@@ -1,0 +1,86 @@
+﻿[
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "grass_bermuda_01.gltf",
+        "md5":  "a1bdd74118d2387a42dba4f605226f87",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/grass_bermuda_01/grass_bermuda_01_1k.gltf",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "alpha.png",
+        "md5":  "274285abb11b3b7a0fd277b9923d1074",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/grass_bermuda_01/grass_bermuda_01_alpha_1k.png",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "textures/grass_bermuda_01_nor_gl_1k.jpg",
+        "md5":  "73a585e0963ff6bf3cefa845cbee0645",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/grass_bermuda_01/grass_bermuda_01_nor_gl_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "textures/grass_bermuda_01_diff_1k.jpg",
+        "md5":  "234be9f52cfcd3380c7f782baaa841c3",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/grass_bermuda_01/grass_bermuda_01_diff_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "textures/grass_bermuda_01_arm_1k.jpg",
+        "md5":  "87c58d5d3345d579eab570f7eb446313",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/grass_bermuda_01/grass_bermuda_01_arm_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "grass_bermuda_01",
+        "file":  "grass_bermuda_01.bin",
+        "md5":  "2940aa3405004b62983fd70bede8e47f",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/grass_bermuda_01/grass_bermuda_01.bin",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "weed_plant_02.gltf",
+        "md5":  "7716ffcf325cbec5c433085a0c0e5f1f",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/gltf/1k/weed_plant_02/weed_plant_02_1k.gltf",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "alpha.png",
+        "md5":  "2fbec8fdd3904e8709718562aa6d37d9",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/png/1k/weed_plant_02/weed_plant_02_alpha_1k.png",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "textures/weed_plant_02_nor_gl_1k.jpg",
+        "md5":  "1f58acb112882c7d0eb7b7d8e58d65c0",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_nor_gl_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "textures/weed_plant_02_diff_1k.jpg",
+        "md5":  "147c346358cf123ca50473cf05df7b86",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_diff_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "textures/weed_plant_02_arm_1k.jpg",
+        "md5":  "ef589b514bd7515ded97f81466e27dd8",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/weed_plant_02/weed_plant_02_arm_1k.jpg",
+        "license":  "CC0 1.0"
+    },
+    {
+        "asset":  "weed_plant_02",
+        "file":  "weed_plant_02.bin",
+        "md5":  "31440e5d2ad17eff90fcf83f3dbe989e",
+        "source":  "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/weed_plant_02/weed_plant_02.bin",
+        "license":  "CC0 1.0"
+    }
+]
