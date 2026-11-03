@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({headless:true,executablePath:'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe'});
+const c=await b.newContext({viewport:{width:844,height:390},deviceScaleFactor:1,isMobile:true,hasTouch:true});
+const p=await c.newPage();
+await p.goto('http://127.0.0.1:8124/?ovl=1&v='+Date.now(),{waitUntil:'networkidle'});
+await p.waitForFunction(()=>window.__ready,null,{timeout:120000});
+await p.evaluate(()=>{window.__changlu.start(); window.__changlu.freeze(); window.__changlu.overview(); window.__changlu.settle(160);});
+await p.waitForTimeout(300);
+console.log(JSON.stringify(await p.evaluate(()=>({cam:window.__changlu.camera.position.toArray(),labels:[...document.querySelectorAll('.ov-label')].map(e=>{const r=e.getBoundingClientRect();return {t:e.textContent.trim(),x:+r.x.toFixed(0),y:+r.y.toFixed(0),w:+r.width.toFixed(0)}}),scrollW:document.documentElement.scrollWidth,start:(()=>{const e=document.querySelector('#startBtn');const r=e.getBoundingClientRect();return {x:r.x,y:r.y,w:r.width,h:r.height}})()}))));
+await p.screenshot({path:'qa/m_landscape_overview.png'});
+await b.close();

@@ -1,0 +1,52 @@
+[
+  {
+    "file": "assets/zones/rural.glb",
+    "bytes": 28996288,
+    "meshes": 41,
+    "primitives": 41,
+    "vertices": 368383,
+    "triangles": 305244,
+    "materials": 17,
+    "embeddedImages": 15
+  },
+  {
+    "file": "assets/vehicles/rickshaw.glb",
+    "bytes": 4390456,
+    "meshes": 6,
+    "primitives": 6,
+    "vertices": 14724,
+    "triangles": 12388,
+    "materials": 6,
+    "embeddedImages": 6
+  },
+  {
+    "file": "assets/vegetation/grass_bermuda_01.glb",
+    "bytes": 1581368,
+    "meshes": 21,
+    "primitives": 21,
+    "vertices": 841,
+    "triangles": 941,
+    "materials": 1,
+    "embeddedImages": 3
+  },
+  {
+    "file": "assets/vegetation/weed_plant_02.glb",
+    "bytes": 2736272,
+    "meshes": 5,
+    "primitives": 5,
+    "vertices": 7956,
+    "triangles": 11116,
+    "materials": 1,
+    "embeddedImages": 3
+  },
+  {
+    "file": "assets/vegetation/rural_broadleaf.glb",
+    "bytes": 9799116,
+    "meshes": 1,
+    "primitives": 1,
+    "vertices": 110304,
+    "triangles": 70462,
+    "materials": 1,
+    "embeddedImages": 4
+  }
+]

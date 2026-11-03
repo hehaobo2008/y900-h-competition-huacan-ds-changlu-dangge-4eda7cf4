@@ -1,0 +1,11 @@
+
+> changlu-dangge@0.1.0 test
+> node tools/verify.mjs
+
+PASS desktop: chapter navigation, memories, autoplay, dialogs, audio, launch, replay
+PASS phone: layout, touch navigation, memory, overview, finale
+PASS landscape: layout, touch navigation, memory, overview, finale
+PASS small-phone: layout, touch navigation, memory, overview, finale
+PASS nested deployment and reduced motion
+PASS offline single file
+PASS 57 checks; screenshots: H:\appdata\H\competition\huacan-ds\changlu-dangge\qa\optimized

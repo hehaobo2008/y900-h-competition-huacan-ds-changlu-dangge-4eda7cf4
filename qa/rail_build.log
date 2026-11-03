@@ -1,0 +1,64 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Blender 4.2.9 LTS (hash a10f621e649a built 2025-04-15 03:32:43)
+Info: Total files 0 | Changed 0 | Failed 0
+Info: Saved "hsr.blend"
+INFO Draco mesh compression is available, use library at D:\Blender\blender-4.2.9-windows-x64\4.2\python\lib\site-packages\extern_draco.dll
+20:42:11 | INFO: Starting glTF 2.0 export
+20:42:11 | INFO: Extracting primitive: HSRStripe
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRWin
+20:42:11 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRBand
+20:42:11 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: NoseLight
+20:42:11 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRAC
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRWheel
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: RearLight
+20:42:11 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRWin.001
+20:42:11 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRBody
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Extracting primitive: HSRSkirt
+20:42:11 | INFO: Primitives created: 1
+20:42:11 | INFO: Finished glTF 2.0 export in 0.03262972831726074 s
+Info: Total files 1 | Changed 1 | Failed 0
+
+HSR EXPORTED 325380
+Info: Saved "rail.blend"
+20:42:42 | INFO: Starting glTF 2.0 export
+20:42:42 | WARNING: Mesh RailBase is not valid, and may be exported wrongly
+20:42:42 | INFO: Extracting primitive: RailBase
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: RailTerrain
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: Water_River
+20:42:42 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: RiverBank
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: BridgeDeck
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: Track
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: BridgeName
+20:42:42 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: RailTree_leaf0
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Extracting primitive: BoatLight
+20:42:42 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:42:42 | INFO: Primitives created: 1
+20:42:42 | INFO: Finished glTF 2.0 export in 0.18623852729797363 s
+
+RAIL EXPORTED 4922548
+
+Blender quit

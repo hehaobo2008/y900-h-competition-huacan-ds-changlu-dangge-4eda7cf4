@@ -1,0 +1,154 @@
+{
+  "info": {
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/151.0.0.0 Safari/537.36",
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "vendor": "Google Inc. (Intel)",
+    "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x0000A788) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "size": [
+      1600,
+      900
+    ],
+    "pixelRatio": 1,
+    "cameraNearFar": [
+      0.1,
+      4000
+    ],
+    "cartPosition": [
+      2.2,
+      0.11,
+      52
+    ],
+    "cartRotationY": 0,
+    "calls": 218,
+    "triangles": 1432114
+  },
+  "errors": [],
+  "views": [
+    [
+      "01_overview",
+      [
+        260,
+        260,
+        350
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      44
+    ],
+    [
+      "02_road",
+      [
+        0,
+        1.7,
+        74
+      ],
+      [
+        0,
+        1.55,
+        30
+      ],
+      52
+    ],
+    [
+      "03_cart_front",
+      [
+        7.4,
+        2,
+        57.7
+      ],
+      [
+        2.2,
+        1.1,
+        52
+      ],
+      44
+    ],
+    [
+      "04_cart_side",
+      [
+        -4.3,
+        1.4,
+        53.8
+      ],
+      [
+        2.2,
+        1.05,
+        52
+      ],
+      44
+    ],
+    [
+      "05_courtyard",
+      [
+        -10,
+        1.7,
+        8
+      ],
+      [
+        -24,
+        2.2,
+        -2
+      ],
+      48
+    ],
+    [
+      "06_water",
+      [
+        30,
+        1.8,
+        -12
+      ],
+      [
+        48,
+        1,
+        -38
+      ],
+      48
+    ],
+    [
+      "07_wheel_detail",
+      [
+        4.55,
+        1.05,
+        53.6
+      ],
+      [
+        3.15,
+        0.68,
+        52
+      ],
+      42
+    ],
+    [
+      "08_cart_rear",
+      [
+        1,
+        1.65,
+        56
+      ],
+      [
+        2.2,
+        0.95,
+        52
+      ],
+      46
+    ],
+    [
+      "09_house_detail",
+      [
+        -22,
+        1.7,
+        7.6
+      ],
+      [
+        -24,
+        1.55,
+        1.6
+      ],
+      45
+    ]
+  ]
+}

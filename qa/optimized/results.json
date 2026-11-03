@@ -1,0 +1,30 @@
+{
+  "checks": 57,
+  "runtimeErrors": [],
+  "screenshots": [
+    "desktop-city.png",
+    "desktop-cover.png",
+    "desktop-ending.png",
+    "desktop-launch.png",
+    "desktop-memory.png",
+    "desktop-overview.png",
+    "desktop-rail.png",
+    "desktop-wish.png",
+    "landscape-cover.png",
+    "landscape-memory.png",
+    "landscape-overview.png",
+    "landscape-travel.png",
+    "landscape-wish.png",
+    "offline-memory.png",
+    "phone-cover.png",
+    "phone-memory.png",
+    "phone-overview.png",
+    "phone-travel.png",
+    "phone-wish.png",
+    "small-phone-cover.png",
+    "small-phone-memory.png",
+    "small-phone-overview.png",
+    "small-phone-travel.png",
+    "small-phone-wish.png"
+  ]
+}
