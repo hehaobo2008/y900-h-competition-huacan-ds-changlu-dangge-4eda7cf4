@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>山河织路 · 设计说明</title>
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  :root{--ink:#231f19;--soft:#5b5246;--paper:#f3ecdf;--paper2:#ece2d1;--red:#a8332a;--line:rgba(35,31,25,.16);--serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--serif);color:var(--ink);background:var(--paper);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:210mm;height:297mm;padding:18mm 19mm 14mm;position:relative;overflow:hidden;page-break-after:always;background:var(--paper)}
+  .page:last-child{page-break-after:auto}
+  .page:before{content:"";position:absolute;inset:0;opacity:.045;background-image:url('../assets/textures/grain.png');background-size:160px;pointer-events:none}
+  header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:3mm;position:relative;z-index:2}
+  .brand{display:flex;gap:7px;align-items:center}
+  .mark{width:8mm;height:8mm;border:1px solid var(--red);color:var(--red);display:grid;place-items:center;font-size:5.4pt;letter-spacing:.06em}
+  .brand b{font-size:10.5pt;font-weight:500;letter-spacing:.2em}
+  .brand span{display:block;font-family:var(--sans);font-size:4.8pt;letter-spacing:.2em;color:var(--soft);margin-top:1px}
+  .meta{font-family:var(--sans);font-size:5.2pt;letter-spacing:.14em;color:var(--soft);text-align:right;line-height:1.9}
+  footer{position:absolute;left:19mm;right:19mm;bottom:8mm;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:2mm;font-family:var(--sans);font-size:4.8pt;letter-spacing:.14em;color:var(--soft);z-index:2}
+  h1{font-size:38pt;font-weight:500;letter-spacing:.12em;line-height:1.08;margin:7mm 0 3mm;text-indent:-.04em}
+  h2{font-size:19pt;font-weight:500;letter-spacing:.1em;line-height:1.3;margin:5mm 0 4mm}
+  h3{font-size:11.5pt;font-weight:500;letter-spacing:.08em;margin:4mm 0 2mm}
+  p{font-size:9.2pt;line-height:1.95;letter-spacing:.04em;color:var(--ink);margin-bottom:3mm}
+  p.soft,li{font-size:8.6pt;line-height:1.95;color:var(--soft);letter-spacing:.03em}
+  .eyebrow{font-family:var(--sans);font-size:5.6pt;letter-spacing:.22em;color:var(--red);margin-bottom:2mm}
+  .en{font-family:var(--sans);font-size:6pt;letter-spacing:.3em;color:var(--soft)}
+  .lead{font-size:11pt;line-height:1.9;margin:3mm 0 4mm}
+  .red{color:var(--red)}
+  .small{font-family:var(--sans);font-size:5.2pt;letter-spacing:.12em;color:var(--soft);line-height:1.8}
+  figure{border:1px solid var(--line);background:var(--paper2);overflow:hidden;position:relative}
+  figure img{display:block;width:100%;height:100%;object-fit:cover}
+  figcaption{position:absolute;left:3mm;bottom:2.2mm;font-family:var(--sans);font-size:4.8pt;letter-spacing:.16em;color:rgba(243,236,223,.9);text-shadow:0 1px 6px rgba(0,0,0,.4)}
+  .cover{padding:22mm 19mm 14mm}
+  .cover .kicker{font-family:var(--sans);font-size:6pt;letter-spacing:.24em;color:var(--red);margin-bottom:8mm}
+  .cover h1{font-size:54pt;line-height:1;margin:0 0 5mm}
+  .cover .sub{font-size:15pt;letter-spacing:.12em;margin-bottom:7mm}
+  .cover .poem{font-size:9.6pt;line-height:2.1;color:var(--soft);letter-spacing:.08em}
+  .cover .hero{height:112mm;margin-top:9mm}
+  .cover .hero img{object-fit:cover;object-position:center;background:#f7f7ef}
+  .cover .foot{display:flex;justify-content:space-between;margin-top:7mm;border-top:1px solid var(--line);padding-top:3mm}
+  .cover .hero figcaption,figure.mapfig figcaption{color:rgba(35,31,25,.62);text-shadow:none}
+  .acts .img2 figure{height:50mm}
+  .timeline{margin-top:4mm;border-top:1px solid var(--line);padding-top:3mm}
+  .timeline .tl-title{display:flex;justify-content:space-between;align-items:baseline}
+  .timeline .tl-title b{font-size:10.5pt;font-weight:500;letter-spacing:.08em}
+  .timeline .tl-title span{font-family:var(--sans);font-size:5.2pt;letter-spacing:.16em;color:var(--soft)}
+  .tlbar{display:flex;height:11mm;margin-top:2.2mm;border:1px solid var(--line)}
+  .tlbar div{border-right:1px solid var(--line);padding:1.4mm 1.6mm;display:flex;flex-direction:column;justify-content:flex-end;background:rgba(255,255,255,.14)}
+  .tlbar div:last-child{border-right:0}
+  .tlbar div:nth-child(2),.tlbar div:nth-child(4){background:rgba(168,51,42,.05)}
+  .tlbar b{font-family:var(--sans);font-size:5.2pt;letter-spacing:.1em;color:var(--red);font-weight:400}
+  .tlbar span{font-size:7.2pt;letter-spacing:.06em;color:var(--ink);margin-top:.6mm}
+  .tl-foot{margin-top:1.6mm;font-family:var(--sans);font-size:5pt;letter-spacing:.12em;color:var(--soft);display:flex;justify-content:space-between}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:7mm}
+  .cols3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5mm}
+  .box{border-top:1px solid var(--line);padding-top:3mm}
+  .box b{display:block;font-size:10.5pt;font-weight:500;letter-spacing:.06em;margin-bottom:1.4mm}
+  .box span{font-size:7.8pt;line-height:1.8;color:var(--soft);display:block}
+  .img-band{height:64mm;margin:5mm 0 3mm}
+  .img-band.tall{height:82mm}
+  .img2{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin:5mm 0 3mm}
+  .img2 figure{height:56mm}
+  .veh{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm;margin:4mm 0}
+  .veh div{border-top:1px solid var(--red);padding-top:2.2mm}
+  .veh b{display:block;font-size:13pt;font-weight:500;color:var(--red);letter-spacing:.04em}
+  .veh span{display:block;font-size:7.4pt;color:var(--soft);margin-top:1mm;line-height:1.6}
+  table{width:100%;border-collapse:collapse;margin:4mm 0}
+  th{font-family:var(--sans);font-size:5.4pt;letter-spacing:.14em;color:var(--soft);text-align:left;font-weight:400;border-bottom:1px solid var(--ink);padding:2mm 1.4mm}
+  td{border-bottom:1px solid var(--line);padding:2mm 1.4mm;font-size:7.6pt;line-height:1.65;vertical-align:top}
+  td b{font-weight:500}
+  .quote{font-size:22pt;line-height:1.6;letter-spacing:.08em;margin:7mm 0;color:var(--ink)}
+  .quote em{font-style:normal;color:var(--red)}
+  ul{margin:2mm 0 3mm 4mm}
+  li{margin-bottom:1mm}
+  .steps{counter-reset:s;margin:3mm 0}
+  .steps div{counter-increment:s;position:relative;padding:2.4mm 0 2.4mm 10mm;border-bottom:1px solid var(--line);font-size:8pt;line-height:1.7;color:var(--soft)}
+  .steps div:before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:2.4mm;font-family:var(--sans);font-size:5.4pt;letter-spacing:.12em;color:var(--red)}
+  .steps b{display:block;color:var(--ink);font-size:9.6pt;font-weight:500;margin-bottom:.6mm}
+  .kv{display:grid;grid-template-columns:1fr 1fr;gap:0 8mm;margin:3mm 0}
+  .kv div{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:2mm 0;font-size:7.8pt}
+  .kv b{font-weight:500}
+  .kv span{color:var(--soft);font-family:var(--sans);font-size:5.8pt;letter-spacing:.08em;text-align:right}
+  .note{border-left:2px solid var(--red);padding:2mm 0 2mm 4mm;font-size:8.4pt;line-height:1.9;color:var(--soft);margin:4mm 0}
+  .cover .seal{width:20mm;height:20mm;border:2px solid var(--red);color:var(--red);display:grid;place-items:center;font-size:9pt;letter-spacing:.14em;line-height:1.3;text-align:center;transform:rotate(-3deg)}
+</style>
+</head>
+<body>
+
+<!-- 01 cover -->
+<section class="page cover">
+  <div class="kicker">2026 新锐设计竞赛 · 华灿奖 / 创意赛道 · 数字媒体设计</div>
+  <h1>山河<br>织路</h1>
+  <div class="sub">一部可漫游的立体长卷</div>
+  <div class="en">A LONG SCROLL OF TIME</div>
+  <div class="poem" style="margin-top:10mm">
+    一条路，把五段中国时间织在一起。<br>
+    从田埂出发，穿过街市、城市与山河，最后通向星河。
+  </div>
+  <figure class="hero"><img src="../qa/overview_crop.png" alt="五座时代之岛"><figcaption>展卷 · 五座时代之岛 / 一根红线</figcaption></figure>
+  <div class="foot">
+    <div class="small">实时 3D · PC + 移动端<br>在线 + 离线单文件</div>
+    <div class="small" style="text-align:center">全流程原创<br>几何 / 贴图 / 声音 / 交互 / 影像</div>
+    <div class="seal">山河<br>织路</div>
+  </div>
+  <footer><span>设计说明 / DESIGN STATEMENT · 01</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 02 concept -->
+<section class="page">
+  <header><div class="brand"><div class="mark">概念</div><div><b>山河织路</b><span>CONCEPT</span></div></div><div class="meta">02 / 07　概念 · 融合</div></header>
+  <div class="eyebrow">主题 / 融合</div>
+  <h1 style="font-size:28pt;margin-top:3mm">路是针脚</h1>
+  <p class="lead">中国的发展常被写成宏大的数字。但数字之外，它更像一条路：从田埂出发，穿过街市、城市与山河，最后通向星河。路不是背景，路是针脚——它把乡土与城市、旧日与未来、人与土地缝在一起。</p>
+  <p>作品把“路”抽成一根贯穿全篇的红线，也把五个时代做成五座悬浮的立体微缩景观。观众不是在看一张时间轴，而是在一根线上行走：从一座岛走进另一座岛，在纸白的虚空里看见红线把时代缝合。走到尽头，可以点亮一枚火箭，为未来放一盏灯。</p>
+  <div class="cols" style="margin-top:6mm">
+    <div class="box"><b>时间的融合</b><span>五个时代由一条连续的路缝合。转场是“织过去”，不是“切过去”；镜头上升，看见上一座岛、下一座岛与中间的红线，再落回人间。</span></div>
+    <div class="box"><b>空间的融合</b><span>田埂、街市、都市、山河、太空并置成一轴立体长卷。五座 320m 见方的岛悬在纸白虚空里，间隔约 120m。</span></div>
+    <div class="box"><b>技术的融合</b><span>Blender 4.2 程序化建模 + Three.js r169 实时渲染 + WebAudio 程序合成声音；所有资产由本项目脚本生成。</span></div>
+    <div class="box"><b>情感的融合</b><span>每个时代都有一件载具和一句“路上的人话”，宏大叙事落回可触摸的日常：车把上的马灯、第一辆自己的车、夜班车的窗。</span></div>
+  </div>
+  <figure class="img-band tall" style="margin-top:7mm"><img src="../qa/h5_rural.png" alt="田埂晨"><figcaption>田埂晨 · 1980s · 路是走出来的。</figcaption></figure>
+  <div class="note">“融合”不是把五种风格拼在一起，而是让它们共享同一条曲线、同一套光照语法、同一种纸感。差异来自时代，统一来自路。</div>
+  <footer><span>02 / 07　概念 · 路是针脚</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 03 five acts -->
+<section class="page acts">
+  <header><div class="brand"><div class="mark">五幕</div><div><b>山河织路</b><span>FIVE ACTS</span></div></div><div class="meta">03 / 07　五幕 · 载具与时代</div></header>
+  <div class="eyebrow">结构 / 一条路的五个刻度</div>
+  <h2>五幕 · 时间在一条路上展开</h2>
+  <table>
+    <thead><tr><th style="width:17%">幕</th><th style="width:13%">年代</th><th>场景</th><th style="width:22%">载具</th><th style="width:26%">一句话</th></tr></thead>
+    <tbody>
+      <tr><td><b>壹 · 田埂晨</b></td><td>1980s</td><td>梯田、白墙黛瓦、晒谷场、晨雾、村口门楼</td><td>人力车</td><td>路是走出来的。</td></tr>
+      <tr><td><b>贰 · 街市暮</b></td><td>1990s</td><td>县城主街、供销社、电影院、河边、梧桐</td><td>汽车</td><td>路通向更大的世界。</td></tr>
+      <tr><td><b>叁 · 城夜雨</b></td><td>2010s</td><td>高楼、霓虹、高架、绿皮车穿城、雨夜</td><td>绿皮火车</td><td>路把远方变成日常。</td></tr>
+      <tr><td><b>肆 · 山河速</b></td><td>2020s</td><td>大跨度斜拉桥、动车组、云海群山、江面</td><td>高速动车</td><td>路让山河彼此相拥。</td></tr>
+      <tr><td><b>伍 · 星河远</b></td><td>未来</td><td>零碳山城、发射场、风机、极光、星海</td><td>重型火箭</td><td>路从脚下，通向星辰。</td></tr>
+    </tbody>
+  </table>
+  <div class="veh">
+    <div><b>壹</b><span>人力车<br>木轮 / 苇席棚<br>车把上的马灯</span></div>
+    <div><b>贰</b><span>汽车<br>方灯 / 镀铬格栅<br>第一辆自己的车</span></div>
+    <div><b>叁</b><span>绿皮火车<br>车窗格 / 雨夜穿城<br>每一格都是一个回家的人</span></div>
+    <div><b>肆</b><span>高速动车<br>流线车头 / 桥塔拉索<br>一杯茶的时间</span></div>
+    <div><b>伍</b><span>重型火箭<br>三助推 / 栅格舵<br>为未来放一盏灯</span></div>
+  </div>
+  <div class="img2" style="margin-top:5mm">
+    <figure><img src="../qa/h5_town.png" alt="街市暮"><figcaption>街市暮 · 1990s · 供销社与主街</figcaption></figure>
+    <figure><img src="../qa/h5_city.png" alt="城夜雨"><figcaption>城夜雨 · 2010s · 高架与万家灯火</figcaption></figure>
+  </div>
+  <div class="img2">
+    <figure><img src="../qa/h5_rail.png" alt="山河速"><figcaption>山河速 · 2020s · 斜拉桥与动车</figcaption></figure>
+    <figure><img src="../qa/h5_future.png" alt="星河远"><figcaption>星河远 · 未来 · 零碳山城与发射场</figcaption></figure>
+  </div>
+  <p class="soft" style="margin-top:3mm">五件载具均由 Python 脚本程序化构建，尺度从 1.8m 到 200m；每一件都保留了可被辨认的结构细节：车轮辐条、镀铬格栅、车窗格、受电弓、栅格舵。</p>
+  <footer><span>03 / 07　五幕 · 载具与时代</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 04 visual -->
+<section class="page">
+  <header><div class="brand"><div class="mark">视觉</div><div><b>山河织路</b><span>VISUAL SYSTEM</span></div></div><div class="meta">04 / 07　视觉 · 纸白 / 墨 / 中国红</div></header>
+  <div class="eyebrow">视觉系统 / 手作模型</div>
+  <h2>不做写实照片感，也不做低幼低多边形</h2>
+  <p>用大量真实构造细节——瓦垄、窗棂、阳台、空调机、电线、桥梁拉索、火箭发动机——加上克制的低饱和配色、纸纹颗粒与轻雾，形成“手作模型”的质感。几何是低多边形的，但构造是可信的；颜色是克制的，但光是准确的。</p>
+  <div class="cols3" style="margin:5mm 0">
+    <div class="box"><b>纸白虚空</b><span>岛与岛之间不是黑场，而是温暖纸白的留白。转场时镜头升到高空，看见红线把时代缝在一起。</span></div>
+    <div class="box"><b>中国红</b><span>路在场景中是土路、柏油、钢轨、光轨；在转场与总览中变成一根发光的红线。红是唯一贯穿全片的饱和色。</span></div>
+    <div class="box"><b>低饱和</b><span>乡土米白黛瓦、城镇琥珀砖红、城市深蓝霓虹、高铁黎明粉金、未来靛蓝极光；每个时代有自己的色温，但共享纸感。</span></div>
+  </div>
+  <figure class="img-band"><img src="../qa/h5_rail.png" alt="山河速"><figcaption>晨雾 / 斜拉索 / 银白动车 · 2020s</figcaption></figure>
+  <h3>色彩与光</h3>
+  <p class="soft">乡土：米白、黛瓦、秧绿、土黄、朱红点缀。城镇：琥珀、砖红、青灰、初亮的暖黄窗光。城市：深蓝、湿沥青、青蓝玻璃、霓虹洋红/青、万家灯火。高铁：黎明粉金、钢蓝山脊、银白列车、青绿江水。未来：靛蓝、极光青、白色曲面建筑、金色尾焰。</p>
+  <h3>镜头</h3>
+  <p class="soft">低机位穿行与高空俯瞰交替；35–50mm 电影感焦距；轻微手持呼吸感；关键节点停一拍。转场用“升空—看见红线—落回”的卷轴式空间转场，配合纸白雾与印章动画；章节跳转使用水墨遮罩。</p>
+  <div class="img2">
+    <figure><img src="../qa/h5_city.png" alt="城夜雨"><figcaption>城市 · 深蓝与霓虹 · 2010s</figcaption></figure>
+    <figure><img src="../qa/ui_card.png" alt="拾光纸卡"><figcaption>纸卡 · 拾光 · 1990s</figcaption></figure>
+  </div>
+  <footer><span>04 / 07　视觉 · 手作模型的质感</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 05 interaction -->
+<section class="page">
+  <header><div class="brand"><div class="mark">交互</div><div><b>山河织路</b><span>INTERACTION</span></div></div><div class="meta">05 / 07　交互 · 漫游 / 拾光 / 展卷 / 放灯</div></header>
+  <div class="eyebrow">交互系统 / 走进去，而不是观看</div>
+  <h2>四种动作，一条连续的线</h2>
+  <div class="steps">
+    <div><b>启程 · 落在田埂上空</b>纸白虚空中的乡村岛，标题、诗句与启程按钮。点击后红线从画面里穿出，镜头俯冲入村。</div>
+    <div><b>漫游 · 沿红线前进</b>滚轮或上滑前进，下滑回望；按住拖动改变视线；方向键 / 空格同样可用。章节标题与年份在到达时淡入，不打断漫游。</div>
+    <div><b>拾光 · 点击载具</b>每一幕有一个不打扰的拾光点：人力车、汽车、车窗、桥塔、火箭。点击展开一张纸卡，读一句那个时代的“路上的人话”。</div>
+    <div><b>展卷 · 俯瞰五座岛</b>右上角“展卷”把镜头拉到纸白虚空，五座岛与红线尽收眼底；点击任一岛可飞回该幕，Esc 退出。</div>
+    <div><b>放灯 · 为未来点一盏灯</b>在终点输入或选择一句愿望，点亮火箭；火箭升空，孔明灯与星屑一起升起，愿望以纸上小字随灯飘远。</div>
+  </div>
+  <div class="img2" style="margin-top:5mm">
+    <figure style="height:70mm"><img src="../qa/ui_card.png" alt="拾光纸卡"><figcaption>拾光 · 一张纸卡，一句人话</figcaption></figure>
+    <figure class="mapfig" style="height:70mm"><img src="../qa/overview_crop.png" alt="展卷总览" style="object-fit:contain;background:#f7f7ef"><figcaption>展卷 · 五座岛与一根红线</figcaption></figure>
+  </div>
+  <p class="soft">可及性：所有按钮可聚焦；Esc 退出模态；尊重 prefers-reduced-motion：界面过渡与动画减弱，3D 漫游保留；声音默认开启但可一键静音；移动端 DPR 上限 1.5、触摸目标 ≥ 44px、低性能设备自动关闭泛光与降低阴影。</p>
+  <div class="note">“拾光”是唯一的支线，也是叙事的呼吸口。它不奖励点击、不收集成就，只给一句话；关掉之后，路继续。</div>
+  <div class="timeline">
+    <div class="tl-title"><b>一条 102 秒的线</b><span>五幕时长配比 · 停留与转场都算在叙事里</span></div>
+    <div class="tlbar">
+      <div style="width:18%"><b>壹 · 18s</b><span>田埂晨</span></div>
+      <div style="width:20%"><b>贰 · 20s</b><span>街市暮</span></div>
+      <div style="width:20%"><b>叁 · 20s</b><span>城夜雨</span></div>
+      <div style="width:18%"><b>肆 · 18s</b><span>山河速</span></div>
+      <div style="width:24%"><b>伍 · 26s</b><span>星河远 · 放灯</span></div>
+    </div>
+    <div class="tl-foot"><span>转场不黑屏：每幕末尾升空 1.2–1.6s，看见红线与下一座岛，再落回。</span><span>102s / 24fps / 1080p</span></div>
+  </div>
+  <footer><span>05 / 07　交互 · 四种动作</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 06 technology -->
+<section class="page">
+  <header><div class="brand"><div class="mark">技术</div><div><b>山河织路</b><span>TECHNOLOGY</span></div></div><div class="meta">06 / 07　技术 · 全流程原创</div></header>
+  <div class="eyebrow">技术实现 / 从脚本到实时</div>
+  <h2>手作模型的数字实现</h2>
+  <p>所有几何由 Blender 4.2 Python 脚本生成；所有贴图由脚本绘制；所有声音由 WebAudio 实时合成；演示视频由确定性帧渲染生成。没有下载的模型、图片或音乐。</p>
+  <div class="kv">
+    <div><b>五座岛</b><span>320 × 300m / 间隔 120m</span></div>
+    <div><b>总三角面</b><span>824,373 tris</span></div>
+    <div><b>五件载具</b><span>1.8m — 200m</span></div>
+    <div><b>在线首包</b><span>约 12MB / Meshopt</span></div>
+    <div><b>离线单文件</b><span>全部资产内嵌 / 双击打开</span></div>
+    <div><b>实时渲染</b><span>Three.js r169 / WebGL2</span></div>
+    <div><b>声音</b><span>WebAudio / 无采样</span></div>
+    <div><b>视频</b><span>1080p / 24fps / 102s / 原创配乐</span></div>
+  </div>
+  <div class="cols" style="margin-top:4mm">
+    <div>
+      <h3>资产管线</h3>
+      <ul>
+        <li>Blender Python 构件库：瓦屋顶、窗棂、阳台、空调、电线、桁架、斜拉索、火箭喷管。</li>
+        <li>按材质合并，导出 glTF；纹理绘制成招牌图集与纸纹。</li>
+        <li>glTF Transform：量化 + Meshopt 压缩 + WebP 纹理，保留 FX 空节点。</li>
+        <li>五岛 + 五载具独立 GLB，置于同一条世界轴线。</li>
+      </ul>
+      <h3>实时管线</h3>
+      <ul>
+        <li>连续相机曲线 + 章节时间轴；天空 / 雾 / 光照随章节插值。</li>
+        <li>自定义水面、雨、烟、星、孔明灯；Bloom + 纸纹 + 暗角后期。</li>
+        <li>移动端低质量档：DPR 1.5、关闭泛光、阴影 1024。</li>
+      </ul>
+    </div>
+    <div>
+      <h3>声音</h3>
+      <ul>
+        <li>五段可循环的时代氛围：乡村风声 / 鸟鸣、城镇市声 / 车铃、城市雨声 / 车流 / 远处喇叭、高铁风噪 / 钢轨节奏、未来低频 / 脉冲。</li>
+        <li>一支共享的五声音阶随机钟琴，随章节换和弦；交叉淡化。</li>
+        <li>火箭升空：低频轰鸣 + 上升噪声 + 子低音；所有声音由 WebAudio 节点实时合成。</li>
+        <li>演示片配乐以同一组五幕和弦为骨架，用 numpy 程序合成；不含采样或外部音乐。</li>
+      </ul>
+      <h3>影像</h3>
+      <ul>
+        <li>Playwright 驱动固定的 24fps 时间步；冻结 RAF，逐帧推进，保证可复现。</li>
+        <li>1080p JPEG 帧序列经 FFmpeg 编码 H.264；章节字幕与操作提示为独立叠加层。</li>
+      </ul>
+    </div>
+  </div>
+  <figure class="img-band tall" style="margin-top:5mm;height:68mm"><img src="../qa/h5_future.png" alt="星河远"><figcaption>星河远 · 未来 · 零碳山城 / 发射场 / 风机</figcaption></figure>
+  <footer><span>06 / 07　技术 · 从脚本到实时</span><span>山河织路 · 2026</span></footer>
+</section>
+
+<!-- 07 credits -->
+<section class="page">
+  <header><div class="brand"><div class="mark">交付</div><div><b>山河织路</b><span>DELIVERY / CREDITS</span></div></div><div class="meta">07 / 07　原创性与交付</div></header>
+  <div class="eyebrow">全流程原创 / 可复现</div>
+  <h2>所有远方，都从脚下出发</h2>
+  <div class="quote">一条路，把五段中国时间<em>织在一起。</em></div>
+  <div class="cols">
+    <div>
+      <h3>原创性声明</h3>
+      <ul>
+        <li>场景、建筑、植被、载具、道具全部由本项目 Blender Python 脚本生成。</li>
+        <li>招牌文字、纸纹、印章、光晕等贴图由脚本绘制或程序生成。</li>
+        <li>交互音乐与音效全部由 WebAudio 节点实时合成；演示片配乐由 numpy 程序合成；均未使用采样库或外部音乐。</li>
+        <li>字体使用系统宋体 / 思源宋体回退；未打包未授权字体。</li>
+        <li>没有下载的模型、图片或音乐；没有使用第三方生成式资产。</li>
+      </ul>
+      <h3>交付清单</h3>
+      <ul>
+        <li>实时 H5 · 在线版（dist/）</li>
+        <li>实时 H5 · 离线单文件（dist/山河织路-离线单文件.html）</li>
+        <li>1080p 演示视频（dist/山河织路-演示片.mp4，约 1 分 42 秒）</li>
+        <li>设计展板 5 张（docs/boards/，2400 × 1500）</li>
+        <li>交互流程图 PDF（docs/交互流程图.pdf）</li>
+        <li>设计说明 PDF（docs/设计说明.pdf）</li>
+        <li>源文件与构建脚本（src/、tools/、assets/）</li>
+      </ul>
+    </div>
+    <div>
+      <h3>运行方式</h3>
+      <ul>
+        <li>在线：<code>npm run serve</code>，打开 <code>http://localhost:8123</code>。</li>
+        <li>离线：双击 <code>山河织路-离线单文件.html</code>；首次点击后启动声音。</li>
+        <li>操作：滚动 / 触摸上滑前进，下滑回望；拖动改变视线；点击拾光；右上角展卷；Esc 退出展卷。</li>
+      </ul>
+      <h3>设备与适配</h3>
+      <ul>
+        <li>桌面：Chrome / Edge / Safari 最新版；1920×1080 目标 60fps。</li>
+        <li>移动：iOS Safari / Android Chrome；DPR 上限 1.5；低质量档自动启用。</li>
+        <li>离线文件无需服务器；WebAudio 受浏览器自动播放策略限制，首次点击后启动。</li>
+      </ul>
+      <h3>构建命令</h3>
+      <div class="small" style="line-height:2">
+        node tools/build_h5.mjs　# 在线版<br>
+        node tools/build_offline.mjs　# 离线单文件<br>
+        node tools/render_video.mjs　# 演示视频<br>
+        node tools/render_boards.mjs　# 展板<br>
+        node tools/render_pdfs.mjs　# 两份 PDF
+      </div>
+    </div>
+  </div>
+  <div class="note" style="margin-top:6mm">作品不是“时间轴动画”，而是可以走进去的立体长卷。五座岛 + 纸白虚空 + 一根红线，形成统一的空间识别；结尾把宏大叙事收束为一次个人动作：为未来放一盏灯。</div>
+  <div class="small" style="margin-top:10mm">山河织路 · A LONG SCROLL OF TIME<br>2026 新锐设计竞赛 · 华灿奖 / 创意赛道 · 数字媒体设计</div>
+  <footer><span>07 / 07　原创性与交付</span><span>山河织路 · 2026</span></footer>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>山河织路 · 交互流程图</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  :root{--ink:#231f19;--soft:#5b5246;--paper:#f3ecdf;--red:#a8332a;--line:rgba(35,31,25,.18);--serif:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--sans:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--serif);color:var(--ink);background:var(--paper);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{width:297mm;height:210mm;padding:13mm 15mm 11mm;position:relative;overflow:hidden;page-break-after:always;background:var(--paper)}
+  .page:last-child{page-break-after:auto}
+  .page:before{content:"";position:absolute;inset:0;opacity:.045;background-image:url('../assets/textures/grain.png');background-size:180px;pointer-events:none}
+  header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1px solid var(--line);padding-bottom:4mm;position:relative;z-index:2}
+  .brand{display:flex;gap:9px;align-items:center}
+  .mark{width:8mm;height:8mm;border:1px solid var(--red);color:var(--red);display:grid;place-items:center;font-size:6pt;letter-spacing:.08em}
+  .brand b{font-size:12pt;font-weight:500;letter-spacing:.18em}
+  .brand span{display:block;font-family:var(--sans);font-size:5.2pt;letter-spacing:.2em;color:var(--soft);margin-top:2px}
+  .meta{font-family:var(--sans);font-size:5.6pt;letter-spacing:.16em;color:var(--soft);text-align:right;line-height:1.9}
+  h1{font-size:31pt;font-weight:500;letter-spacing:.1em;margin:6mm 0 1.5mm}
+  .sub{font-size:8.4pt;letter-spacing:.08em;color:var(--soft);line-height:1.9}
+  .eyebrow{font-family:var(--sans);font-size:5.6pt;letter-spacing:.22em;color:var(--red);margin-top:5mm}
+  /* flow */
+  .flow{display:grid;grid-template-columns:repeat(7,1fr);gap:0;margin-top:5mm;position:relative;z-index:2}
+  .node{border:1px solid var(--line);background:rgba(255,255,255,.22);padding:4mm 3.2mm;min-height:31mm;position:relative}
+  .node + .node{margin-left:7mm}
+  .node + .node:before{content:"→";position:absolute;left:-7mm;top:50%;transform:translateY(-50%);color:var(--red);font-size:11pt;width:7mm;text-align:center}
+  .node .n{font-family:var(--sans);font-size:5.2pt;letter-spacing:.2em;color:var(--red);margin-bottom:2.4mm}
+  .node b{font-size:10.5pt;font-weight:500;letter-spacing:.06em;display:block;line-height:1.4}
+  .node p{font-size:6.4pt;line-height:1.8;color:var(--soft);margin-top:1.6mm}
+  .node .tag{position:absolute;bottom:2.4mm;left:3.2mm;font-family:var(--sans);font-size:4.8pt;letter-spacing:.12em;color:var(--soft);border-top:1px solid var(--line);width:calc(100% - 6.4mm);padding-top:1.4mm}
+  .node.hot{border-color:rgba(168,51,42,.5);background:rgba(168,51,42,.045)}
+  .lanes{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6mm;margin-top:5mm;position:relative;z-index:2}
+  .lane{border-top:1px solid var(--red);padding-top:3mm}
+  .lane h3{font-size:8pt;font-weight:500;letter-spacing:.12em;margin-bottom:2mm}
+  .lane .row{display:flex;gap:3mm;align-items:baseline;font-size:6.4pt;color:var(--soft);line-height:1.8;margin-bottom:1.4mm}
+  .lane .row b{font-family:var(--sans);font-size:5.2pt;letter-spacing:.12em;color:var(--red);white-space:nowrap;font-weight:400}
+  .legend{display:flex;gap:6mm;margin-top:3.4mm;font-family:var(--sans);font-size:5.2pt;letter-spacing:.12em;color:var(--soft)}
+  .legend i{display:inline-block;width:4mm;height:2.2mm;border:1px solid var(--line);margin-right:1.6mm;vertical-align:middle}
+  .legend .r{background:rgba(168,51,42,.08);border-color:rgba(168,51,42,.5)}
+  /* chapter rhythm */
+  .rhythm{margin-top:3.6mm;border-top:1px solid var(--ink);padding-top:3mm;position:relative;z-index:2}
+  .rhythm .rh{display:flex;justify-content:space-between;align-items:baseline}
+  .rhythm .rh b{font-size:9.6pt;font-weight:500;letter-spacing:.14em}
+  .rhythm .rh span{font-family:var(--sans);font-size:5pt;letter-spacing:.2em;color:var(--soft)}
+  .beats{display:grid;grid-template-columns:repeat(5,1fr);gap:5mm;margin-top:2.4mm}
+  .beat{border-top:1px solid var(--line);padding-top:2mm;font-size:6.2pt;line-height:1.62;color:var(--soft)}
+  .beat .bh{display:flex;justify-content:space-between;font-family:var(--sans);font-size:4.8pt;letter-spacing:.14em;color:var(--red);margin-bottom:1.2mm}
+  .beat b{display:block;font-size:9.6pt;font-weight:500;letter-spacing:.08em;color:var(--ink);line-height:1.3}
+  .beat .bar{height:2px;background:rgba(35,31,25,.12);margin:2.2mm 0 1.6mm;position:relative}
+  .beat .bar:after{content:"";position:absolute;top:-1.5px;width:5px;height:5px;border-radius:50%;background:var(--red);left:var(--p)}
+  .beat em{display:block;font-style:normal;font-family:var(--sans);font-size:4.9pt;letter-spacing:.08em;color:var(--soft);margin-top:1mm}
+  .beat i{display:block;font-style:normal;font-size:6.4pt;color:var(--ink);margin-top:1.2mm;letter-spacing:.03em}
+  .rhythm .closing{display:flex;justify-content:space-between;margin-top:2.2mm;padding-top:1.4mm;border-top:1px solid var(--line);font-family:var(--sans);font-size:5pt;letter-spacing:.14em;color:var(--soft)}
+  .rhythm .closing b{color:var(--red);font-weight:400}
+  footer{position:absolute;left:15mm;right:15mm;bottom:7mm;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:2.4mm;font-family:var(--sans);font-size:5.2pt;letter-spacing:.16em;color:var(--soft);z-index:2}
+  /* page 2 */
+  .grid2{display:grid;grid-template-columns:1.25fr 1fr;gap:10mm;margin-top:6mm;position:relative;z-index:2}
+  table{width:100%;border-collapse:collapse;font-size:6.6pt}
+  th{font-family:var(--sans);font-size:5.2pt;letter-spacing:.14em;color:var(--soft);text-align:left;font-weight:400;border-bottom:1px solid var(--ink);padding:2.2mm 1.6mm}
+  td{border-bottom:1px solid var(--line);padding:2.2mm 1.6mm;line-height:1.6;vertical-align:top}
+  td b{font-weight:500}
+  .pill{display:inline-block;font-family:var(--sans);font-size:4.8pt;letter-spacing:.1em;border:1px solid var(--line);padding:.8mm 1.4mm;color:var(--soft)}
+  .spec{margin-top:3mm}
+  .spec div{padding:2mm 0;border-bottom:1px solid var(--line);font-size:6.6pt;line-height:1.7;color:var(--soft)}
+  .spec b{display:block;font-family:var(--sans);font-size:5.2pt;letter-spacing:.14em;color:var(--red);font-weight:400;margin-bottom:.6mm}
+  .callout{border:1px solid var(--line);padding:4mm;margin-top:4mm;background:rgba(255,255,255,.18)}
+  .callout b{font-size:9pt;font-weight:500;letter-spacing:.08em}
+  .callout p{font-size:6.6pt;line-height:1.8;color:var(--soft);margin-top:1.4mm}
+</style>
+</head>
+<body>
+
+<section class="page">
+  <header>
+    <div class="brand"><div class="mark">山河</div><div><b>山河织路</b><span>A LONG SCROLL OF TIME</span></div></div>
+    <div class="meta">2026 新锐设计竞赛 · 华灿奖 / 数字媒体设计<br>交互流程图 · INTERACTION FLOW / 01</div>
+  </header>
+
+  <div class="eyebrow">一条红线 · 七次状态 · 四种动作</div>
+  <h1>交互流程图</h1>
+  <p class="sub">用户不是在“播放”一段动画，而是在一条连续的线上行走：滚动或上滑前进，拖动回望，点击拾光，展卷俯瞰，最后写下一个愿望。</p>
+
+  <div class="flow">
+    <div class="node"><div class="n">01 / ENTRY</div><b>启程</b><p>纸白虚空中的乡村岛；标题、诗句、启程按钮。</p><div class="tag">点击 / 回车 → 入村</div></div>
+    <div class="node"><div class="n">02 / TRAVEL</div><b>漫游</b><p>镜头沿红线前进；章节标题与年份淡入；可回望。</p><div class="tag">滚轮 / 触摸上滑 / 方向键</div></div>
+    <div class="node hot"><div class="n">03 / PAUSE</div><b>拾光</b><p>载具旁的纸卡：一个年代、一句“路上的人话”。</p><div class="tag">点击载具 / 再次点击关闭</div></div>
+    <div class="node"><div class="n">04 / OVERVIEW</div><b>展卷</b><p>升到纸白虚空，五座岛与一根红线尽收眼底。</p><div class="tag">右上角“展卷” / Esc</div></div>
+    <div class="node"><div class="n">05 / ARRIVE</div><b>终点</b><p>星河港；输入或选择一句愿望。</p><div class="tag">滚动到底 → 自动浮出</div></div>
+    <div class="node hot"><div class="n">06 / LAUNCH</div><b>放灯</b><p>火箭升空；孔明灯与星屑一起升起。</p><div class="tag">点击“点亮” / 输入愿望</div></div>
+    <div class="node"><div class="n">07 / END</div><b>尾声</b><p>“所有远方，都从脚下出发。”</p><div class="tag">再看一遍 / 展开长卷</div></div>
+  </div>
+
+  <div class="lanes">
+    <div class="lane">
+      <h3>漫游分支 / TRAVEL</h3>
+      <div class="row"><b>SCROLL</b><span>滚轮或上滑 → 前进；下滑 → 回望；进度条同步。</span></div>
+      <div class="row"><b>DRAG</b><span>按住拖动 → 改变视线；松手回正；不改变进度。</span></div>
+      <div class="row"><b>KEYS</b><span>↑ / ↓ / 空格 → 前进后退；Home / End → 首尾。</span></div>
+      <div class="row"><b>JUMP</b><span>点击时间轴章节 → 水墨遮罩 + 1.25s 飞行。</span></div>
+    </div>
+    <div class="lane">
+      <h3>展卷分支 / OVERVIEW</h3>
+      <div class="row"><b>ENTER</b><span>右上角“展卷” → 镜头升空；HUD 隐去。</span></div>
+      <div class="row"><b>ISLAND</b><span>点击任一岛标签 → 飞回该幕；恢复 HUD。</span></div>
+      <div class="row"><b>EXIT</b><span>Esc / “回到路上” → 回到进入前的位置。</span></div>
+      <div class="row"><b>THREAD</b><span>总览中的红线是真实的路：五岛共享同一根曲线。</span></div>
+    </div>
+    <div class="lane">
+      <h3>尾声分支 / FINALE</h3>
+      <div class="row"><b>WISH</b><span>输入 ≤24 字，或使用默认“愿山河无恙，路远必达”。</span></div>
+      <div class="row"><b>SKIP</b><span>“直接看结局” → 跳过升空，进入尾声。</span></div>
+      <div class="row"><b>AGAIN</b><span>“再看一遍” → 回到启程，重置载具与状态。</span></div>
+      <div class="row"><b>SCROLL</b><span>“展开长卷” → 尾声后再次进入总览。</span></div>
+    </div>
+  </div>
+
+  <div class="legend"><span><i class="r"></i>有停留 / 有反馈的关键节点</span><span><i></i>线性推进节点</span><span>状态：landing → travel → pause → overview → finalePrompt → finale → ended</span></div>
+
+  <div class="rhythm">
+    <div class="rh"><b>五幕节奏 / CHAPTER RHYTHM</b><span>滚动进度 · 镜头速度 · 声音床 · 拾光台词</span></div>
+    <div class="beats">
+      <div class="beat"><div class="bh"><span>壹 / 1980s</span><span>0–18%</span></div><b>田埂晨</b><div class="bar" style="--p:6%"></div><span>贴地慢行，村口停一拍；镜头略低，看见车把上的马灯。</span><em>风声 / 鸟鸣 / 木轮</em><i>“路是走出来的。”</i></div>
+      <div class="beat"><div class="bh"><span>贰 / 1990s</span><span>18–38%</span></div><b>街市暮</b><div class="bar" style="--p:37%"></div><span>横移穿过主街，梧桐与招牌从两侧掠过；速度第一次加快。</span><em>市声 / 车铃 / 广播</em><i>“路通向更大的世界。”</i></div>
+      <div class="beat"><div class="bh"><span>叁 / 2010s</span><span>38–58%</span></div><b>城夜雨</b><div class="bar" style="--p:62%"></div><span>升到高架上方，雨夜俯瞰；绿皮车穿城，霓虹在湿地面拉长。</span><em>雨声 / 车流 / 远笛</em><i>“路把远方变成日常。”</i></div>
+      <div class="beat"><div class="bh"><span>肆 / 2020s</span><span>58–76%</span></div><b>山河速</b><div class="bar" style="--p:81%"></div><span>高速前推，斜拉索一根根掠过；从桥面跃到云海之上。</span><em>风噪 / 钢轨节奏</em><i>“路让山河彼此相拥。”</i></div>
+      <div class="beat"><div class="bh"><span>伍 / 未来</span><span>76–100%</span></div><b>星河远</b><div class="bar" style="--p:96%"></div><span>升至发射场上空，火箭点火；镜头停住，把最后一眼留给星河。</span><em>低频 / 脉冲 / 轰鸣</em><i>“路从脚下，通向星辰。”</i></div>
+    </div>
+    <div class="closing"><span>五幕之间没有黑场：只有纸白虚空、一根红线与一次呼吸。</span><b>总时长约 102 秒 · 每幕一个停留点</b></div>
+  </div>
+
+  <footer><span>01 / 02　交互流程图 · 一条连续的线</span><span>山河织路 · 2026 华灿奖 · 数字媒体设计</span><span>全流程原创</span></footer>
+</section>
+
+<section class="page">
+  <header>
+    <div class="brand"><div class="mark">规范</div><div><b>山河织路</b><span>STATE / INPUT / FALLBACK</span></div></div>
+    <div class="meta">2026 新锐设计竞赛 · 华灿奖 / 数字媒体设计<br>交互流程图 · INTERACTION FLOW / 02</div>
+  </header>
+
+  <div class="eyebrow">状态、输入、降级</div>
+  <h1 style="font-size:26pt">状态机与适配规范</h1>
+
+  <div class="grid2">
+    <div>
+      <table>
+        <thead><tr><th style="width:20%">状态</th><th style="width:26%">进入条件</th><th>镜头 / UI</th><th style="width:20%">退出</th></tr></thead>
+        <tbody>
+          <tr><td><b>loading</b></td><td>资源并行加载</td><td>纸白进度页；加载完成后进入 landing。</td><td>全部就绪</td></tr>
+          <tr><td><b>landing</b></td><td>首屏</td><td>乡村岛高空；标题、诗句、启程；HUD 隐藏。</td><td>点击 / 回车</td></tr>
+          <tr><td><b>travel</b></td><td>启程后</td><td>连续相机曲线；章节标题、时间轴、拾光点。</td><td>滚到底 / 展卷</td></tr>
+          <tr><td><b>pause</b></td><td>点击拾光</td><td>当前镜头保持；纸卡从左侧浮出；不暂停声音。</td><td>关闭 / 继续滚动</td></tr>
+          <tr><td><b>overview</b></td><td>点击展卷</td><td>纸白虚空俯视；五岛、红线、标签；HUD 隐藏。</td><td>Esc / 岛 / 回到路上</td></tr>
+          <tr><td><b>finalePrompt</b></td><td>进度 &gt; .996</td><td>终点镜头；纸卡：愿望输入、点亮、直接看结局。</td><td>点亮 / 跳过</td></tr>
+          <tr><td><b>finale</b></td><td>点击点亮</td><td>火箭 7.5s 升空；镜头跟随；9.3s 后自动进入尾声。</td><td>自动 / 跳过</td></tr>
+          <tr><td><b>ended</b></td><td>尾声</td><td>“所有远方，都从脚下出发。”；两个动作。</td><td>再看一遍 / 展卷</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout">
+        <b>关键不变量</b>
+        <p>无论从哪条路径返回，<b>进度、章节与声音</b>必须一致：总览只改变镜头，不改变进度；章节跳转由同一条缓动曲线完成；尾声“展开长卷”回到总览，而不是重置故事。</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="spec">
+        <div><b>输入映射</b>滚轮 / 触摸上滑：前进 · 触摸下滑：回望 · 按住拖动：视线 · 点击拾光：纸卡 · Esc：退出展卷 · ← → / ↑ ↓ / 空格：键盘漫游 · Enter：启程。</div>
+        <div><b>移动端</b>DPR 上限 1.5；关闭泛光、阴影 1024；卡片自适应屏宽；触摸目标 ≥ 44px；横竖屏均可用。</div>
+        <div><b>可及性</b>所有按钮可聚焦；Esc 退出模态；尊重 prefers-reduced-motion：界面过渡与动画减弱，3D 漫游保留；声音默认开启但可一键静音；正文使用系统宋体回退。</div>
+        <div><b>性能预算</b>在线首包约 12MB（5 岛 + 5 载具 + 纹理）；桌面 1080p 60fps 目标；移动端自动降级；加载失败显示纸白错误页并可重试。</div>
+        <div><b>离线</b>单文件 HTML 内嵌全部 GLB / 贴图 / 字体回退；双击打开，无需服务器；WebAudio 在首次点击后启动（浏览器自动播放策略）。</div>
+        <div><b>状态持久化</b>不写入账号或云端；仅保留当前会话的进度、声音开关与愿望文本；“再看一遍”清空会话状态。</div>
+      </div>
+
+      <div class="callout" style="border-color:rgba(168,51,42,.45)">
+        <b>设计取舍</b>
+        <p>不做自由第一人称：观众只需要“向前”，不需要迷路。镜头是编排好的，但速度与停留由观众决定；总览是唯一的“上帝视角”，让五段时间第一次同时出现。</p>
+      </div>
+    </div>
+  </div>
+
+  <footer><span>02 / 02　状态机与适配规范</span><span>版本 1.0 · 2026-10</span><span>山河织路 · 2026</span></footer>
+</section>
+
+</body>
+</html>
