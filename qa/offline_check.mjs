@@ -1,0 +1,18 @@
+import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
+const browser = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+page.on('pageerror', e => console.log('PAGEERR', e.message));
+page.on('console', m => { if (m.type()==='error') console.log('CERR', m.text().slice(0,200)); });
+const url = pathToFileURL('H:/appdata/H/competition/huacan-ds/changlu-dangge/qa/offline_test.html').href;
+await page.goto(url, { waitUntil: 'load' });
+await page.waitForFunction(() => window.__ready, null, { timeout: 120000 });
+console.log('READY offline');
+await page.screenshot({ path: 'qa/offline_landing.png' });
+await page.click('#startBtn');
+await page.waitForTimeout(1200);
+await page.evaluate(() => { window.__changlu.setProgress(0.315); window.__changlu.settle(70); });
+await page.waitForTimeout(500);
+await page.screenshot({ path: 'qa/offline_town.png' });
+console.log('SHOT offline');
+await browser.close();

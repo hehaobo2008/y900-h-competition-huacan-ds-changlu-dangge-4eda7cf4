@@ -1,0 +1,69 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Blender 4.2.9 LTS (hash a10f621e649a built 2025-04-15 03:32:43)
+Info: Total files 1 | Changed 1 | Failed 0
+Info: Saved "city.blend"
+INFO Draco mesh compression is available, use library at D:\Blender\blender-4.2.9-windows-x64\4.2\python\lib\site-packages\extern_draco.dll
+20:24:59 | INFO: Starting glTF 2.0 export
+20:24:59 | WARNING: Mesh CityBase is not valid, and may be exported wrongly
+20:24:59 | INFO: Extracting primitive: CityBase
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CityTerrain
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: Sidewalk
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CitySign
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: NeonBar
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: NeonBar.001
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: GantryPole
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: Water_River
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CityTree_leaf0
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: LampHead
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: ViaDeck
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CarCabin
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: Headlight
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: Taillight
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: SafetyNet
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CommBeacon
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: BusWindow
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: SculptureRing_c
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CityWindows_CityPale
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CityWindows_CityCool
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Extracting primitive: CityWindows_CityDark
+20:24:59 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:24:59 | INFO: Primitives created: 1
+20:24:59 | INFO: Finished glTF 2.0 export in 0.35490894317626953 s
+
+CITY EXPORTED 9997888
+
+Blender quit

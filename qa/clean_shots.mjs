@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const p = await b.newPage({ viewport: { width: 1600, height: 1000 } });
+p.on('pageerror', e=>console.log('ERR',e.message));
+await p.goto('http://127.0.0.1:8124/?capture=1',{waitUntil:'networkidle'}); await p.waitForFunction(()=>window.__ready,null,{timeout:90000});
+await p.waitForTimeout(1200);
+await p.addStyleTag({content:'*{transition:none!important} #loading,#toast{display:none}'});
+await p.evaluate(()=>{__changlu.start();__changlu.freeze();__changlu.setProgress(.5);__changlu.settle(70);__changlu.overview();__changlu.settle(100);document.querySelectorAll('.ov-head,.ov-foot,#hud,#timeline,#chapter,#hotspot').forEach(e=>e.style.display='none');});
+await p.screenshot({path:'qa/overview_clean.png'});
+await p.evaluate(()=>{__changlu.exitOverview();__changlu.setProgress(1);__changlu.settle(80);__changlu.advance(1/24);__changlu.launch();for(let i=0;i<63;i++)__changlu.advance(1/24);});
+await p.screenshot({path:'qa/finale_clean.png'});
+console.log('CLEAN SHOTS');
+await b.close();

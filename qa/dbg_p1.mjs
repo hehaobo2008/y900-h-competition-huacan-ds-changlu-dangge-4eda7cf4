@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const p = await b.newPage({ viewport: { width: 1200, height: 800 } });
+p.on('pageerror', e=>console.log('ERR',e.message));
+await p.goto('http://127.0.0.1:8124/?capture=1',{waitUntil:'networkidle'}); await p.waitForFunction(()=>window.__ready,null,{timeout:90000});
+await p.waitForTimeout(1000);
+await p.addStyleTag({content:'*{transition:none!important} #loading{display:none}'});
+await p.evaluate(()=>{__changlu.start();__changlu.freeze();__changlu.setProgress(1);__changlu.settle(80);__changlu.advance(1/24);});
+console.log(await p.evaluate(()=>__changlu.info()));
+await p.screenshot({path:'qa/dbg_p1.png'});
+await b.close();

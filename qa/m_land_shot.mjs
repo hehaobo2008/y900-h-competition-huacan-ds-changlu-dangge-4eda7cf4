@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({headless:true,executablePath:'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe'});
+const c=await b.newContext({viewport:{width:844,height:390},deviceScaleFactor:2,isMobile:true,hasTouch:true});
+const p=await c.newPage();
+await p.goto('http://127.0.0.1:8124/?land=1&v='+Date.now(),{waitUntil:'networkidle'});
+await p.waitForFunction(()=>window.__ready,null,{timeout:120000});
+await p.waitForTimeout(1500);
+console.log(JSON.stringify(await p.evaluate(()=>{const box=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return{x:+r.x.toFixed(0),y:+r.y.toFixed(0),w:+r.width.toFixed(0),h:+r.height.toFixed(0)}};return{scrollW:document.documentElement.scrollWidth,inner:{x:box('.landing-inner'),title:box('.title'),start:box('#startBtn'),foot:box('.landing-foot')}}})));
+await p.screenshot({path:'qa/m_landscape_landing.png'});
+await b.close();

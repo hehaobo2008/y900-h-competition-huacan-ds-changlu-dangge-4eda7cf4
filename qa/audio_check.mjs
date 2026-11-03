@@ -1,0 +1,31 @@
+import { chromium } from 'playwright';
+
+const b = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const p = await b.newPage({ viewport: { width: 1280, height: 720 } });
+const errs = [];
+p.on('pageerror', (e) => errs.push('PAGEERR ' + e.message));
+p.on('console', (m) => { if (m.type() === 'error') errs.push('CERR ' + m.text().slice(0, 200)); });
+await p.goto('http://127.0.0.1:8124/?audio=1&v=' + Date.now(), { waitUntil: 'networkidle' });
+await p.waitForFunction(() => window.__ready, null, { timeout: 120000 });
+await p.waitForTimeout(1200);
+console.log('before', JSON.stringify(await p.evaluate(() => window.__changlu.soundInfo())));
+await p.click('#startBtn');
+await p.waitForTimeout(1400);
+console.log('afterStart', JSON.stringify(await p.evaluate(() => ({ s: window.__changlu.soundInfo(), m: window.__changlu.state.sound }))));
+await p.evaluate(() => window.__changlu.scrollTo(.98));
+await p.waitForTimeout(1600);
+console.log('future', JSON.stringify(await p.evaluate(() => ({ s: window.__changlu.soundInfo(), ch: window.__changlu.state.chapter }))));
+await p.click('#soundBtn');
+await p.waitForTimeout(500);
+console.log('muted', JSON.stringify(await p.evaluate(() => ({ s: window.__changlu.soundInfo(), m: window.__changlu.state.sound, txt: document.querySelector('#soundTxt').textContent, cls: document.querySelector('#soundBtn').className }))));
+await p.click('#soundBtn');
+await p.waitForTimeout(500);
+console.log('unmuted', JSON.stringify(await p.evaluate(() => ({ s: window.__changlu.soundInfo(), m: window.__changlu.state.sound, txt: document.querySelector('#soundTxt').textContent }))));
+// go to finale and launch, verify launch sound path does not throw
+await p.evaluate(() => window.__changlu.scrollTo(1));
+await p.waitForTimeout(2000);
+await p.click('#launchBtn');
+await p.waitForTimeout(2500);
+console.log('launch', JSON.stringify(await p.evaluate(() => ({ s: window.__changlu.soundInfo(), mode: window.__changlu.state.mode }))));
+console.log('ERRORS', JSON.stringify(errs));
+await b.close();

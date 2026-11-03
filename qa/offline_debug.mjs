@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+import { pathToFileURL } from 'node:url';
+const browser = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const page = await browser.newPage({ viewport: { width: 1000, height: 700 } });
+page.on('pageerror', e => console.log('PAGEERR', e.stack));
+page.on('console', m => console.log('CON', m.type(), m.text().slice(0,300)));
+const url = pathToFileURL('H:/appdata/H/competition/huacan-ds/changlu-dangge/qa/offline_test.html').href;
+await page.goto(url, { waitUntil: 'load' });
+await page.waitForTimeout(8000);
+console.log(await page.evaluate(() => ({ready: !!window.__ready, map: window.__ASSET_MAP ? Object.keys(window.__ASSET_MAP).length : -1, app: !!document.querySelector('canvas'), scripts: document.scripts.length, html: document.body.className, loadTxt: document.querySelector('#loadPct')?.textContent, loadDisplay: getComputedStyle(document.querySelector('#loading')).display })));
+await page.screenshot({ path: 'qa/offline_debug.png' });
+await browser.close();
