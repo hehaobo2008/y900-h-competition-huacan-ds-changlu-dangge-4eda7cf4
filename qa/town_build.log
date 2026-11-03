@@ -1,0 +1,75 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Blender 4.2.9 LTS (hash a10f621e649a built 2025-04-15 03:32:43)
+Info: Total files 1 | Changed 1 | Failed 0
+PREJOIN objects 3662
+PREJOIN 0 2
+PREJOIN 160 5
+PREJOIN 320 7
+PREJOIN 480 8
+PREJOIN 640 9
+PREJOIN 800 21
+PREJOIN 960 32
+PREJOIN 1120 43
+PREJOIN 1280 49
+PREJOIN 1440 54
+PREJOIN 1600 58
+PREJOIN 1760 63
+PREJOIN 1920 70
+PREJOIN 2080 72
+PREJOIN 2240 77
+PREJOIN 2400 80
+PREJOIN 2560 83
+PREJOIN 2720 88
+PREJOIN 2880 91
+PREJOIN 3040 94
+PREJOIN 3200 95
+PREJOIN 3360 96
+PREJOIN 3520 97
+PREJOIN done 97
+TOWN STATS tris=190618 verts=130434 objs=23
+Info: Saved "town.blend"
+INFO Draco mesh compression is available, use library at D:\Blender\blender-4.2.9-windows-x64\4.2\python\lib\site-packages\extern_draco.dll
+21:39:48 | INFO: Starting glTF 2.0 export
+21:39:48 | WARNING: Mesh Base is not valid, and may be exported wrongly
+21:39:48 | INFO: Extracting primitive: Base
+21:39:48 | INFO: Primitives created: 2
+21:39:48 | INFO: Extracting primitive: Road
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | WARNING: Mesh manhole is not valid, and may be exported wrongly
+21:39:48 | INFO: Extracting primitive: manhole
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: Water_Canal
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: quayface
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sw2_op0_bulb
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sw2_dr1_trans
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sw3_w10_g
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sw3_redcloth
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sign_q
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: sign_light
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: fd_lantern_body
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: lifa_w10_g
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Extracting primitive: cin_lobby
+21:39:48 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+21:39:48 | INFO: Primitives created: 1
+21:39:48 | INFO: Finished glTF 2.0 export in 0.8637771606445312 s
+
+TOWN EXPORTED 17729096
+
+Blender quit

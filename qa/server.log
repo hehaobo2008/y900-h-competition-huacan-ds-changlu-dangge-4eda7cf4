@@ -1,0 +1,995 @@
+127.0.0.1 - - [29/Oct/2026 19:17:32] "GET /qa/viewer/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:17:33] "GET /qa/viewer/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:17:33] "GET /qa/viewer/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:17:34] "GET /assets/test_zone.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:17:34] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 19:17:34] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 19:58:02] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=95,58,115&target=-12,4,-5 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:02] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:02] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:02] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 19:58:02] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 19:58:18] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,105&target=-6,3,5&fov=48&fog=120,340 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:18] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:18] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 19:58:18] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 19:58:18] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:01:28] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=95,55,110&target=-12,4,-5&fog=150,420 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:28] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:28] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:28] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:01:28] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:01:30] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,105&target=-6,3,5&fov=48&fog=140,380 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:31] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:31] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:01:31] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:01:31] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:03:19] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,105&target=-6,3,5&fov=48&fog=130,360 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:03:19] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:03:19] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:03:19] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:03:19] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:04:32] "GET /qa/zone/index.html?glb=/assets/vehicles/rickshaw.glb&cam=3.2,2.4,3.8&target=0,1,0&fov=38&fog=1000,2000 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:04:32] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:04:32] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:04:32] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:04:32] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:04:59] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&vscale=1&cam=3,2.6,110&target=1,2,70&fov=42&fog=130,360 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:00] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:00] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:00] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:00] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:05:00] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:05:56] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&fog=130,360&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:57] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:57] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:57] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:57] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:05:57] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:05:57] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:06:35] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&ink=0.85 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:35] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:35] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:35] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:36] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:36] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:06:36] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:06:57] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&ink=0.85 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:58] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:58] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:58] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:58] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:06:58] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:06:58] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:07:13] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,110&target=1,2,70&fov=42&ink=5 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:13] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:13] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:13] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:13] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:07:13] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:07:22] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,110&target=1,2,70&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:23] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:23] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:23] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:23] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:07:23] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:07:43] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,110&target=1,2,70&fov=42&debug=1 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:44] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:44] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:44] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:44] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:07:44] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:07:47] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,110&target=1,2,70&fov=42&debug=3 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:47] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:47] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:47] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:07:47] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:07:47] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:08:15] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=3,2.6,110&target=1,2,70&fov=42&ink=1.4 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:08:15] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:08:15] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:08:15] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:08:15] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:08:15] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:07] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:09:07] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:09:50] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:50] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:09:51] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:09:51] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=3,2.6,110&target=1,2,70&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:01] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:02] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:11:02] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=90,60,120&target=-15,4,-10&fov=40&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:17] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:11:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:11:56] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=90,48,120&target=-15,4,-10&fov=38&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:11:57] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:11:57] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=90,48,120&target=-15,4,-10&fov=38&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:57] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:13:58] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:13:58] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:14:21] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&cam=90,48,120&target=-15,4,-10&fov=38 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:22] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:14:22] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:14:40] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,90&vrot=3.1&cam=90,48,120&target=-15,4,-10&fov=38&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:40] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:14:41] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:14:41] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:16:20] "GET /qa/zone/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:16:25] "GET /qa/zone/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:16:28] "GET /qa/zone/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,7,140&target=0,10,0&fov=45&night=1&ink=0.9 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:25] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:26] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:20:26] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=95,70,165&target=0,10,-20&fov=40&night=1&ink=0.9 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:20:37] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:20:37] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,7,140&target=0,10,0&fov=45&night=1 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:05] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:21:05] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=42,8,-30&target=40,25,-10&fov=45&night=0&post=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:39] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:21:39] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=26,25,42&target=0,28,0&fov=35&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:54] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:55] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:21:55] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,10,35&target=30,28,-15&fov=50&night=0&post=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:56] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:21:56] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,10,35&target=30,28,-15&fov=50&night=1&post=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:21:59] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:21:59] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=52,38,76&target=0,30,0&fov=44&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:08] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:22:08] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:22:39] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,10,35&target=30,28,-15&fov=50&night=0&post=1&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:39] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:40] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:40] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:40] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:40] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:40] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:22:40] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:22:42] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,10,35&target=30,28,-15&fov=50&night=1&post=1&ink=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:22:43] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:22:43] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=56,34,84&target=0,30,0&fov=42&sky=%234e6f88&hz=%23c9dade&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:09] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:23:09] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&cam=0,3.2,100&target=0,6,0&fov=52&night=1&ink=0.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:14] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:23:14] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=44,28,64&target=0,28,0&fov=46&sky=%234e6f88&hz=%23c9dade&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:34] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:23:34] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=22,16,26&target=0,14,0&fov=44&sky=%234e6f88&hz=%23c9dade&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:23:37] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:23:37] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /qa/zone/index.html?glb=/assets/vehicles/green_train.glb&cam=55,22,75&target=0,3,20&fov=34&fog=1000,2000&night=1&ink=0.2 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /assets/vehicles/green_train.glb HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:37] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:25:37] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=55,38,75&target=2,4,-12&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:44] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:25:44] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /qa/zone/index.html?glb=/assets/vehicles/green_train.glb&cam=55,22,75&target=0,3,20&fov=34&fog=1000,2000&night=1&ink=0.2 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /assets/vehicles/green_train.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:25:59] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:25:59] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=0,4,120&target=0,5,0&fov=48&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:36:53] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:36:53] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:37:20] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=100,60,140&target=0,5,0&fov=40&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:20] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:20] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:21] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:21] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:21] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:37:21] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:37:21] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /qa/zone/index.html?glb=/assets/zones/town2.glb&cam=0,4,120&target=0,6,0&fov=46&night=0&ink=0.7 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /assets/zones/town2.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:38:58] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:38:58] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:39:01] "GET /qa/zone/index.html?glb=/assets/zones/town2.glb&cam=80,55,120&target=0,5,10&fov=38&night=0&ink=0.7 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:01] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:01] "GET /assets/zones/town2.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:02] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:02] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:02] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:39:02] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:39:02] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.4,1.9,3.8&target=0,0.9,0&fov=38&fog=1000,2000&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:10] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:40:10] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:40:30] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&cam=120,75,130&target=0,15,0&fov=40&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:30] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:31] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:31] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:31] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:31] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:31] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:40:31] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.4,1.9,3.8&target=0,0.9,0&fov=38&fog=1000,2000&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:40:40] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:40:40] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:41:12] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&vrot=0&cam=140,170,320&target=0,10,-10&fov=38&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:12] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:41:13] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:41:13] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:42:28] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=140,170,320&target=0,10,-10&fov=38&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:28] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:28] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:28] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:29] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:29] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:29] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:29] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:42:29] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /qa/zone/index.html?glb=/assets/zones/rail.glb&cam=90,62,120&target=0,30,0&fov=42&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /assets/zones/rail.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:49] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:42:49] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /qa/zone/index.html?glb=/assets/vehicles/hsr.glb&cam=55,22,85&target=0,3,10&fov=32&fog=1000,2000&night=0&ink=0.5 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /assets/vehicles/hsr.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:42:52] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:42:52] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=70,40,110&target=-5,6,0&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:10] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:43:10] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=2,3.0,76&target=4,4,4&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:13] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:43:13] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /qa/zone/index.html?glb=/assets/zones/rail.glb&cam=100,125,150&target=0,30,-20&fov=42&night=0&ink=0.6 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /assets/zones/rail.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:43:19] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:43:19] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:44:12] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=40,30,60&target=0,30,0&fov=40 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:12] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:12] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:13] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:13] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:13] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:44:13] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:44:13] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:47:21] "GET /qa/zone/index.html?glb=/assets/vehicles/rocket.glb&cam=40,30,60&target=0,30,0&fov=40 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:21] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:22] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:22] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:22] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:22] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:22] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:47:22] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:47:23] "GET /qa/zone/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:49] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=0,4.5,70&target=0,3,-20&fov=48&night=1&ink=.8 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:49] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:50] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:50] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:50] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:50] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:50] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:47:50] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=120,100,150&target=0,0,-10&fov=45&night=1&ink=.8 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:47:53] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:47:53] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=140,170,320&target=0,10,-10&fov=38&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:48:12] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:48:12] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /qa/zone/index.html?glb=C:/Program%20Files/Git/assets/zones/future.glb&cam=120,80,160&target=0,20,0&fov=45 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:49:47] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:49:47] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /qa/zone/index.html?glb=C:/Program%20Files/Git/assets/zones/future.glb&cam=120,80,160&target=0,20,0&fov=45 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:51:23] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:51:23] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&cam=120,80,160&target=0,20,0&fov=45 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:00] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:00] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=155,180,340&target=0,12,-12&fov=38&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:18] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:19] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:19] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7,-80&cam=185,62,95&target=85,30,-55&fov=44&night=1&ink=.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:21] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:22] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:22] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7,-80&cam=95,48,120&target=100,38,-80&fov=48&night=1&ink=.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:25] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:25] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=46,20,-30&target=95,26,-78&fov=42&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:51] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:52] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:52] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:53:54] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=14,9,52&target=-6,26,-6&fov=46&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:54] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:54] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:54] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:55] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:55] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:55] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:53:55] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:53:55] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /qa/zone/index.html?glb=/assets/zones/rail.glb&vehicle=/assets/vehicles/hsr.glb&vpos=2.4,32.95,0&cam=-62,58,58&target=4,34,-50&fov=42&ink=.75 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /assets/zones/rail.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /assets/vehicles/hsr.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:55] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:56] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:55:56] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:55:58] "GET /qa/zone/index.html?glb=/assets/zones/rail.glb&vehicle=/assets/vehicles/hsr.glb&vpos=2.4,32.95,0&cam=0,145,170&target=0,30,-20&fov=40&ink=.75 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:58] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /assets/vehicles/hsr.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /assets/zones/rail.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:55:59] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:55:59] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=14,9,52&target=-6,26,-6&fov=46&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:56:54] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:56:54] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7,-80&cam=165,46,75&target=55,28,-55&fov=46&night=1&ink=.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:39] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:40] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:57:40] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7,-80&cam=150,34,55&target=60,30,-70&fov=46&night=1&ink=.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:43] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:57:43] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7,-80&cam=175,78,160&target=50,30,-55&fov=46&night=1&ink=.35 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:57:47] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:57:47] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=160,185,350&target=0,13,-12&fov=38.5&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:39] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:40] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:59:40] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=40,26,-22&target=96,32,-78&fov=52&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:43] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:59:43] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&cam=8,8,44&target=22,13,-38&fov=48&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 20:59:46] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 20:59:46] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:26] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:27] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:00:27] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=88,30,8&target=100,30,-80&fov=46&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:00:48] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:00:48] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:02:06] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,52&vrot=1.5708&cam=8.5,3.4,70&target=1.5,1.2,54&fov=47&ink=.9 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:06] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:07] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:02:07] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /qa/zone/index.html?glb=/assets/zones/rural.glb&vehicle=/assets/vehicles/rickshaw.glb&vpos=2.2,0.06,52&vrot=-1.5708&cam=-6,3.2,68&target=2,1.2,52&fov=47&ink=.9 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /assets/vehicles/rickshaw.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /assets/zones/rural.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:10] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:02:10] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=86,30,6&target=94,30,-78&fov=46&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:02:42] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:02:42] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:03:06] "GET /qa/zone/index.html?glb=/assets/zones/city.glb&vehicle=/assets/vehicles/green_train.glb&vpos=0,13.72,-5&cam=16,10,-20&target=0,14,-5&fov=60&night=1 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:06] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /assets/vehicles/green_train.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /assets/zones/city.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:07] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:03:07] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:03:26] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:26] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:27] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:27] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:27] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:27] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:27] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:03:27] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:03:29] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=-4.8,2.0,2.4&target=0,0.7,0&fov=40&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:29] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:30] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:30] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:30] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:30] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:30] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:03:30] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=7,1.0,0&target=0,0.8,0&fov=30&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:03:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:00] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:04:00] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:04:02] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=0,8,0.01&target=0,0,0&fov=45&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:02] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:02] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:03] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:03] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:03] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:03] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:04:03] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=80,36,30&target=100,32,-80&fov=50&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:40] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:04:40] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:50] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:04:50] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:04:52] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=-4.8,2.0,2.4&target=0,0.7,0&fov=40&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:52] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:53] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:53] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:53] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:53] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:04:53] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:04:53] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:05:13] "GET /qa/zone_future/index.html?glb=/assets/vehicles/rocket.glb&cam=-58,26,80&target=0,30,0&fov=46&ink=1.0&sunpos=-80,160,120&fognear=330&fogfar=1000&sky=%235d7d9a&hz=%23e4d6be HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:13] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:13] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:14] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:14] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:14] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:14] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:05:14] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=86,30,6&target=96,30,-80&fov=46&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:16] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:17] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:05:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:20] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:21] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:05:21] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:05:58] "GET /qa/zone_future/index.html?glb=/assets/vehicles/rocket.glb&cam=-55,16,72&target=0,30,0&fov=50&ink=1.0&sunpos=-90,170,120&fognear=330&fogfar=1000&sky=%235d7d9a&hz=%23e4d6be HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:58] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:58] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:05:59] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:05:59] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /qa/zone_future/index.html?glb=/assets/vehicles/rocket.glb&cam=-64,26,38&target=0,30,0&fov=48&ink=1.0&sunpos=-90,170,120&fognear=330&fogfar=1000&sky=%233d5b7c&hz=%23d6c5aa HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:31] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:06:31] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /qa/zone_future/index.html?glb=/assets/vehicles/rocket.glb&cam=-70,28,44&target=0,31,0&fov=50&ink=1.0&sunpos=-90,170,120&fognear=330&fogfar=1000&sky=%23334f70&hz=%23b9c2bd HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:57] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:06:57] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:06:59] "GET /qa/zone_future/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=160,185,350&target=0,13,-12&fov=38.5&ink=1.0&sunpos=140,200,240&fognear=330&fogfar=1000&sky=%236384a0&hz=%23e8d9c0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:06:59] "GET /qa/zone_future/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:07:00] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:07:00] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /qa/zone/index.html?glb=/assets/zones/future.glb&vehicle=/assets/vehicles/rocket.glb&vpos=102,7.0,-80&cam=80,36,30&target=100,32,-80&fov=50&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /assets/vehicles/rocket.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /assets/zones/future.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:24] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:08:25] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:08:25] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=2,3.5,-58&target=12,4.5,-70&fov=46&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:09] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:09:09] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=2,3.2,36&target=5,1,14&fov=46&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:12] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:09:12] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:09:15] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=2,3.4,-100&target=15,4,-112&fov=46&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:15] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:15] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:16] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:16] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:16] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:09:16] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:09:16] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:17:35] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:35] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:36] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:36] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:36] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:36] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:36] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:17:36] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=-4.6,1.8,2.8&target=0,0.7,0&fov=40&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:40] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:17:41] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:17:41] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.7,2.2,-4.6&target=0,0.72,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:06] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:07] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:18:07] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:18:24] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.8,1.7,4.3&target=0,0.8,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:25] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:18:25] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:18:27] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=-4.8,1.9,-0.5&target=0,0.75,0&fov=40&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:27] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:28] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:28] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:28] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:28] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:28] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:18:28] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.8,1.7,4.3&target=0,0.8,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:55] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:18:56] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:18:56] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.8,1.7,4.3&target=0,0.8,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:20:12] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:20:12] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:22:31] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=80,44,120&target=-3,4,0&fov=42&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:31] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:32] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:32] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:32] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:32] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:32] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:22:32] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:22:34] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=4,3.0,85&target=4,4.2,-2&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:34] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:35] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:35] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:35] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:35] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:35] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:22:35] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:22:37] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-18,2.8,-4&target=24,0.5,-12&fov=46&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:37] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:37] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:38] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:38] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:38] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:22:38] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:22:38] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.4,2.0,-4.2&target=0,0.7,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:23:42] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:23:42] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:24:16] "GET /qa/zone/index.html?glb=/assets/vehicles/car.glb&cam=3.4,2.0,-4.2&target=0,0.7,0&fov=38&fog=1000,2000&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:16] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:17] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:17] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:17] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:17] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:17] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:24:17] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-34,3.0,3&target=-30,0.5,13&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:39] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:24:39] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-40,3.2,-1&target=-48,2.5,7&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:42] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:24:42] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:24:44] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=2,3.5,-92&target=16,4,-112&fov=46&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:44] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:44] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:45] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:45] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:45] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:24:45] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:24:45] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-34,3.0,3&target=-30,0.5,13&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:29] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:28:29] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-40,3.2,-1&target=-48,2.5,7&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:32] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:28:32] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=4,3.0,85&target=4,4.2,-2&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:28:35] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:28:35] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:32:58] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=95,75,135&target=-2,2,-5&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:58] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:59] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:59] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:59] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:59] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:32:59] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:32:59] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:33:01] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=150,55,150&target=-5,1,0&fov=48&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:01] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:02] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:02] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:02] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:02] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:02] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:33:02] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:33:04] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=35,85,95&target=0,0,-5&fov=45&ink=1.0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:04] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:04] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:05] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:05] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:05] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:33:05] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:33:05] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-6,3.2,-46&target=7,1.5,-36.5&fov=44&ink=1.0&vehicle=/assets/vehicles/car.glb&vpos=4.6,0.02,-36.4&vrot=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:14] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:34:14] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:34:17] "GET /qa/zone/index.html?glb=/assets/zones/town.glb&cam=-1,3.0,-16&target=6,1.6,-37&fov=44&ink=1.0&vehicle=/assets/vehicles/car.glb&vpos=4.6,0.02,-36.4&vrot=0 HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:17] "GET /qa/zone/bundle.js HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:17] "GET /assets/vehicles/car.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:17] "GET /assets/zones/town.glb HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:18] "GET /assets/textures/cloud.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:18] "GET /assets/textures/grain.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:18] "GET /assets/textures/glow.png HTTP/1.1" 200 -
+127.0.0.1 - - [29/Oct/2026 21:34:18] code 404, message File not found
+127.0.0.1 - - [29/Oct/2026 21:34:18] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [29/Oct/2026 21:55:10] "GET / HTTP/1.1" 200 -

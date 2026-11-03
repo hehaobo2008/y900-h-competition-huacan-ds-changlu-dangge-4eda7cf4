@@ -1,0 +1,39 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Blender 4.2.9 LTS (hash a10f621e649a built 2025-04-15 03:32:43)
+Info: Total files 1 | Changed 1 | Failed 0
+Info: Saved "town2.blend"
+INFO Draco mesh compression is available, use library at D:\Blender\blender-4.2.9-windows-x64\4.2\python\lib\site-packages\extern_draco.dll
+20:38:50 | INFO: Starting glTF 2.0 export
+20:38:50 | WARNING: Mesh TownBase is not valid, and may be exported wrongly
+20:38:50 | INFO: Extracting primitive: TownBase
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: TownTerrain
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: Sidewalk
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: Water_Canal
+20:38:50 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: ShopGlass
+20:38:50 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: ShopGlass.001
+20:38:50 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: ShopDoor
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: ShopSign
+20:38:50 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: Neon
+20:38:50 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: Balcony
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Extracting primitive: Rail
+20:38:50 | INFO: Primitives created: 1
+20:38:50 | INFO: Finished glTF 2.0 export in 0.24325990676879883 s
+
+TOWN2 EXPORTED 5313360
+
+Blender quit

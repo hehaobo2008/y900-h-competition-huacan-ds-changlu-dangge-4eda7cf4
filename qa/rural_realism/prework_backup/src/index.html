@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f1e9">
+<meta name="description" content="一条路，把五段中国时间织在一起。走进五座原创微缩景观，在可漫游的立体长卷中，拾起属于时代的日常。">
+<title>山河织路 · 一部可漫游的立体长卷</title>
+<link rel="icon" href="./assets/textures/seal.png">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body data-mode="loading">
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="m12 4-5 4H3v8h4l5 4V4Zm4 4c2 2 2 6 0 8m3-11c4 4 4 10 0 14"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5"/></symbol>
+</defs></svg>
+<div id="app">
+  <div id="world"><canvas id="gl" aria-label="五座时代之岛组成的三维山河长卷"></canvas>
+    <div class="world-top"><span class="live-dot"></span>实时三维长卷<span>SCENE 01 / 05</span></div>
+    <div class="world-caption"><span>壹 · 田埂晨 <i>1980s</i></span><span>一切，从这里开始。</span></div>
+    <div class="world-coordinate" aria-hidden="true">山川为纸，岁月成卷</div>
+  </div>
+  <div id="grain" aria-hidden="true"></div><div id="ink" aria-hidden="true"></div>
+
+  <section id="loading" class="screen" aria-label="正在加载作品">
+    <div class="load-inner"><div class="load-seal">织</div><span class="overline">SHAN HE · A JOURNEY THROUGH TIME</span>
+      <div class="load-brand">正在展开山河<span>请稍候，远方正在抵达。</span></div>
+      <div class="load-line" role="progressbar" aria-label="场景加载进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="loadFill"></i></div>
+      <div class="load-meta"><span id="loadStatus">准备五座时代之岛</span><span id="loadPct">0%</span></div>
+      <p class="load-note">五段时间，一路相逢。</p>
+    </div>
+  </section>
+  <section id="errorScreen" class="screen hidden" role="alert" inert>
+    <div class="load-inner"><div class="load-seal">路</div><span class="overline">旅程暂未展开</span><h2>山河，还在等你。</h2><p>场景未能加载。请检查网络，并使用支持 WebGL 的浏览器重试。</p><button id="retryBtn" class="solid-btn" type="button">重新展开 <svg><use href="#i-arrow"/></svg></button></div>
+  </section>
+
+  <section id="landing" class="screen hidden" inert aria-labelledby="workTitle">
+    <header class="landing-header"><a class="wordmark" href="./" aria-label="山河织路首页"><span class="small-seal">山<br>河</span><span>山河织路<small>SHAN HE · ZHI LU</small></span></a>
+      <nav aria-label="作品导航"><span class="nav-current">作品 · 2026</span><button id="landingOverviewBtn" type="button">五幕长卷 <svg><use href="#i-grid"/></svg></button><button id="landingInfoBtn" type="button">关于作品 <svg><use href="#i-info"/></svg></button></nav>
+    </header>
+    <div class="landing-inner"><div class="eyebrow"><span class="eyebrow-line"></span>一部可漫游的立体长卷</div>
+      <div class="title-row"><h1 id="workTitle" class="title">山河<br><span>织路</span></h1><span class="vertical-note">以路为线 · 以时代为卷</span></div>
+      <p class="subtitle">一条路，织起五段中国时间。</p>
+      <p class="poem">从田埂的第一缕晨光，到星河的下一次启程。<br>循着一根红线，拾起我们共同走过的日常。</p>
+      <div class="landing-cta"><button id="startBtn" class="solid-btn" type="button">走进长卷 <svg><use href="#i-arrow"/></svg></button><button id="landingSoundBtn" class="landing-sound" type="button" aria-pressed="false"><svg><use href="#i-sound"/></svg><span>开启声音</span></button></div>
+      <div class="gesture-hint"><span class="mouse-glyph"></span>滚动前行 · 停下拾光 · 随时回望</div>
+    </div>
+    <div class="chapter-gallery" aria-label="选择一幕开始漫游">
+      <button data-entry="0" type="button"><span class="gallery-number">01 <i>1980s</i></span><span class="gallery-title">田埂晨 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc">一盏马灯，照亮出发的路</span></button>
+      <button data-entry="1" type="button"><span class="gallery-number">02 <i>1990s</i></span><span class="gallery-title">街市暮 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc">街巷烟火，驶向更大的世界</span></button>
+      <button data-entry="2" type="button"><span class="gallery-number">03 <i>2010s</i></span><span class="gallery-title">城夜雨 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc">万家灯火，远方成为日常</span></button>
+      <button data-entry="3" type="button"><span class="gallery-number">04 <i>2020s</i></span><span class="gallery-title">山河速 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc">一桥飞架，山河从此相拥</span></button>
+      <button data-entry="4" type="button"><span class="gallery-number">05 <i>未来</i></span><span class="gallery-title">星河远 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc">回望来路，再向星辰出发</span></button>
+    </div>
+    <footer class="landing-foot"><span>东方微缩景观 × 交互叙事</span><span><i class="live-dot"></i> 原创数字媒体作品 <b>融 · 合</b></span></footer>
+  </section>
+
+  <header id="hud" class="hidden" inert>
+    <button id="homeBtn" class="brand" type="button" aria-label="回到作品封面"><span class="small-seal">山<br>河</span><span class="brand-copy"><span class="brand-mark">山河织路</span><span class="brand-sub">A JOURNEY THROUGH TIME</span></span></button>
+    <nav class="hud-actions" aria-label="漫游工具">
+      <button id="autoBtn" type="button" aria-label="开始自动漫游" aria-pressed="false"><svg><use href="#i-play"/></svg><span id="autoTxt">自动漫游</span></button>
+      <button id="overviewBtn" type="button" aria-label="展开长卷"><svg><use href="#i-grid"/></svg><span>展卷</span></button>
+      <button id="soundBtn" type="button" aria-label="开启声音" aria-pressed="false" class="muted"><svg><use href="#i-sound"/></svg><span id="soundTxt">声音关</span></button>
+      <button id="fullscreenBtn" type="button" aria-label="进入全屏"><svg><use href="#i-expand"/></svg><span>全屏</span></button>
+      <button id="infoBtn" type="button" aria-label="作品与操作说明" aria-expanded="false"><svg><use href="#i-info"/></svg><span>说明</span></button>
+    </nav>
+  </header>
+
+  <div id="chapter" aria-live="polite"><div class="ch-num"><span id="chNum">壹</span><i></i></div><div class="ch-body"><div class="ch-year" id="chYear">1980s</div><h2 class="ch-title" id="chTitle">田埂晨</h2><p class="ch-line" id="chLine">路是走出来的。</p></div></div>
+  <div id="travelMeta" class="travel-meta hidden" inert><span id="journeyPct">00%</span><span class="meta-rule"></span><span id="collectedTxt">拾光 0 / 5</span><button id="memoryBtn" type="button">拾起这一幕 <svg><use href="#i-arrow"/></svg></button></div>
+  <button id="hotspot" class="hotspot" type="button" aria-label="拾起这一幕的时代记忆" inert><span class="hs-ring"></span><span class="hs-core"></span><span class="hs-label">拾光 <small>停一停，听听时代的声音</small></span></button>
+
+  <aside id="card" class="card" role="dialog" aria-modal="true" aria-labelledby="cardTitle" inert><button id="cardClose" class="card-close" type="button" aria-label="关闭拾光卡"><svg><use href="#i-close"/></svg></button><div class="card-seal">拾光</div><div class="card-eyebrow" id="cardEyebrow">1980s · 村口</div><h3 id="cardTitle">车把上的马灯</h3><p id="cardBody">天没亮，路先醒了。</p><div class="card-foot"><span id="cardIndex">01 / 05</span><span id="cardCollected">已拾起 · 留住这一刻</span></div></aside>
+
+  <nav id="timeline" class="timeline hidden" aria-label="时代章节" inert><div class="tl-line"><i id="tlFill"></i></div><div class="tl-marks">
+    <button data-ch="0" type="button" aria-label="第一幕 田埂晨 1980年代"><span class="tl-dot"></span><b>壹</b><em>田埂晨</em><small>1980s</small></button>
+    <button data-ch="1" type="button" aria-label="第二幕 街市暮 1990年代"><span class="tl-dot"></span><b>贰</b><em>街市暮</em><small>1990s</small></button>
+    <button data-ch="2" type="button" aria-label="第三幕 城夜雨 2010年代"><span class="tl-dot"></span><b>叁</b><em>城夜雨</em><small>2010s</small></button>
+    <button data-ch="3" type="button" aria-label="第四幕 山河速 2020年代"><span class="tl-dot"></span><b>肆</b><em>山河速</em><small>2020s</small></button>
+    <button data-ch="4" type="button" aria-label="第五幕 星河远 未来"><span class="tl-dot"></span><b>伍</b><em>星河远</em><small>未来</small></button>
+  </div></nav>
+  <div id="scrollHint" class="scroll-hint"><span></span>滚动向前，走进下一段时间</div>
+
+  <section id="overview" class="overview hidden" inert aria-label="五幕长卷总览"><div class="ov-head"><div class="ov-kicker">一根红线 · 五座时代之岛</div><h2 class="ov-title">把山河，<br>织在一起。</h2><p>从脚下的田埂，到头顶的星河。<br>每一次出发，都与另一个时代相逢。</p></div><div id="ovLabels" class="ov-labels"></div><div class="ov-foot"><button id="ovBack" type="button">回到路上 <svg><use href="#i-arrow"/></svg></button><span>选择一座岛，走进那段时间</span></div></section>
+
+  <aside id="info" class="info" role="dialog" aria-modal="true" aria-labelledby="infoTitle" inert><button id="infoClose" class="card-close" type="button" aria-label="关闭作品说明"><svg><use href="#i-close"/></svg></button><div class="info-eyebrow">关于作品 / VIEWING GUIDE</div><h3 id="infoTitle">山川为纸，<br>岁月成卷。</h3><p class="info-intro">把“路”看作一根针线，缝合乡土与城市、旧日与未来。在五座微缩景观里，重新遇见发展背后那些细小而温暖的日常。</p><div class="info-grid"><div><b>01 · 自由前行</b><span>滚轮、上下滑动或方向键控制进退；左右拖动回望。</span></div><div><b>02 · 慢慢看</b><span>开启自动漫游，沿镜头缓缓前行；手动操作即可暂停。</span></div><div><b>03 · 拾起记忆</b><span>点击场景中的拾光点，或“拾起这一幕”，收集五段日常。</span></div><div><b>04 · 展开山河</b><span>从总览跳转任意时代，在终点写下愿望，点亮星河。</span></div></div><p class="info-note">键盘 ↑ ↓ / 空格：前进与回望 · M：声音 · Esc：返回<br>声音由程序实时合成。拾光进度与声音偏好保存在本机。</p><div class="info-foot">2026 · 融 / 合 · 原创数字媒体设计</div></aside>
+
+  <aside id="finale" class="finale" role="dialog" aria-modal="true" aria-labelledby="finaleTitle" inert><div class="finale-seal">未来</div><div class="finale-kicker">终点站 · 星河港</div><h3 id="finaleTitle">把下一程，<br>写给星河。</h3><p>写下一句话，让它随灯火一起升空。</p><label class="sr-only" for="wishInput">写给未来的话，最多 24 个字</label><div class="wish-row"><input id="wishInput" type="text" maxlength="24" value="愿山河无恙，路远必达" autocomplete="off"><button id="launchBtn" type="button">点亮 <span>↗</span></button></div><div class="wish-presets" aria-label="选择一句愿望"><button type="button" data-wish="愿山河无恙，路远必达">山河无恙</button><button type="button" data-wish="愿每一次出发，都有归途">出发有归途</button><button type="button" data-wish="愿心之所向，皆有路可往">心之所向</button></div><button id="skipFinale" class="text-btn" type="button">直接看尾声</button></aside>
+
+  <section id="endCard" class="endcard" aria-live="polite" inert><div class="end-inner"><div class="end-kicker">山河织路 · 尾声</div><div class="end-seal">山河</div><h2>所有远方，<br>都从脚下出发。</h2><p id="endWish">愿山河无恙，路远必达。</p><p id="endCollection" class="end-collection">五段时间，一路相逢。</p><div class="end-actions"><button id="againBtn" type="button">再走一程 <svg><use href="#i-arrow"/></svg></button><button id="endOverviewBtn" type="button">展开长卷 <svg><use href="#i-grid"/></svg></button></div><div class="end-sign">SHAN HE · A JOURNEY THROUGH TIME</div></div></section>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+<noscript><div class="noscript">请开启 JavaScript，以展开这轴实时三维长卷。</div></noscript>
+<script src="./app.js"></script>
+</body>
+</html>

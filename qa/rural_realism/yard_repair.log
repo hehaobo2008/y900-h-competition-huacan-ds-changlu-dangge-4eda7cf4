@@ -1,0 +1,132 @@
+TBBmalloc: skip allocation functions replacement in ucrtbase.dll: unknown prologue for function _msize
+Add-on not loaded: "addon", cause: No module named 'addon'
+Info: No new files have been packed
+Info: Saved "rural.blend"
+REPAIRED_YARD_SOURCE
+INFO Draco mesh compression is available, use library at D:\Blender\blender-4.2.9-windows-x64\4.2\python\lib\site-packages\extern_draco.dll
+23:51:06 | INFO: Starting glTF 2.0 export
+23:51:06 | WARNING: Mesh Base is not valid, and may be exported wrongly
+23:51:06 | INFO: Extracting primitive: Base
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Terrain
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Bund
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Rice
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.001
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.002
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.003
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.004
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.005
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.006
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.007
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.008
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Water_Paddy.009
+23:51:06 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:06 | INFO: Primitives created: 1
+23:51:06 | INFO: Extracting primitive: Road_sculpted_tracks
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Wheel_track_overlay
+23:51:07 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Stone_0_0
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: GateEave_tiled_shell
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: GateSign
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: GateLantern
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: LanternCap
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: ShopWall_facade
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: ShopWin
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: ShopDoor
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: HWin_paper
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: WellWater
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Pond
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace.001
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace.002
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace.003
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace.004
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Terrace.005
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: MountainBack
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.001
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.002
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.003
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.004
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.005
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Extracting primitive: Water_Puddle.006
+23:51:07 | WARNING: The active Vertex Color will not be exported, as it is not used in the node tree of the material
+23:51:07 | INFO: Primitives created: 1
+23:51:07 | INFO: Finished glTF 2.0 export in 1.2994968891143799 s
+
+EXPORTED_EDITABLE_SOURCE H:\appdata\H\competition\huacan-ds\changlu-dangge\assets\zones\rural.glb 28996288
+Blender 4.2.9 LTS (hash a10f621e649a built 2025-04-15 03:32:43)
+Read blend: "H:\appdata\H\competition\huacan-ds\changlu-dangge\assets\zones\rural.blend"
+
+Blender quit

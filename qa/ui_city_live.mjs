@@ -1,0 +1,13 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({headless:true,executablePath:'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe'});
+const p=await b.newPage({viewport:{width:1600,height:900}});
+await p.goto('http://127.0.0.1:8124/?live=1&v='+Date.now(),{waitUntil:'networkidle'});
+await p.waitForFunction(()=>window.__ready,null,{timeout:120000});
+await p.waitForTimeout(1200);
+await p.click('#startBtn');
+await p.waitForTimeout(1500);
+await p.evaluate(()=>window.__changlu.scrollTo(.545));
+await p.waitForTimeout(4000);
+console.log(JSON.stringify(await p.evaluate(()=>({dark:document.body.className,ch:window.__changlu.state.chapter,void:window.__changlu.state.voidMix}))));
+await p.screenshot({path:'qa/ui3_city_live.png'});
+await b.close();
