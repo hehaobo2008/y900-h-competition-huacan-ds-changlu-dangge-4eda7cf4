@@ -1,0 +1,32 @@
+[
+  {
+    "file": "cr400af-coach-mobile-v4.glb",
+    "source": "assets/runtime/trains/cr400af-coach-mobile-v4.glb",
+    "sha256": "c53ce7c885bcea4411c642fca556277d7bdd1fc55d20ee8ec5cb1fa43c6d8bb5"
+  },
+  {
+    "file": "cr400af-mobile-v4.glb",
+    "source": "assets/runtime/trains/cr400af-mobile-v4.glb",
+    "sha256": "337e08287d1ddb4ea551cad0f10b2684424198f7b41f8155f1dca183d96ca11a"
+  },
+  {
+    "file": "crh-coach-mobile-v4.glb",
+    "source": "assets/runtime/trains/crh-coach-mobile-v4.glb",
+    "sha256": "2600787efbad44051ce377a1f51d808a414b78e9a76227efcc2eca47146e957b"
+  },
+  {
+    "file": "crh-mobile-v4.glb",
+    "source": "assets/runtime/trains/crh-mobile-v4.glb",
+    "sha256": "03b0927359f7693c266743751298d1fe02d892de7e4b1eddf7b45efd31e1488c"
+  },
+  {
+    "file": "green-mobile.glb",
+    "source": "assets/runtime/trains/green-mobile.glb",
+    "sha256": "634b2dfc5f4238788fc8e27561e1ab9b727713b17659b6b3dc07a82574c2f271"
+  },
+  {
+    "file": "manifest.json",
+    "source": "assets/runtime/trains/manifest.json",
+    "sha256": "4147ac1536d1b26d41d44f52b3946bce1de58502240b00a0721d3aeb561f31f2"
+  }
+]

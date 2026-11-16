@@ -11,6 +11,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import bpy
 import build_rural as R
 import blib as B
+import rural_craft as craft
+from mathutils import Vector
+from era_fixtures import village_sign
+from model_craft import Batch
+import random
 from rural_materials import pbr, project_uv
 
 ROOT = Path(B.ROOT)
@@ -28,12 +33,14 @@ for material, color in [(R.glass, "#746d59"), (R.paper, "#c9bfa4"), (R.lantern, 
     bsdf.inputs["Base Color"].default_value = (*B.srgb(color), 1)
 
 old_box, old_roof, old_road = B.box, B.tile_roof, B.road_ribbon
-old_rice, old_tufts = B.rice_field, B.tufts_mesh
+old_tufts = B.tufts_mesh
 old_terrain = B.terrain
 old_tree = B.tree
 old_house = R.house
 old_join, old_save = B.join_materials, B.save_blend
 old_ground_h = R.ground_h
+leaf_sprays = craft.cutout("Branch_foliage","leaf_spray.png")
+grain_heads = craft.cutout("Harvest_panicles","rice_panicles.png")
 
 def ground_h(x, y):
     # A real depression below the water, blended into the surrounding terrain.
@@ -41,7 +48,14 @@ def ground_h(x, y):
     radius = math.sqrt(((x-48)/25)**2 + ((y-38)/16)**2)
     t = max(0,min(1,(radius-.86)/.28))
     t = t*t*(3-2*t)
-    return -.28*(1-t)+base*t
+    shore=-.28*(1-t)+base*t
+    if 2<y<29:
+        channel=48+1.6*math.sin((y-17)*.14)
+        width=min(1,(y-2)/8)*2.65
+        if width>.01:
+            blend=max(0,min(1,(abs(x-channel)-width)/1.7))
+            shore=min(shore,-.39+(base+.39)*blend*blend*(3-2*blend))
+    return shore
 R.ground_h = ground_h
 
 def wall_piece(name, size, pos):
@@ -131,6 +145,33 @@ def roof(name, cx, cy, z, width, depth, ridge_h=2.2, eave_h=.2,
             v = ob.data.vertices[ob.data.loops[li].vertex_index].co
             uv.data[li].uv = (v.y/1.0, v.x/1.0)
     obs[0] = ob
+    # Fill the two open gables down to the wall plate. The rake boards,
+    # purlins and rafter tails follow the tiled surface at both ends.
+    framing=Batch()
+    if name in ("HRoof","ShopRoof"):
+        for end in (-1,1):
+            gy=cy+end*(depth/2-.68)
+            vs,fs=[],[]
+            for j in range(29):
+                xx=(width/2-.82)*(2*j/28-1)
+                top=z+eave_h+ridge_h*(1-abs(xx)/(width/2))**1.35-.045
+                vs.extend([(cx+xx,gy,z-.10),(cx+xx,gy,top)])
+                if j: fs.append((2*j-2,2*j,2*j+1,2*j-1))
+            gable=B._finish(name+"_lime_gable",vs,fs,"#ffffff",plaster)
+            project_uv(gable,scale=1.1)
+            obs.append(gable)
+            for j in range(0,28,2):
+                framing.rod(vs[j*2+1],vs[(j+2)*2+1],.060,"#70573c",7)
+            for k in range(-3,4):
+                xx=k*(width-.9)/8
+                zz=z+eave_h+ridge_h*(1-abs(xx)/(width/2))**1.35-.085
+                framing.rod((cx+xx,gy,zz),(cx+xx,cy+end*(depth/2+.05),zz),.073,"#725b42")
+    for side in (-1,1):
+        for j in range(max(4,int(depth/.30))):
+            yy=cy-depth/2+.14+j*.30
+            framing.rod((cx+side*(width/2-.72),yy,z+eave_h+.09),
+                        (cx+side*(width/2-.04),yy,z+eave_h-.06),.045,"#805f3f",7)
+    obs.append(framing.object(name+"_roof_carpentry",R.matte))
     return obs
 B.tile_roof = roof
 
@@ -150,8 +191,41 @@ def tree(name, base, *args, **kwargs):
         for obj in result:
             bpy.data.objects.remove(obj, do_unlink=True)
         return []
+    for i,obj in enumerate(result):
+        if "_leaf" not in obj.name:
+            continue
+        bounds=[obj.matrix_world @ Vector(v) for v in obj.bound_box]
+        low = [min(p[k] for p in bounds) for k in range(3)]
+        high = [max(p[k] for p in bounds) for k in range(3)]
+        center = [(a+b)/2 for a,b in zip(low,high)]
+        radii = [max(.2,(b-a)/2) for a,b in zip(low,high)]
+        result[i]=craft.canopy(center,radii,int(base[0]*81+base[1]*18)+i,leaf_sprays)
+        bpy.data.objects.remove(obj,do_unlink=True)
     return result
 B.tree = tree
+
+def hillside_pine(x,y,h=4,color="#405b41"):
+    z=R.ground_h(x,y)
+    limbs=Batch()
+    limbs.rod((x,y,z),(x+.11,y,z+h*.97),h*.036,"#645541",7,.026)
+    foliage=[]
+    for j in range(4):
+        a=j*2.40+x*.14+y*.08
+        r=h*(.21-.036*j)
+        px=x+math.cos(a)*r*.47
+        py=y+math.sin(a)*r*.47
+        pz=z+h*(.43+.14*j)
+        limbs.rod((x,y,pz-h*.14),(px,py,pz),h*.021,"#6a5a46",6,.018)
+        foliage.append(craft.canopy((px,py,pz),(r*1.16,r*.94,r*.84),int(x*71+y*37)+j,leaf_sprays))
+    R.add([limbs.object("Ridge pine branches",R.matte),*foliage])
+R.conifer=hillside_pine
+
+old_sphere=B.sphere
+def sphere(name,radius=1.0,loc=(0,0,0),scale=(1,1,1),**kwargs):
+    if name in ("BanyanLeaf","Shrub"):
+        return craft.canopy(loc,[radius*s for s in scale],int(loc[0]*108+loc[2]*33),leaf_sprays)
+    return old_sphere(name,radius,loc,scale,**kwargs)
+B.sphere=sphere
 
 def house(x, y, rot, w, d, h, style="white", two=False, yard=False):
     old_house(x,y,rot,w,d,h,style,two,yard)
@@ -252,6 +326,24 @@ def road(name, pts, width, color="#5b554c", material=None, z=.02, crown=.04, seg
             v = ob.data.vertices[ob.data.loops[li].vertex_index].co
             uv.data[li].uv = (v.x/2, v.y/2)
     overlays = []
+    verge=Batch()
+    rng=random.Random(108)
+    for i in range(5000):
+        y=rng.uniform(-144,144)
+        side=rng.choice((-1,1))
+        half=2.65+.16*math.sin(y*.043)+.08*math.sin(y*.12)
+        x=R.road_x(y)+side*(half+rng.uniform(-.34,1.06))
+        zz=R.ground_h(x,y)+.048
+        if rng.random()<.24:
+            rr=rng.uniform(.025,.115)
+            verge.rod((x,y,zz-.02),(x+.01,y,zz+rr*.42),rr,rng.choice(["#8e805e","#9d8f70","#877656"]),5,rr*.53)
+        else:
+            for k in range(4):
+                dx,dy=rng.uniform(-.12,.12),rng.uniform(-.12,.12)
+                h=rng.uniform(.09,.30)
+                verge.panel([(x-.015,y,zz),(x+.015,y+.012,zz),
+                             (x+dx,y+dy,zz+h)],rng.choice(["#868555","#84865c","#a69d66","#737d4c"]))
+    overlays.append(verge.object("Irregular earth and stubble at road edge",R.rough))
     for side in (-1,1):
         vs, fs = [], []
         for i in range(length_steps+1):
@@ -281,11 +373,22 @@ def road(name, pts, width, color="#5b554c", material=None, z=.02, crown=.04, seg
     return [ob, *overlays]
 B.road_ribbon = road
 
-def rice(*args, **kwargs):
-    # Late-autumn harvest: mature rice beside cut / drying grain.
-    kwargs["colors"] = ("#a49151", "#b9a967")
-    return old_rice(*args, **kwargs)
-B.rice_field = rice
+B.rice_field = craft.grain_plot
+
+def crop_bands(x,y,w,d,rot,colors,height,rows):
+    obj=craft.grain_plot("Harvest rows",0,0,.055,w,d,height=.57,rng=R.rng)
+    B.apply_xform([obj],(x,y,R.ground_h(x,y)),rot)
+    R.add(obj)
+R.crop_bands=crop_bands
+
+old_shop=R.village_shop
+def shop(x,y,rot):
+    old_shop(x,y,rot)
+    R.add(craft.sorting_table(-3.0,-46.1,R.ground_h(-3,-46.1)))
+    R.add(village_sign())
+    for fx,fy,w,d,a in [(12,-61,11,19,.09),(22,-65,7,16,.10),(-13,-72,11,14,-.12),(16,-11,13,18,.05)]:
+        crop_bands(fx,fy,w,d,a,(),.65,0)
+R.village_shop=shop
 
 def tufts(name, pts, height=.5, color="#6e864b", material=None, rng=None):
     if name != "RoadGrass":
@@ -333,6 +436,36 @@ def pond():
     bank = B._finish("Pond_natural_bank",verts,faces,"#ffffff",dirt,smooth=True)
     project_uv(bank,scale=2)
     R.add(bank)
+    irrigation=[]
+    for j in range(30):
+        yy=3+j*.70
+        x=48+1.6*math.sin((yy-17)*.14)
+        width=min(1,(yy-2)/8)*2.87
+        irrigation.extend([(x-width,yy,.066),(x+width,yy,.066)])
+    channel=B._finish("Water_Field_Inlet",irrigation,[(i,i+1,i+3,i+2) for i in range(0,len(irrigation)-2,2)],"#38776d",R.water)
+    R.add_water(channel)
+    # A small double-ended punt with individual plank courses, breast hook and seats.
+    punt=Batch()
+    x,y=39.0,26.4
+    stations=[(-2.45,.075,.42),(-1.75,.61,.36),(-.65,.86,.31),(.65,.85,.32),(1.73,.58,.37),(2.45,.06,.46)]
+    for side in (-1,1):
+        for a,b in zip(stations,stations[1:]):
+            for j,c in enumerate(("#574535","#7e6044","#996e45")):
+                def point(row,f):
+                    dx,w,gunwale=row
+                    return (x+dx,y+side*w*(.61+.39*f),.03+(gunwale-.03)*f)
+                punt.panel([point(a,j/3),point(b,j/3),point(b,(j+1)/3),point(a,(j+1)/3)],c)
+            punt.rod(point(a,1),point(b,1),.043,"#ac8254")
+    for a,b in zip(stations,stations[1:]):
+        punt.panel([(x+a[0],y-a[1]*.65,.116),(x+b[0],y-b[1]*.65,.116),(x+b[0],y+b[1]*.65,.116),(x+a[0],y+a[1]*.65,.116)],"#61523d")
+    for dx,ww in ((-1.20,1.28),(.32,1.58),(1.41,1.12)): punt.box((x+dx,y,.29),(.26,ww,.10),"#a98453")
+    punt.rod((x-1.80,y-.35,.30),(x+1.84,y+.35,.54),.041,"#aa8756")
+    for j in range(7):
+        punt.box((x-2.4,22.8+j*.30,.24),(1.4,.28,.12),("#91734f","#a28157","#7d664b")[j%3])
+    for dx in (-.55,.55):
+        for yy in (22.7,24.6): punt.rod((x-2.4+dx,yy,-.36),(x-2.4+dx,yy,.46),.074,"#77644a")
+    punt.pipe([(x-2.38,y,.41),(x-2.57,y-.8,.21),(x-2.96,24.6,.42)],.027,"#97845c",6)
+    R.add(punt.object("Moored rice-field punt and landing",R.matte))
     # Reeds cluster on the sheltered shore; open water remains visible.
     rng = R.rng
     for i in range(85):

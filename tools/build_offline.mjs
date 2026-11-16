@@ -13,12 +13,13 @@ const css0 = fs.readFileSync(path.join(root, 'src/style.css'), 'utf8');
 const html0 = fs.readFileSync(path.join(root, 'src/index.html'), 'utf8');
 
 const files = [
+  ...['earth.jpg','clouds.jpg'].map(f=>`assets/earth/${f}`),
   ...['rural','town','city','rail','future'].map(f => `assets/zones/${f}.glb`),
-  ...['rickshaw','car','green_train','hsr','rocket'].map(f => `assets/vehicles/${f}.glb`),
-  ...['grass_bermuda_01','weed_plant_02','rural_broadleaf'].map(f => `assets/vegetation/${f}.glb`),
+  ...['rickshaw','car','green_train','hsr','harmony','rocket','future_metro'].map(f => `assets/vehicles/${f}.glb`),
+  ...fs.readdirSync(path.join(root,'assets','painted')).map(f => `assets/painted/${f}`),
   ...['cloud.png','glow.png','star.png','smoke.png','shadow.png','grain.png','ink.png','seal.png'].map(f => `assets/textures/${f}`),
 ];
-const mime = (p) => p.endsWith('.glb') ? 'model/gltf-binary' : p.endsWith('.png') ? 'image/png' : p.endsWith('.jpg') ? 'image/jpeg' : 'application/octet-stream';
+const mime = (p) => p.endsWith('.woff') ? 'font/woff' : p.endsWith('.glb') ? 'model/gltf-binary' : p.endsWith('.png') ? 'image/png' : p.endsWith('.webp') ? 'image/webp' : p.endsWith('.jpg') ? 'image/jpeg' : 'application/octet-stream';
 const map = {};
 for (const rel of files) {
   const buf = fs.readFileSync(path.join(root, rel));
@@ -29,7 +30,10 @@ const dataCSS = (p) => {
   return `data:${mime(rel)};base64,${fs.readFileSync(path.join(root, rel)).toString('base64')}`;
 };
 let css = css0.replace(/url\(['"]?((?:\.\/|\/)assets\/[^)'"]+)['"]?\)/g, (_, p) => `url('${dataCSS(p)}')`);
+const fontNotices=['mashanzheng','zcoolqingkehuangyou'].map(family=>
+  fs.readFileSync(path.join(root,'assets','sources','lettering',family+'-OFL.txt'),'utf8')).join('\n\n');
 let html = html0
+  .replace('</head>',()=>'<script type="text/plain" id="font-licenses">'+fontNotices+'</script>\n<script type="text/plain" id="earth-credits">'+['CLOUDS-CREDIT.txt','EARTH-CREDIT.txt'].map(f=>fs.readFileSync(path.join(root,'assets','earth',f),'utf8')).join('\n\n')+'</script>\n</head>')
   .replace(/<link rel="icon" href="[^"]+">/, `<link rel="icon" href="${map['/assets/textures/seal.png']}">`)
   .replace(/<link rel="stylesheet" href="\.\/style\.css">/, `<style>\n${css}\n</style>`)
   .replace(/src="\/assets\/textures\/seal\.png"/g, `src="${map['/assets/textures/seal.png']}"`);

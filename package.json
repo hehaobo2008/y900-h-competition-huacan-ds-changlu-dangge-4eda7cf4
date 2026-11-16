@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node tools/build.mjs",
     "build:web": "node tools/build_h5.mjs",
+    "prepare:web-bundle": "node tools/prepare_cloudflare.mjs",
     "test": "node tools/verify.mjs",
     "serve": "python -m http.server 8137 --bind 127.0.0.1 --directory dist",
     "shot": "node tools/shot.mjs"

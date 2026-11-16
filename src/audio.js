@@ -337,11 +337,21 @@ export class Soundscape {
     };
   }
 
-  sfx(kind) {
+  sfx(kind, delay = 0) {
     if (!this.ctx || !this.on) return;
-    const ctx = this.ctx, t = ctx.currentTime;
+    const ctx = this.ctx, t = ctx.currentTime + delay;
     const out = ctx.createGain(); out.gain.value = 0.9; out.connect(this.master);
-    if (kind === 'click') {
+    if (kind === 'knock') {
+      const tap = ctx.createOscillator(), gain = ctx.createGain();
+      tap.type = 'triangle';
+      tap.frequency.setValueAtTime(410, t);
+      tap.frequency.exponentialRampToValueAtTime(128, t + .075);
+      gain.gain.setValueAtTime(.0001, t);
+      gain.gain.exponentialRampToValueAtTime(.23, t + .004);
+      gain.gain.exponentialRampToValueAtTime(.0001, t + .115);
+      tap.connect(gain); gain.connect(out); tap.start(t); tap.stop(t + .13);
+      tap.onended = () => { tap.disconnect(); gain.disconnect(); out.disconnect(); };
+    } else if (kind === 'click') {
       const o = ctx.createOscillator(), g = ctx.createGain();
       o.type = 'sine'; o.frequency.value = 690;
       g.gain.setValueAtTime(0.035, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);

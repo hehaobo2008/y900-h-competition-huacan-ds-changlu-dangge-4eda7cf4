@@ -246,13 +246,8 @@ def gate(cx, cy, rot):
     roof = B.tile_roof("GateRoof", 0, 0, 5.38, 4.6, 12.6, 1.95, 0.16, "#6d6960", matte, curl=0.5, nx=16, ny=34)
     B.apply_xform(roof, (0, 0, 0), math.pi / 2)
     objs.extend(roof)
-    objs.append(B.box("GatePlaque", (4.9, .18, 1.55), (0, -.32, 4.4), color="#3b2b20", material=matte))
-    objs.append(B.sign_quad("GateSign", "cun", (0, -0.32, 4.45), 0, 4.3, 1.4, signs))
-    for sx in (-1, 1):
-        objs.append(B.sphere("GateLantern", 0.5, (sx * 3.1, 0, 3.9), scale=(0.8, 0.8, 1.2),
-                             color="#b83a2c", material=lantern, segments=12, rings=8))
-        objs.append(B.cylinder("LanternCap", .16, .12, (sx * 3.1, 0, 4.55), segments=8,
-                               color="#c9a35a", material=metal))
+    from scene_lettering import porch_braces
+    objs.extend(B.apply_xform(porch_braces(),(0,0,4.7)))
     B.apply_xform(objs, (cx, cy, z), rot)
     add(objs)
 
@@ -362,25 +357,32 @@ def cone(name, r, depth, loc, rot=(0, 0, 0), color="#ffffff", material=None, seg
 
 
 def bridge(cx, cy, rot, span=8.0, width=2.0, rise=1.0):
-    objs = []
-    n = 10
-    for i in range(n):
-        t0, t1 = i / n, (i + 1) / n
-        x0 = -span/2 + span * t0
-        x1 = -span/2 + span * t1
-        z0 = rise * math.sin(math.pi * t0)
-        z1 = rise * math.sin(math.pi * t1)
-        L = math.hypot(x1 - x0, z1 - z0)
-        objs.append(B.box("BridgeDeck", (L + .05, width, .22), ((x0+x1)/2, 0, (z0+z1)/2),
-                          rot=(0, math.atan2(z1-z0, x1-x0), 0), color="#918874", material=stone, bevel=0.02))
-        for s in (-1, 1):
-            objs.append(B.box("BridgeRail", (L + .05, .12, .55), ((x0+x1)/2, s * (width/2 - .05), (z0+z1)/2 + .35),
-                              rot=(0, math.atan2(z1-z0, x1-x0), 0), color="#7f7767", material=stone, bevel=0.02))
-    for s in (-1, 1):
-        objs.append(B.box("BridgePier", (1.2, width + .8, 1.2), (s * span/2, 0, -0.55),
-                          color="#817967", material=stone, bevel=0.03))
-    B.apply_xform(objs, (cx, cy, 0.1), rot)
-    add(objs)
+    from model_craft import Batch
+    masonry=Batch()
+    masonry_colors=("#a39682","#938979","#b3a48d","#9f9380","#b6aa91")
+    # Wedge stones run through the barrel. The open arch reveals the irrigation channel.
+    for i in range(15):
+        angles=[math.pi*i/15+.004,math.pi*(i+1)/15-.004]
+        points=[]
+        for yy in (-width/2,width/2):
+            for rad,up,t in ((.69,0,angles[0]),(.69,0,angles[1]),(1,.17,angles[1]),(1,.17,angles[0])):
+                points.append((span*.5*math.cos(t)*rad,yy,.02+(rise*.88+up)*math.sin(t)))
+        masonry.part(points,[(0,1,2,3),(7,6,5,4),(0,4,5,1),(1,5,6,2),(2,6,7,3),(3,7,4,0)],masonry_colors[i%5])
+    for i in range(18):
+        x=-span/2+(i+.5)*span/18
+        foot=rise*math.sqrt(max(0,1-(x/(span/2))**2))
+        masonry.box((x,0,foot+.08),(span/18+.015,width+.10,.18),masonry_colors[(i+2)%5])
+        for side in (-1,1):
+            masonry.box((x,side*(width/2-.015),foot+.27),(span/18+.015,.19,.35),masonry_colors[i%5])
+    for x0 in (-span*.48,-span*.25,0,span*.25,span*.48):
+        height=rise*math.sqrt(max(0,1-(x0/(span/2))**2))
+        for side in (-1,1):
+            yy=side*(width/2-.015)
+            masonry.box((x0,yy,height+.53),(.24,.24,.70),"#a49681")
+            masonry.box((x0,yy,height+.89),(.29,.29,.075),"#b8aa94")
+    ob=masonry.object("Field bridge stone barrel and coping",stone)
+    B.apply_xform([ob],(cx,cy,.05),rot)
+    add(ob)
 
 
 def well(x, y):
@@ -456,6 +458,7 @@ def bike(x, y, rot=0):
     objs.append(B.tube("BikeFrame", [(-.58, 0, .36), (-.1, 0, .78), (.3, 0, .82), (.58, 0, .36)], .03,
                        "#3f5e58", metal, segments=4))
     objs.append(B.tube("BikeFrame2", [(-.1, 0, .78), (-.05, 0, .36), (.3, 0, .82)], .028, "#3f5e58", metal, segments=4))
+    objs.append(B.beam("Bicycle stand", (-.28, 0, .36), (-.43, .18, .006), .022,.022, "#64635a", metal))
     objs.append(B.box("BikeSeat", (.3, .12, .06), (-.12, 0, .9), color="#3d2b20", material=matte))
     objs.append(B.tube("BikeBar", [(.5, -.22, .92), (.5, .22, .92)], .018, "#8a8579", metal, segments=4))
     B.apply_xform(objs, (x, y, z), rot)
@@ -505,21 +508,19 @@ def mountain_band(name, axis, a0, a1, amp, seed):
     heights = []
     prng = random.Random(seed * 991 + 7)
     peaks = []
-    for k in range(9):
-        center = -170 + 340 * (k + 0.5) / 9 + prng.uniform(-15, 15)
-        width = prng.uniform(22, 55)
-        hh = prng.uniform(.35, 1.0)
-        peaks.append((center, width, hh))
+    for k in range(7):
+        center = -165 + 330*(k+.45)/7 + prng.uniform(-9,9)
+        peaks.append((center, prng.uniform(20,38), prng.uniform(.30,.97)))
     for iy in range(ny + 1):
         for ix in range(nx + 1):
             x, y, along, t = at(ix, iy)
-            prof = math.sin(math.pi * max(0.0, min(1.0, t))) ** 0.5
-            env = 0.06
-            for (center, width, hh) in peaks:
-                env += hh * math.exp(-((along - center) / width) ** 2)
-            env = min(1.12, env)
-            env *= 0.88 + 0.22 * fbm(along * 0.09, seed * 1.7, seed, 2)
-            h = prof * amp * max(0.12, env)
+            ridge = .57 + .15*math.sin(along*.031+seed)
+            flank = t/ridge if t < ridge else (1-t)/(1-ridge)
+            profile = math.sin(math.pi*.5*max(0,flank))**1.65
+            env = max(hh*math.exp(-((along-center)/width)**2) for center,width,hh in peaks)
+            saddle = 1-.74*math.exp(-((along-36)/28)**2)
+            folds = .87+.13*math.sin(along*.105+t*4)+.10*fbm(along*.08,t*4,seed,2)
+            h = amp*profile*(.05+env)*saddle*folds
             verts.append((x, y, max(0.0, h)))
             heights.append(h)
     for iy in range(ny):
@@ -531,10 +532,10 @@ def mountain_band(name, axis, a0, a1, amp, seed):
             faces.append((a, b, c, d))
             h = (heights[a] + heights[b] + heights[c] + heights[d]) / 4
             t = max(0.0, min(1.0, h / max(amp, .01)))
-            col = B.mix(C["hill"], B.srgb("#737764"), t * 0.85)
-            col = B.mix(C["dark"], col, min(1.0, 0.48 + t * 0.65))
-            fc.append(tuple(max(0, min(1, q * (0.9 + 0.18 * rng.random()))) for q in col))
-    ob = B._finish(name, verts, faces, None, B.vmat("Mountain", 0.97), smooth=False, face_colors=fc)
+            col = B.mix(B.srgb("#718f70"), B.srgb("#a4b397"), t * .72)
+            col = B.mix(B.srgb("#56765d"), col, .59 + .21*math.sin(ix*.13+iy*.24))
+            fc.append(tuple(max(0, min(1, q * (0.97 + 0.06 * rng.random()))) for q in col))
+    ob = B._finish(name, verts, faces, None, B.vmat("Mountain", 0.97), smooth=True, face_colors=fc)
     add(ob)
 
 
@@ -671,7 +672,7 @@ def village_shop(x, y, rot):
     objs.append(B.box("ShopAwning", (8.2, 2.3, .12), (0, -3.5, 2.72), rot=(.16, 0, 0), color="#8b3a2f", material=matte))
     for sx in (-3.6, 0, 3.6):
         objs.append(B.box("AwningPost", (.1, .1, 2.5), (sx, -4.4, 1.25), color="#5a4632", material=matte))
-    objs.append(B.sign_quad("ShopSign", "gongxiaoshe", (0, -2.62, 3.15), 0, 4.6, 1.45, signs))
+    # The street-facing fascia and its dimensional lettering are fitted over this eave in the interactive set.
     for s in (-1, 1):
         objs.append(B.box("ShopBench", (3.0, .5, .15), (-4.3, s * 1.5, .5), color="#6b563e", material=matte))
         objs.append(B.box("ShopBenchLeg", (.14, .42, .48), (-5.5, s * 1.5, .25), color="#5a4935", material=matte))
@@ -680,18 +681,17 @@ def village_shop(x, y, rot):
         objs.append(B.sphere("Sack", .32, (3.4 + (i % 2) * .5, -3.2 + (i // 2) * .5, .35),
                              scale=(1, .75, 1.1), color="#b8a578", material=rough, segments=8, rings=5))
     objs.append(B.box("NoticeBoard", (1.7, .1, 1.4), (-3.9, -3.1, 1.9), color="#6f5a40", material=matte))
-    for i in range(3):
-        objs.append(B.quad("Poster", [(-4.6 + i * .45, -3.17, 1.3), (-4.35 + i * .45, -3.17, 1.3),
-                                      (-4.35 + i * .45, -3.17, 2.4), (-4.6 + i * .45, -3.17, 2.4)],
-                           ["#c7b26e", "#a9c1b2", "#c79074"][i], matte))
+    from scene_lettering import grain_notice
+    objs.extend(B.apply_xform(grain_notice(),(-3.9,-3.1,1.9)))
     B.apply_xform(objs, (x, y, z), rot)
     add(objs)
 
 
 def main():
     # island base + terrain
-    add(B.ground_slab("Base", 320, 300, 9, colors=("#6f5b42", "#7e674a", "#8a7658", "#5a4a39")))
-    add(B.terrain("Terrain", 320, 300, 96, 88, ground_h, ground_color, matte, z0=0.0, smooth=True))
+    add(B.ground_slab("Base", 320, 300, 9, colors=("#6f5b42", "#7e674a", "#8a7658", "#5a4a39"),cap=False))
+    add(B.terrain("Terrain", 320, 300, 170, 156, ground_h, ground_color, matte, z0=0.0, smooth=True,
+                  section=("#726c58","#89816a","#948d70","#878a6c","#83906e")))
 
     # entry paddies
     for i, (x, y, w, d, rot) in enumerate([
@@ -770,7 +770,7 @@ def main():
     corn_string(-19.2, 1.0, 4.2)
     corn_string(-18.0, 1.1, 4.2)
     bike(-11, 14, 0.4)
-    bike(5, -40, -0.2)
+    bike(-8.1, -38.4, 0.08)
     # threshing ground
     add(B.quad("Thresh", [(-40, -19, 0.08), (-24, -19, 0.08), (-24, -8, 0.08), (-40, -8, 0.08)], "#a29472", rough))
     for i in range(4):
@@ -782,7 +782,7 @@ def main():
 
     # pond and bridge
     pond()
-    bridge(48, 17, 0.02, 9, 2.2, 1.0)
+    bridge(48, 17, .03, 9, 2.2, 1.12)
     # reeds along a stream edge
     for i in range(30):
         x, y = 68 + rng.uniform(-2, 2), 50 + rng.uniform(-10, 10)

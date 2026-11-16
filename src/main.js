@@ -1,12 +1,24 @@
-// 《山河织路》 — interactive 3D scroll. All geometry/audio original to this project.
+import { route, crossings, routeIndex, crossingAt, hermite, travelTime, progressAtTime, travelLength, glide, arrivalCurve, sampleArrival } from './journey.js';
+import { railway } from './rail_traffic.js';
+import { futureMetro } from './future_metro.js';
+import { letters, endingText } from './letters.js';
+import { createTicketView } from './tickets.js';
+import { createOpeningLights } from './opening.js';
+import { fillHomeTickets } from './homecoming.js';
+import { createEarthEnding, DURATION as EARTH_END } from './earth/ending.js';
+// 《山河织路》 — interactive 3D scroll. Five connected miniature landscapes.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { Soundscape } from './audio.js';
-import { ASSET } from './assets.js';
+import {loadAssetURL} from './asset_transport.js';
+import {AssetTextureLoader,waitForAssetTextures} from './asset_loaders.js';
 import { makePaperPipeline } from './paper.js';
 import { applyWater } from './water.js';
-import { addRuralVegetation } from './rural_vegetation.js';
+import { loadPaintings, PaintedSky, illustrate } from './illustration.js';
+import { stageLandscapes } from './painted_scenes.js';
+import { prepareWoodland } from './woodland.js';
+import { studioSky, rainOnAvenue, villagePond, passingRain, finishMasonry, paintSurfaces } from './surface.js';
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
@@ -21,135 +33,66 @@ const lowQuality = isMobile && !q.get('high');
 const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
 let reducedMotion = motionQuery.matches;
 motionQuery.addEventListener('change', e => { reducedMotion = e.matches; });
-const ENTRY = [.1, .315, .545, .79, .95];
+const ENTRY = [.1, .315, .545, .79, .937];
 let preferences = {};
-try { preferences = JSON.parse(localStorage.getItem('shanhe.preferences') || '{}') || {}; } catch {}
+try {
+  const current = localStorage.getItem('shanhe.knocks');
+  if (current) preferences = JSON.parse(current) || {};
+  else preferences.sound = JSON.parse(localStorage.getItem('shanhe.preferences') || '{}')?.sound === true;
+} catch {}
 if (typeof preferences !== 'object') preferences = {};
 function savePreferences() {
-  try { localStorage.setItem('shanhe.preferences', JSON.stringify({ sound: state.sound, memories: [...state.collected] })); } catch {}
+  try { localStorage.setItem('shanhe.knocks', JSON.stringify({ sound: state.sound, memories: [...state.collected] })); } catch {}
 }
 
 const SPACING = 420;
 const ZONES = [
-  { id: 'rural', label: '田埂晨', num: '壹', year: '1980s', line: '路是走出来的。', center: 0, file: 'rural.glb', start: 0.045, end: 0.215 },
-  { id: 'town', label: '街市暮', num: '贰', year: '1990s', line: '路通向更大的世界。', center: -420, file: 'town.glb', start: 0.25, end: 0.43 },
-  { id: 'city', label: '城夜雨', num: '叁', year: '2010s', line: '路把远方变成日常。', center: -840, file: 'city.glb', start: 0.47, end: 0.65 },
-  { id: 'rail', label: '山河速', num: '肆', year: '2020s', line: '路让山河彼此相拥。', center: -1260, file: 'rail.glb', start: 0.69, end: 0.86 },
-  { id: 'future', label: '星河远', num: '伍', year: '未来', line: '路从脚下，通向星辰。', center: -1680, file: 'future.glb', start: 0.90, end: 1.0 },
+  { id: 'rural', label: '田埂晨', num: '壹', year: '1980s', center: 0, file: 'rural.glb', start: 0.045, end: 0.215 },
+  { id: 'town', label: '街市暮', num: '贰', year: '1990s', center: -420, file: 'town.glb', start: 0.25, end: 0.43 },
+  { id: 'city', label: '城夜雨', num: '叁', year: '2010s', center: -840, file: 'city.glb', start: 0.47, end: 0.65 },
+  { id: 'rail', label: '山河速', num: '肆', year: '2020s', center: -1260, file: 'rail.glb', start: 0.69, end: 0.86 },
+  { id: 'future', label: '星河远', num: '伍', year: '未来', center: -1680, file: 'future.glb', start: 0.90, end: 1.0 },
 ];
 
 const PALETTES = [
-  { name: 'rural', top: '#84a6ab', bot: '#f6e2c2', sun: '#ffd39a', fog: '#dfcfb2', fogNear: 135, fogFar: 760,
-    sunDir: [-0.55, 0.16, -0.6], sunInt: 3.0, hemi: 1.05, fill: .55, fillColor: '#cfe0e8', exp: 1.15,
-    ink: .07, bloom: .05, stars: 0, clouds: .6, waterDeep: '#3f5f45', waterShallow: '#8ba06a' },
-  { name: 'town', top: '#536782', bot: '#f0b27a', sun: '#ffb066', fog: '#d9ad8a', fogNear: 80, fogFar: 520,
-    sunDir: [-0.6, 0.12, -0.55], sunInt: 2.4, hemi: 1.0, fill: .4, fillColor: '#ffd2b0', exp: 1.12,
-    ink: .54, bloom: .3, stars: .0, clouds: .4, waterDeep: '#345a58', waterShallow: '#82a08c' },
-  { name: 'city', top: '#030712', bot: '#14243c', sun: '#a9c6ff', fog: '#0a1422', fogNear: 60, fogFar: 430,
-    sunDir: [-0.35, 0.55, -0.3], sunInt: .7, hemi: .55, fill: .24, fillColor: '#ff7a9a', exp: 1.02,
-    ink: .34, bloom: .62, stars: .55, clouds: .12, waterDeep: '#102a36', waterShallow: '#2b6470' },
-  { name: 'rail', top: '#7595bd', bot: '#ffd2a1', sun: '#ffc98a', fog: '#dcd2c2', fogNear: 180, fogFar: 900,
-    sunDir: [-0.62, 0.12, -0.5], sunInt: 2.7, hemi: 1.2, fill: .45, fillColor: '#d7e6ef', exp: 1.2,
-    ink: .52, bloom: .28, stars: 0, clouds: .55, waterDeep: '#3c6a70', waterShallow: '#8fb6b1' },
-  { name: 'future', top: '#02050d', bot: '#0b2a38', sun: '#b8d7ff', fog: '#0b1a24', fogNear: 140, fogFar: 760,
-    sunDir: [-0.3, 0.5, -0.3], sunInt: 1.0, hemi: .82, fill: .46, fillColor: '#39e0c8', exp: 1.14,
-    ink: .4, bloom: .52, stars: .9, clouds: .08, waterDeep: '#0b3038', waterShallow: '#2a7a70' },
+  { name:'rural', top:'#4da7ae', bot:'#d4e8ca', sun:'#ffddad', fog:'#a8c6ae', fogNear:52, fogFar:310,
+    sunDir:[.78,.54,.32], sunInt:2.45, hemi:.85, fill:.38, fillColor:'#d4e3de', exp:1.08,
+    ink:.61, bloom:.09, stars:0, clouds:.40, waterDeep:'#2e766f', waterShallow:'#8dc4a0' },
+  { name:'town', top:'#e0a599', bot:'#ffcf9e', sun:'#ffd094', fog:'#e1b4a0', fogNear:58, fogFar:285,
+    sunDir:[-.65,.50,.63], sunInt:2.35, hemi:.90, fill:.48, fillColor:'#c5d9e0', exp:1.07,
+    ink:.59, bloom:.12, stars:0, clouds:.46, waterDeep:'#345a58', waterShallow:'#82a08c' },
+  { name:'city', top:'#354e85', bot:'#6175a2', sun:'#b6d9f4', fog:'#394d79', fogNear:55, fogFar:370,
+    sunDir:[-.54,.69,.46], sunInt:1.44, hemi:.57, fill:.49, fillColor:'#dba888', exp:1.04,
+    ink:.52, bloom:.16, stars:0, clouds:.24, waterDeep:'#102a36', waterShallow:'#2b6470' },
+  { name:'rail', top:'#4aa9ad', bot:'#e5dbb0', sun:'#ffddaf', fog:'#a4c5ad', fogNear:83, fogFar:495,
+    sunDir:[-.74,.43,.43], sunInt:2.15, hemi:.95, fill:.38, fillColor:'#d1e4ed', exp:1.11,
+    ink:.57, bloom:.10, stars:0, clouds:.52, waterDeep:'#1c7778', waterShallow:'#89c9ad' },
+  { name:'future', top:'#31485f', bot:'#809699', sun:'#e5d7bd', fog:'#567176', fogNear:60, fogFar:390,
+    sunDir:[.52,.58,.63], sunInt:1.72, hemi:.65, fill:.43, fillColor:'#a9c5be', exp:1.04,
+    ink:.51, bloom:.12, stars:.65, clouds:.08, waterDeep:'#2f565d', waterShallow:'#749d96' },
 ];
-const VOID_PAL = { name: 'void', top: '#f3ecdf', bot: '#e7dcc6', sun: '#ffd9a0', fog: '#efe6d5', fogNear: 500, fogFar: 2600,
-  sunDir: [-0.45, .45, -0.42], sunInt: 2.15, hemi: 1.25, fill: .6, fillColor: '#fff6e5', exp: 1.14,
-  ink: .4, bloom: .16, stars: 0, clouds: 0, waterDeep: '#4e6a5a', waterShallow: '#9ab09c' };
 const OVERVIEW_PAL = { name: 'overview', top: '#f3ecdf', bot: '#e7dcc6', sun: '#ffd9a0', fog: '#ece2cf', fogNear: 760, fogFar: 4200,
   sunDir: [-0.45, .5, -0.42], sunInt: 2.45, hemi: 1.55, fill: .7, fillColor: '#fff6e5', exp: 1.2,
   ink: .72, bloom: .2, stars: 0, clouds: 0, waterDeep: '#4e6a5a', waterShallow: '#9ab09c' };
 
-const CHAPTER_TITLES = ZONES.map(z => ({ num: z.num, year: z.year, title: z.label, line: z.line }));
-
-// Camera keys: p (progress), pos [x,y,z], look [x,y,z], fov
-const KEYS = [
-  { p: 0.000, pos: [78, 44, 208], look: [-54, 5, 42], fov: 40 },
-  { p: 0.018, pos: [58, 38, 180], look: [-34, 5, 50], fov: 42 },
-  { p: 0.040, pos: [35, 44, 185], look: [-4, 5, 40], fov: 44 },
-  { p: 0.065, pos: [18, 24, 135], look: [-5, 5, 20], fov: 46 },
-  { p: 0.085, pos: [10, 13, 110], look: [-1, 4, 58], fov: 46 },
-  { p: 0.100, pos: [6.2, 2.9, 64.5], look: [2.0, 1.15, 52.5], fov: 46 },
-  { p: 0.118, pos: [1.2, 3.4, 38], look: [-5, 3, 2], fov: 48 },
-  { p: 0.140, pos: [0, 3.8, 22], look: [-6, 4, -20], fov: 48 },
-  { p: 0.165, pos: [0, 4.2, 0], look: [-6, 5, -58], fov: 48 },
-  { p: 0.190, pos: [0, 7, -52], look: [-7, 5, -115], fov: 46 },
-  { p: 0.208, pos: [0, 22, -100], look: [0, 3, -175], fov: 44 },
-  { p: 0.230, pos: [0, 95, -175], look: [0, 0, -260], fov: 42 },
-  { p: 0.245, pos: [0, 78, -244], look: [0, 3, -330], fov: 42 },
-  { p: 0.265, pos: [3, 44, -282], look: [1, 4, -360], fov: 43 },
-  { p: 0.285, pos: [4, 20, -322], look: [2, 4, -395], fov: 45 },
-  { p: 0.300, pos: [5, 8.5, -360], look: [3, 4, -425], fov: 47 },
-  { p: 0.315, pos: [1.6, 4.2, -436], look: [5.0, 1.55, -456.4], fov: 50 },
-  { p: 0.335, pos: [0.0, 5.2, -445], look: [-1, 4, -505], fov: 48 },
-  { p: 0.355, pos: [-1.0, 5.0, -478], look: [-3.6, 4.0, -540], fov: 47 },
-  { p: 0.380, pos: [-3.4, 6.0, -508], look: [-3.5, 4.0, -568], fov: 46 },
-  { p: 0.405, pos: [-1.0, 18, -548], look: [-3.5, 4, -605], fov: 44 },
-  { p: 0.425, pos: [0, 52, -585], look: [0, 2, -655], fov: 42 },
-  { p: 0.450, pos: [0, 100, -640], look: [0, 0, -720], fov: 42 },
-  { p: 0.470, pos: [0, 70, -690], look: [0, 6, -780], fov: 43 },
-  { p: 0.495, pos: [34, 58, -720], look: [0, 18, -810], fov: 44 },
-  { p: 0.520, pos: [0, 26, -750], look: [0, 16, -830], fov: 45 },
-  { p: 0.545, pos: [0, 18, -812], look: [0, 15, -848], fov: 52 },
-  { p: 0.560, pos: [0, 8.5, -790], look: [0, 11, -852], fov: 47 },
-  { p: 0.575, pos: [0, 6.5, -810], look: [0, 10, -870], fov: 47 },
-  { p: 0.595, pos: [0, 6.2, -838], look: [0, 13, -890], fov: 48 },
-  { p: 0.615, pos: [0, 14, -878], look: [0, 8, -940], fov: 46 },
-  { p: 0.640, pos: [0, 46, -940], look: [0, 5, -1010], fov: 43 },
-  { p: 0.660, pos: [0, 88, -980], look: [0, 0, -1060], fov: 42 },
-  { p: 0.680, pos: [0, 100, -1040], look: [0, 4, -1120], fov: 42 },
-  { p: 0.700, pos: [0, 112, -1080], look: [0, 20, -1160], fov: 42 },
-  { p: 0.725, pos: [8, 96, -1110], look: [0, 34, -1230], fov: 43 },
-  { p: 0.750, pos: [16, 72, -1150], look: [0, 36, -1270], fov: 44 },
-  { p: 0.775, pos: [-55, 64, -1160], look: [2, 36, -1280], fov: 43 },
-  { p: 0.790, pos: [-62, 58, -1202], look: [4, 34, -1310], fov: 42 },
-  { p: 0.810, pos: [-50, 54, -1250], look: [4, 34, -1345], fov: 43 },
-  { p: 0.830, pos: [-30, 66, -1305], look: [0, 30, -1390], fov: 44 },
-  { p: 0.850, pos: [0, 92, -1370], look: [0, 14, -1450], fov: 43 },
-  { p: 0.865, pos: [0, 104, -1420], look: [0, 4, -1510], fov: 42 },
-  { p: 0.882, pos: [0, 110, -1470], look: [0, 10, -1550], fov: 42 },
-  { p: 0.900, pos: [0, 116, -1505], look: [20, 20, -1620], fov: 43 },
-  { p: 0.925, pos: [175, 78, -1520], look: [50, 30, -1735], fov: 46 },
-  { p: 0.950, pos: [195, 62, -1580], look: [55, 30, -1735], fov: 47 },
-  { p: 0.975, pos: [120, 32, -1670], look: [100, 38, -1756], fov: 47 },
-  { p: 1.000, pos: [104, 30, -1700], look: [102, 36, -1760], fov: 46 },
-];
-
 const OVERVIEW_POSE = { pos: [900, 700, 600], look: [0, 0, -820], fov: 42 };
 const OVERVIEW_POSE_PORTRAIT = { pos: [-341, 3192, -57], look: [0, 20, -900], fov: 48 };
 function overviewPose() { return innerWidth / innerHeight < .85 ? OVERVIEW_POSE_PORTRAIT : OVERVIEW_POSE; }
-
 // ---------------------------------------------------------------- UI helpers
-const el = {
-  loading: $('#loading'), loadFill: $('#loadFill'), loadPct: $('#loadPct'),
-  landing: $('#landing'), startBtn: $('#startBtn'), hud: $('#hud'),
-  chapter: $('#chapter'), chNum: $('#chNum'), chYear: $('#chYear'), chTitle: $('#chTitle'), chLine: $('#chLine'),
-  hotspot: $('#hotspot'), card: $('#card'), cardClose: $('#cardClose'), cardEyebrow: $('#cardEyebrow'),
-  cardTitle: $('#cardTitle'), cardBody: $('#cardBody'), cardIndex: $('#cardIndex'),
-  tlFill: $('#tlFill'), timeline: $('#timeline'), scrollHint: $('#scrollHint'),
-  overviewBtn: $('#overviewBtn'), soundBtn: $('#soundBtn'), soundTxt: $('#soundTxt'), infoBtn: $('#infoBtn'),
-  info: $('#info'), infoClose: $('#infoClose'), overview: $('#overview'), ovLabels: $('#ovLabels'), ovBack: $('#ovBack'),
-  ink: $('#ink'), finale: $('#finale'), wishInput: $('#wishInput'), launchBtn: $('#launchBtn'), skipFinale: $('#skipFinale'),
-  endCard: $('#endCard'), endWish: $('#endWish'), againBtn: $('#againBtn'), endOverviewBtn: $('#endOverviewBtn'),
-  toast: $('#toast'),
-  world: $('#world'), autoBtn: $('#autoBtn'), autoTxt: $('#autoTxt'), homeBtn: $('#homeBtn'),
-  walkBtn: $('#walkBtn'), walkHelp: $('#walkHelp'), walkControls: $('#walkControls'),
-  travelMeta: $('#travelMeta'), journeyPct: $('#journeyPct'), collectedTxt: $('#collectedTxt'), memoryBtn: $('#memoryBtn'),
-  landingSoundBtn: $('#landingSoundBtn'), endCollection: $('#endCollection'),
-};
+const el=Object.fromEntries(['loading','loadFill','loadPct','landing','startBtn','hud','chapter','chNum','chYear','chTitle','chLine','chSetting','mailFrom','mailAction','letterPages','prevLetter','nextLetter','launchSignal','cardTitle','cardBody','cardIndex','keepLetter','cardClose','tlFill','timeline','scrollHint','overviewBtn','soundBtn','soundTxt','infoBtn','info','infoClose','overview','ovLabels','ovBack','ink','wishInput','launchBtn','skipFinale','endCard','endWish','againBtn','endOverviewBtn','toast','world','autoBtn','autoTxt','homeBtn','travelMeta','journeyPct','collectedTxt','memoryBtn','landingSoundBtn','replyQuote','endSource','endQuote','endReply','endRecipient'].map(id=>[id,$('#'+id)]));
+el.card=$('#ticketLayer');
 
 const state = {
-  mode: 'loading', // loading landing travel overview finalePrompt finale ended
+  mode: 'loading', // loading landing prologue approach travel overview finale ended
   progress: 0, target: 0, chapter: -1, chapterShown: false,
   jumping: null, started: false, finaleShown: false, ended: false,
   voidMix: 1, time: 0, mouse: new THREE.Vector2(), look: new THREE.Vector2(),
-  wish: '愿山河无恙，路远必达', sound: preferences.sound === true, ready: false, frozen: false,
-  auto: false, modal: null,
+  keptLetter: null, delivered: 0, reading: 0, replyDraft: '', wish: '', sound: preferences.sound === true, ready: false, frozen: false,
+  auto: false, modal: null, autoPages:true, presented:new Set(), watchingFor:-1, watchingTime:0, arrival:null, storyStop:null, routeVelocity:0, glideSpeed:0, metreSpeed:0, braking:null, pendingLaunch:null, introTime:0, approach:null,
   collected: new Set((Array.isArray(preferences.memories) ? preferences.memories : []).filter(i => Number.isInteger(i) && i >= 0 && i < 5)),
 };
 
+let earthEnding=null;
 let previousMode = null;
 function hidden(node, value) {
   if (node.classList.contains('hidden') !== value) node.classList.toggle('hidden', value);
@@ -161,34 +104,37 @@ function syncUIState(force = false) {
   previousMode = state.mode;
   document.body.dataset.mode = state.mode;
   hidden(el.landing, state.mode !== 'landing');
-  hidden(el.hud, !['travel', 'finalePrompt'].includes(state.mode));
+  $('#prologue').hidden = $('#prologue').inert = state.mode !== 'prologue';
+  document.body.classList.toggle('ticket-reading',state.modal===el.card);
+  hidden(el.hud, !['travel'].includes(state.mode));
   hidden(el.timeline, state.mode !== 'travel');
   hidden(el.travelMeta, state.mode !== 'travel');
   hidden(el.overview, state.mode !== 'overview');
   el.endCard.classList.toggle('show', state.mode === 'ended');
   el.endCard.inert = state.mode !== 'ended' || !!state.modal;
-  el.hotspot.inert = !el.hotspot.classList.contains('show') || !!state.modal;
   if (wasLanding !== (state.mode === 'landing')) resizeViewport();
 }
 let panelReturnFocus = null;
-function closePanels(restoreFocus = true) {
-  const wasOpen = state.modal;
-  for (const panel of [el.card, el.info, el.finale]) { panel.classList.remove('show'); panel.inert = true; }
-  state.modal = null;
-  el.infoBtn.setAttribute('aria-expanded', 'false');
-  syncUIState(true);
-  if (restoreFocus && wasOpen && panelReturnFocus?.isConnected && !panelReturnFocus.closest('[inert]')) panelReturnFocus.focus({ preventScroll: true });
+function closePanels(restoreFocus=true){
+  const wasOpen=state.modal,resume=state.resumeAfterTicket;
+  el.info.classList.remove('show');el.info.inert=true;tickets.hide();
+  state.modal=null;state.arrival=null;state.storyStop=null;state.braking=null;state.glideSpeed=state.metreSpeed=0;state.target=state.progress;
+  state.resumeAfterTicket=false;el.infoBtn.setAttribute('aria-expanded','false');syncUIState(true);
+  if(restoreFocus&&wasOpen===el.card){
+    if(resume&&state.mode==='travel'&&state.progress<.996)setAuto(true);
+  }
+  if(restoreFocus&&wasOpen){
+    const focus=panelReturnFocus?.isConnected&&!panelReturnFocus.closest('[inert]')&&!el.card.contains(panelReturnFocus)?panelReturnFocus:el.memoryBtn;
+    focus?.focus({preventScroll:true});
+  }
 }
-function openPanel(panel, focusTarget) {
-  const returnFocus = document.activeElement;
-  closePanels(false); setAuto(false);
-  clearTimeout(showToast._t); el.toast.classList.remove('show');
-  state.modal = panel;
-  panelReturnFocus = returnFocus;
-  panel.classList.add('show'); panel.inert = false;
-  el.infoBtn.setAttribute('aria-expanded', String(panel === el.info));
-  syncUIState(true);
-  (focusTarget || panel.querySelector('button,input'))?.focus({ preventScroll: true });
+function openPanel(panel,focusTarget){
+  const returnFocus=document.activeElement;
+  cancelArrival();closePanels(false);setAuto(false);
+  clearTimeout(showToast._t);el.toast.classList.remove('show');
+  state.modal=panel;panelReturnFocus=returnFocus;panel.classList.add('show');panel.inert=false;
+  el.infoBtn.setAttribute('aria-expanded',String(panel===el.info));syncUIState(true);
+  (focusTarget||panel.querySelector('button,input'))?.focus({preventScroll:true});
 }
 function setAuto(on) {
   state.auto = !!on;
@@ -199,10 +145,11 @@ function setAuto(on) {
 }
 function resizeViewport() {
   const width = Math.max(1, el.world.clientWidth), height = Math.max(1, el.world.clientHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, lowQuality ? 1.5 : 1.75));
+  renderer.setPixelRatio(earthEnding?.active ? earthEnding.pixelRatio : Math.min(devicePixelRatio, lowQuality ? 1.5 : 2));
   renderer.setSize(width, height, false);
   camera.aspect = width / height; camera.updateProjectionMatrix();
   paper.setSize(width, height);
+  earthEnding?.resize(width,height);
 }
 
 // ---------------------------------------------------------------- renderer
@@ -217,6 +164,8 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
+scene.environment = studioSky(renderer);
+scene.environmentIntensity = .46;
 scene.background = new THREE.Color('#efe6d5');
 const camera = new THREE.PerspectiveCamera(44, innerWidth / innerHeight, 0.1, 4000);
 camera.position.set(70, 82, 310);
@@ -227,117 +176,21 @@ const paper = makePaperPipeline(renderer, scene, camera, {
 if (lowQuality) paper.bloom.enabled = false;
 
 // ---------------------------------------------------------------- sky
-const texLoader = new THREE.TextureLoader();
-const grainTex = null; // paper pipeline owns its own
-const cloudTex = texLoader.load(ASSET('/assets/textures/cloud.png'));
-const glowTex = texLoader.load(ASSET('/assets/textures/glow.png'));
-const starTex = texLoader.load(ASSET('/assets/textures/star.png'));
-const smokeTex = texLoader.load(ASSET('/assets/textures/smoke.png'));
-const shadowTex = texLoader.load(ASSET('/assets/textures/shadow.png'));
+const texLoader = new AssetTextureLoader();
+const glowTex = texLoader.load('/assets/textures/glow.png');
+const starTex = texLoader.load('/assets/textures/star.png');
+const smokeTex = texLoader.load('/assets/textures/smoke.png');
+const shadowTex = texLoader.load('/assets/textures/shadow.png');
 
-class Sky {
-  constructor() {
-    this.group = new THREE.Group();
-    this.group.userData.noNormal = true;
-    scene.add(this.group);
-    const geo = new THREE.SphereGeometry(1200, 32, 20);
-    this.mat = new THREE.ShaderMaterial({
-      side: THREE.BackSide, depthWrite: false, fog: false,
-      uniforms: {
-        top: { value: new THREE.Color('#93b3b5') }, bot: { value: new THREE.Color('#f7e7cb') },
-        sunDir: { value: new THREE.Vector3(-.55, .26, -.55).normalize() },
-        sunCol: { value: new THREE.Color('#ffd7a0') }, glow: { value: .55 },
-      },
-      vertexShader: 'varying vec3 vP; void main(){ vP=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
-      fragmentShader: `varying vec3 vP; uniform vec3 top,bot,sunCol,sunDir; uniform float glow;
-        void main(){ vec3 d=normalize(vP); float h=smoothstep(-.08,.55,d.y); vec3 c=mix(bot,top,h);
-        float s=max(dot(d,normalize(sunDir)),0.0); c+=sunCol*pow(s,180.0)*glow*.9;
-        c+=sunCol*pow(s,12.0)*glow*.10; gl_FragColor=vec4(c,1.0); }`
-    });
-    this.dome = new THREE.Mesh(geo, this.mat);
-    this.dome.userData.noNormal = true;
-    this.group.add(this.dome);
-    // stars
-    const n = 1600, pos = new Float32Array(n * 3);
-    for (let i = 0; i < n; i++) {
-      const a = Math.random() * Math.PI * 2, b = Math.random() * Math.PI * .48 + .03;
-      const r = 900;
-      pos[i * 3] = Math.cos(a) * Math.cos(b) * r;
-      pos[i * 3 + 1] = Math.sin(b) * r;
-      pos[i * 3 + 2] = Math.sin(a) * Math.cos(b) * r;
-    }
-    const sg = new THREE.BufferGeometry();
-    sg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    this.starMat = new THREE.PointsMaterial({ size: 2.0, map: starTex, transparent: true, opacity: 0,
-      depthWrite: false, blending: THREE.AdditiveBlending, color: '#dbe7ff', sizeAttenuation: true, fog: false });
-    this.stars = new THREE.Points(sg, this.starMat);
-    this.stars.userData.noNormal = true;
-    this.group.add(this.stars);
-    // clouds
-    this.clouds = [];
-    const specs = [[-420, 85, -760, 520, 160, .55], [60, 128, -900, 640, 190, .42], [460, 78, -760, 480, 150, .48],
-      [-620, 62, -520, 420, 130, .32], [620, 105, -540, 520, 160, .32], [0, 168, -980, 760, 200, .22]];
-    for (const [x, y, z, sx, sy, op] of specs) {
-      const m = new THREE.SpriteMaterial({ map: cloudTex, transparent: true, opacity: op, depthWrite: false,
-        color: '#f6dfc4', fog: false });
-      const sp = new THREE.Sprite(m);
-      sp.position.set(x, y, z); sp.scale.set(sx, sy, 1); sp.userData.noNormal = true;
-      this.group.add(sp); this.clouds.push(sp);
-    }
-    // sun / moon glow
-    this.sunHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .55,
-      depthWrite: false, color: '#ffc98c', blending: THREE.AdditiveBlending, fog: false }));
-    this.sunHalo.scale.set(92, 92, 1); this.sunHalo.userData.noNormal = true; this.group.add(this.sunHalo);
-    this.sunCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .9,
-      depthWrite: false, color: '#ffe3af', blending: THREE.AdditiveBlending, fog: false }));
-    this.sunCore.scale.set(28, 28, 1); this.sunCore.userData.noNormal = true; this.group.add(this.sunCore);
-    this.target = { ...PALETTES[0] };
-    this.cur = {
-      top: new THREE.Color(PALETTES[0].top), bot: new THREE.Color(PALETTES[0].bot),
-      sun: new THREE.Color(PALETTES[0].sun), dir: new THREE.Vector3(...PALETTES[0].sunDir).normalize(),
-      glow: .55, stars: 0, clouds: .55, visible: true,
-    };
-    this.setPalette(PALETTES[0]);
-  }
-  setPalette(p) {
-    this.target = p;
-  }
-  update(dt, camera, voidMix) {
-    const t = this.target;
-    this.cur.top.lerp(new THREE.Color(t.top), 1 - Math.exp(-dt * 1.6));
-    this.cur.bot.lerp(new THREE.Color(t.bot), 1 - Math.exp(-dt * 1.6));
-    this.cur.sun.lerp(new THREE.Color(t.sun), 1 - Math.exp(-dt * 1.6));
-    this.cur.dir.lerp(new THREE.Vector3(...t.sunDir).normalize(), 1 - Math.exp(-dt * 1.2)).normalize();
-    this.cur.glow = damp(this.cur.glow, t.name === 'city' || t.name === 'future' ? .28 : .6, 2, dt);
-    this.cur.stars = damp(this.cur.stars, t.stars ?? 0, 2, dt);
-    this.cur.clouds = damp(this.cur.clouds, t.clouds ?? 0, 2, dt);
-    this.mat.uniforms.top.value.copy(this.cur.top);
-    this.mat.uniforms.bot.value.copy(this.cur.bot);
-    this.mat.uniforms.sunCol.value.copy(this.cur.sun);
-    this.mat.uniforms.sunDir.value.copy(this.cur.dir);
-    this.mat.uniforms.glow.value = this.cur.glow;
-    this.group.position.set(camera.position.x, 0, camera.position.z);
-    this.stars.material.opacity = this.cur.stars * .8;
-    this.stars.visible = this.cur.stars > .01;
-    for (const c of this.clouds) c.material.opacity = (c.userData.baseOp ??= c.material.opacity) * this.cur.clouds;
-    const d = this.cur.dir;
-    this.sunHalo.position.set(d.x * 900, d.y * 900, d.z * 900);
-    this.sunCore.position.copy(this.sunHalo.position);
-    this.sunHalo.material.color.copy(this.cur.sun).lerp(new THREE.Color('#fff2d0'), .3);
-    this.sunCore.material.color.copy(this.cur.sun).lerp(new THREE.Color('#ffffff'), .45);
-    this.sunHalo.material.opacity = (t.name === 'city' || t.name === 'future') ? .10 : .34;
-    this.sunCore.material.opacity = (t.name === 'city' || t.name === 'future') ? .25 : .8;
-    this.group.visible = voidMix < .9;
-    this.group.userData.void = voidMix;
-  }
-}
-const sky = new Sky();
+const sky = new PaintedSky(scene);
+let animateScenery, trains,metro;
 
 // ---------------------------------------------------------------- lights
 const hemi = new THREE.HemisphereLight('#f4efe2', '#6b5b45', 1.4);
 scene.add(hemi);
 const sun = new THREE.DirectionalLight('#ffd9a8', 2.4);
 sun.castShadow = true;
+sun.shadow.autoUpdate = false;
 sun.shadow.mapSize.set(lowQuality ? 1024 : 2048, lowQuality ? 1024 : 2048);
 sun.shadow.camera.left = -80; sun.shadow.camera.right = 80;
 sun.shadow.camera.top = 80; sun.shadow.camera.bottom = -80;
@@ -345,33 +198,9 @@ sun.shadow.camera.near = 1; sun.shadow.camera.far = 420;
 sun.shadow.bias = -0.00015; sun.shadow.normalBias = .6;
 scene.add(sun); scene.add(sun.target);
 const fill = new THREE.DirectionalLight('#cfe0e8', .55);
-scene.add(fill);
+scene.add(fill); scene.add(fill.target);
 
-// ---------------------------------------------------------------- thread + island shadows
-const threadCurve = new THREE.CatmullRomCurve3([
-  new THREE.Vector3(0, 2.4, 150), new THREE.Vector3(0, 2.0, 60), new THREE.Vector3(0, 2.0, -40),
-  new THREE.Vector3(0, 2.4, -150), new THREE.Vector3(0, 3.2, -210), new THREE.Vector3(0, 2.0, -280),
-  new THREE.Vector3(0, 2.0, -360), new THREE.Vector3(0, 2.4, -570), new THREE.Vector3(0, 3.2, -630),
-  new THREE.Vector3(0, 2.0, -700), new THREE.Vector3(0, 2.0, -780), new THREE.Vector3(0, 2.4, -990),
-  new THREE.Vector3(0, 3.2, -1050), new THREE.Vector3(0, 2.0, -1120), new THREE.Vector3(0, 2.0, -1200),
-  new THREE.Vector3(0, 2.4, -1410), new THREE.Vector3(0, 3.2, -1470), new THREE.Vector3(0, 2.0, -1540),
-  new THREE.Vector3(0, 2.0, -1620), new THREE.Vector3(0, 2.4, -1830),
-], false, 'catmullrom', .12);
-const threadMat = new THREE.MeshStandardMaterial({ color: '#7c2019', emissive: '#c0392b', emissiveIntensity: 1.7, roughness: .5, metalness: .1 });
-const thread = new THREE.Mesh(new THREE.TubeGeometry(threadCurve, 520, .22, 6, false), threadMat);
-thread.visible = false;
-scene.add(thread);
-const threadGlowMat = new THREE.MeshBasicMaterial({ color: '#ff6a45', transparent: true, opacity: .18, blending: THREE.AdditiveBlending, depthWrite: false });
-const threadGlow = new THREE.Mesh(new THREE.TubeGeometry(threadCurve, 520, .62, 6, false), threadGlowMat);
-threadGlow.visible = false; scene.add(threadGlow);
-// symbolic red thread for the scroll overview: drawn on top, like ink on paper
-const ovThreadMat = new THREE.MeshBasicMaterial({ color: '#b23a2a', transparent: true, opacity: .86, depthTest: false, depthWrite: false });
-const ovThread = new THREE.Mesh(new THREE.TubeGeometry(threadCurve, 520, 1.5, 5, false), ovThreadMat);
-ovThread.renderOrder = 900; ovThread.visible = false; scene.add(ovThread);
-const ovThreadGlowMat = new THREE.MeshBasicMaterial({ color: '#ff7a55', transparent: true, opacity: .14, depthTest: false, depthWrite: false, blending: THREE.AdditiveBlending });
-const ovThreadGlow = new THREE.Mesh(new THREE.TubeGeometry(threadCurve, 520, 4.2, 5, false), ovThreadGlowMat);
-ovThreadGlow.renderOrder = 899; ovThreadGlow.visible = false; scene.add(ovThreadGlow);
-
+// Island silhouettes during aerial views.
 const islandShadows = new THREE.Group();
 scene.add(islandShadows);
 const islandShadowByZone = {};
@@ -390,11 +219,7 @@ const water = applyWater(scene, 'all'); // created once; no water meshes yet, bu
 const waterSet = water;
 // A quieter version of the water shader is local to the morning pond.
 const ruralPondMat = waterSet.pondMat.clone();
-ruralPondMat.uniforms = waterSet.pondMat.uniforms;
-ruralPondMat.fragmentShader = ruralPondMat.fragmentShader
-  .replace('fres * .55', 'fres * .34')
-  .replace('160.0) * 1.4', '160.0) * .55')
-  .replace('18.0) * .10', '18.0) * .045');
+ruralPondMat.uniforms.uRipple.value = .60;
 let waterApplied = false;
 function applyWaterToZones() {
   if (waterApplied) return;
@@ -402,7 +227,7 @@ function applyWaterToZones() {
     data.group?.traverse(o => {
       if (o.isMesh && o.material && o.material.name === 'Water') {
         const isPaddy = o.name.includes('Paddy') || o.name.includes('Terrace');
-        o.material = isPaddy ? waterSet.paddyMat : id === 'rural' ? ruralPondMat : waterSet.pondMat;
+        o.material = isPaddy ? waterSet.paddyMat : id === 'rural' ? ruralPondMat : id === 'rail' ? waterSet.riverMat : waterSet.pondMat;
         o.receiveShadow = false;
       }
     });
@@ -415,46 +240,71 @@ const fx = [];
 const gltfLoader = new GLTFLoader();
 gltfLoader.setMeshoptDecoder(MeshoptDecoder);
 let loadedCount = 0;
-let totalAssets = ZONES.length + 8;
+const totalAssets = ZONES.length + 7 + 1;
 function bumpLoad() {
   loadedCount++;
-  const pct = Math.min(100, Math.round(loadedCount / totalAssets * 100));
+  const pct = Math.min(80, Math.round(loadedCount / totalAssets * 80));
   if (el.loadFill) el.loadFill.style.width = pct + '%';
   if (el.loadPct) el.loadPct.textContent = pct + '%';
   $('.load-line').setAttribute('aria-valuenow', String(pct));
   $('#loadStatus').textContent = `铺开时代之岛 · ${loadedCount} / ${totalAssets}`;
 }
-function loadAsset(url) {
-  return new Promise((resolve, reject) => {
-    gltfLoader.load(ASSET(url), (g) => { bumpLoad(); resolve(g); },
-      undefined, (e) => { reject(new Error('Required scene could not load: ' + url, { cause: e })); });
-  });
+async function loadAsset(url) {
+  const asset=await gltfLoader.loadAsync(await loadAssetURL(url));
+  bumpLoad();return asset;
 }
 
 async function loadWorld() {
   const tasks = ZONES.map(z => loadAsset('/assets/zones/' + z.file).then(g => ({ z, g })));
-  const [zoneResults, rick, train, carG, hsr, rocket, grass, weed, broadleaf] = await Promise.all([
+  const [zoneResults, rick, train, carG, hsr, rocket, harmony, paintings, metroAsset] = await Promise.all([
     Promise.all(tasks),
     loadAsset('/assets/vehicles/rickshaw.glb'),
     loadAsset('/assets/vehicles/green_train.glb'),
     loadAsset('/assets/vehicles/car.glb'),
     loadAsset('/assets/vehicles/hsr.glb'),
     loadAsset('/assets/vehicles/rocket.glb'),
-    loadAsset('/assets/vegetation/grass_bermuda_01.glb'),
-    loadAsset('/assets/vegetation/weed_plant_02.glb'),
-    loadAsset('/assets/vegetation/rural_broadleaf.glb'),
+    loadAsset('/assets/vehicles/harmony.glb'),
+    loadPaintings().then(plates => { bumpLoad(); return plates; }),
+    loadAsset('/assets/vehicles/future_metro.glb'),
   ]);
+  sky.plates=paintings;
   for (const { z, g } of zoneResults) {
-    if (!g) { zones[z.id] = { spec: z, group: null, hotspot: null, lights: [], smoke: [] }; continue; }
+    if (!g) { zones[z.id] = { spec: z, group: null, lights: [], smoke: [] }; continue; }
     const group = g.scene;
     group.position.z = z.center;
     scene.add(group);
-    const data = { spec: z, group, hotspot: null, lights: [], smoke: [] };
+    const data = { spec: z, group, lights: [], smoke: [] };
     group.updateMatrixWorld(true);
     group.traverse(o => {
       if (o.isMesh) {
         o.castShadow = true; o.receiveShadow = true;
         if (o.material) o.material.envMapIntensity = .6;
+        const mat=o.material;
+        if(mat.name==='Overhead conductors'){
+          o.userData.noNormal=true;o.castShadow=false;o.receiveShadow=false;
+        }
+        if(mat.name.startsWith('Q leaves ')){
+          o.userData.noNormal=true;
+          mat.transparent=false;mat.depthWrite=true;mat.alphaTest=.36;mat.forceSinglePass=true;
+          if(mat.map) mat.map.anisotropy=4;
+        }
+        if(mat.name.startsWith('Port nursery glazing')){
+          mat.depthWrite=false;mat.forceSinglePass=true;o.userData.noNormal=true;o.castShadow=false;
+        }
+        if(!mat.userData.stageCoating){
+          if (z.id==='town' && ['Matte','Stone','Rough'].includes(mat.name)) finishMasonry(mat,mat.name==='Matte');
+          if (['CityConcrete','RailConcrete','RailRock','F_Matte','F_White'].includes(mat.name)) finishMasonry(mat,false);
+          paintSurfaces(mat,z.id,paintings);mat.userData.stageCoating=true;
+        }
+        if(z.id==='future' && /^Emis(Cyan|Warm)$/.test(mat.name)) mat.emissiveIntensity=.52;
+        if (['Branch_foliage','Harvest_panicles'].includes(mat.name)) {
+          mat.transparent=false; mat.alphaTest=.34; mat.depthWrite=true;
+          mat.forceSinglePass=true; o.userData.noNormal=true;
+          if(mat.map) mat.map.anisotropy=4;
+        }
+        const windowPower = {CityWarm:.52, CityCool:.28, CityPale:.42, SignsNeon:1.0,
+          WinWarm:.65, WinPale:.48, ShopGlow:.56, NeonPink:1.70, NeonCyan:1.38};
+        if (windowPower[mat.name]!==undefined) mat.emissiveIntensity=windowPower[mat.name];
         // The original night-like glowing panes and lanterns fight the morning light.
         if (z.id === 'rural' && o.material) {
           if (['GlassWarm', 'PaperWarm', 'Lantern'].includes(o.material.name)) {
@@ -467,8 +317,7 @@ async function loadWorld() {
       if (o.name && o.name.startsWith('FX_')) {
         const wp = new THREE.Vector3();
         o.getWorldPosition(wp);
-        if (o.name.startsWith('FX_Hotspot')) data.hotspot = wp;
-        else if (o.name.startsWith('FX_Light')) data.lights.push(wp);
+        if (o.name.startsWith('FX_Light')) data.lights.push(wp);
         else if (o.name.startsWith('FX_Smoke')) data.smoke.push(wp);
         else if (o.name.startsWith('FX_Fireflies') && z.id !== 'rural') data.fireflies = wp;
       }
@@ -509,12 +358,29 @@ async function loadWorld() {
     fx.push(...data.lights.map(p => ({ p, zone: z.id })));
   }
   applyWaterToZones();
-  addRuralVegetation(zones.rural.group, grass, weed, broadleaf, ruralGround, ruralWalkable);
+  paper.prepareWoodland=prepareWoodland(zones);
+  animateScenery=stageLandscapes(zones,paintings,shadowTex,ruralGround,ruralWalkable);
+  zones.rural.pond=villagePond(lowQuality);zones.rural.group.add(zones.rural.pond);
+  zones.city.asphalt=[];
+  zones.city.group.traverse(o=>{if(o.isMesh && o.material?.name==='Rain darkened asphalt') zones.city.asphalt.push(o);});
+  zones.city.road = rainOnAvenue(lowQuality,paintings.puddles);
+  zones.city.rain = passingRain(lowQuality);
+  zones.city.group.add(zones.city.road,zones.city.rain);
+  for (const [id, from, to, tint, power, spread] of [
+    ['future',[128,8,58],[102,35,80],'#ffe0ac',4200,.53],
+    ['future',[82,13,88],[104,39,80],'#a9dfe3',2800,.57],
+    ['city',[-9,20,-9],[1,16,5],'#f5e2bd',1150,.87],
+  ]) {
+    const group=zones[id].group;
+    const lamp=new THREE.SpotLight(tint,power,125,spread,.64,2);
+    lamp.position.set(from[0],from[1],-from[2]); lamp.target.position.set(to[0],to[1],-to[2]);
+    group.add(lamp,lamp.target);
+  }
 
   // rickshaw in the rural
   if (rick) {
     const r = rick.scene;
-    // The shafts face along the road toward the village; placement still matches the hotspot.
+    // The shafts face along the road toward the village.
     r.position.set(2.2, .11, 52); r.rotation.y = 0;
     r.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     scene.add(r); zones.rural.vehicle = r;
@@ -530,14 +396,16 @@ async function loadWorld() {
   // green train on the city viaduct
   if (train) {
     const tg = new THREE.Group(); tg.add(train.scene);
-    tg.position.set(-160, 13.72, -845); tg.rotation.y = -Math.PI / 2;
+    tg.position.set(-91.5, 13.855, -845); tg.rotation.y = -Math.PI / 2;
     tg.traverse(o => {
       if (!o.isMesh) return;
       o.castShadow = true; o.receiveShadow = true;
       if (/^TrainGreen/.test(o.material?.name || '')) {
         o.material.emissive = new THREE.Color('#3f7d4a');
-        o.material.emissiveIntensity = .24;
+        o.material.emissiveIntensity = .07;
       }
+      if (o.material?.name==='TrainWarm') o.material.emissiveIntensity=.62;
+      if (o.material?.name==='TrainCool') o.material.emissiveIntensity=.34;
     });
     scene.add(tg); zones.city.train = tg;
   }
@@ -551,10 +419,14 @@ async function loadWorld() {
   // high-speed train on the rail bridge
   if (hsr) {
     const hg = new THREE.Group(); hg.add(hsr.scene);
-    hg.position.set(2.4, 32.95, -1260);
+    hg.position.set(2.4, 32.9975, -1260);
     hg.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     scene.add(hg); zones.rail.hsr = hg;
   }
+  const second=new THREE.Group(); second.add(harmony.scene);
+  second.position.set(-2.4,32.9975,-1260);second.rotation.y=Math.PI;
+  second.traverse(o=>{if(o.isMesh) o.castShadow=o.receiveShadow=true;});
+  scene.add(second);zones.rail.harmony=second;
   // heavy-lift rocket at the future pad (PAD=(102,80) local, base z=7)
   if (rocket) {
     const rg = new THREE.Group(); rg.add(rocket.scene);
@@ -562,39 +434,19 @@ async function loadWorld() {
     rg.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
     scene.add(rg); zones.future.rocket = rg;
   }
-  // use hotspot anchors; fallback positions
-  if (zones.rural && zones.rural.vehicle) zones.rural.hotspot = new THREE.Vector3(2.2, 2.2, 52);
-  if (zones.town && zones.town.car) zones.town.hotspot = new THREE.Vector3(4.6, 1.55, -456.4);
-  const fallback = { rural: [2, 2, 52], town: [0, 3, -380], city: [0, 14, -845], rail: [0, 32, -1260], future: [0, 8, -1710] };
-  for (const z of ZONES) {
-    if (!zones[z.id].hotspot) zones[z.id].hotspot = new THREE.Vector3(...fallback[z.id]);
+  zones.future.group.add(metroAsset.scene);
+  metroAsset.scene.traverse(o=>{if(o.isMesh){o.castShadow=o.receiveShadow=true;if(o.material?.name==='Metro smoked glazing')o.userData.noNormal=true;}});
+  metro=futureMetro(metroAsset.scene);zones.future.metro=metro.root;
+  for(const [chapter,data] of Object.entries(zones)) {
+    for(const object of [data.group,data.vehicle,data.train,data.car,data.hsr,data.harmony,data.rocket])
+      object?.traverse(o=>{if(o.isMesh && o.material) illustrate(o.material,chapter);});
   }
+  trains=railway(zones);
 }
 
 // ---------------------------------------------------------------- camera sampling
-function hermite(field, t) {
-  const n = KEYS.length;
-  if (t <= KEYS[0].p) return KEYS[0][field].slice();
-  if (t >= KEYS[n-1].p) return KEYS[n-1][field].slice();
-  let i = 0;
-  while (i < n-1 && KEYS[i+1].p < t) i++;
-  const k0 = KEYS[Math.max(0, i-1)], k1 = KEYS[i], k2 = KEYS[i+1], k3 = KEYS[Math.min(n-1, i+2)];
-  const dt = k2.p - k1.p;
-  const u = (t - k1.p) / dt;
-  const t0 = k0.p, t1 = k1.p, t2 = k2.p, t3 = k3.p;
-  const out = [];
-  for (let j = 0; j < k1[field].length; j++) {
-    const p0 = k0[field][j], p1 = k1[field][j], p2 = k2[field][j], p3 = k3[field][j];
-    const m1 = (p2 - p0) / Math.max(1e-6, t2 - t0) * dt;
-    const m2 = (p3 - p1) / Math.max(1e-6, t3 - t1) * dt;
-    const u2 = u*u, u3 = u2*u;
-    const h00 = 2*u3 - 3*u2 + 1, h10 = u3 - 2*u2 + u, h01 = -2*u3 + 3*u2, h11 = u3 - u2;
-    out.push(h00*p1 + h10*m1 + h01*p2 + h11*m2);
-  }
-  return out;
-}
 function sampleFov(t) {
-  // smooth fov between keys
+  const KEYS = route;
   let i = 0; while (i < KEYS.length-1 && KEYS[i+1].p < t) i++;
   const a = KEYS[i], b = KEYS[Math.min(KEYS.length-1, i+1)];
   const u = b.p === a.p ? 0 : clamp((t - a.p)/(b.p - a.p), 0, 1);
@@ -608,10 +460,24 @@ let paletteCur = {
   sunInt: PALETTES[0].sunInt, hemi: PALETTES[0].hemi, fill: PALETTES[0].fill,
 };
 let paletteTarget = PALETTES[0];
+const flightPalette = {name:'crossing',sunDir:[0,0,0]};
+const tint = new THREE.Color();
+const warmPaper = new THREE.Color('#f4efe2');
+const lightDirection = new THREE.Vector3();
+const colourFields = ['fog','top','bot','sun','fillColor','waterDeep','waterShallow'];
+for(const field of colourFields) flightPalette[field]=new THREE.Color();
+function flightLight({from,to,blend}) {
+  const a=PALETTES[from], b=PALETTES[to];
+  for(const field of colourFields) flightPalette[field].set(a[field]).lerp(tint.set(b[field]),blend);
+  for(const field of ['fogNear','fogFar','exp','ink','bloom','sunInt','hemi','fill'])
+    flightPalette[field]=THREE.MathUtils.lerp(a[field],b[field],blend);
+  for(let i=0;i<3;i++) flightPalette.sunDir[i]=THREE.MathUtils.lerp(a.sunDir[i],b.sunDir[i],blend);
+  return flightPalette;
+}
 function setPaletteTarget(p) { paletteTarget = p; }
 function updatePalette(dt) {
   const k = 1 - Math.exp(-dt * 1.8);
-  paletteCur.fog.lerp(new THREE.Color(paletteTarget.fog), k);
+  paletteCur.fog.lerp(tint.set(paletteTarget.fog), k);
   paletteCur.fogNear = damp(paletteCur.fogNear, paletteTarget.fogNear, 1.8, dt);
   paletteCur.fogFar = damp(paletteCur.fogFar, paletteTarget.fogFar, 1.8, dt);
   paletteCur.exp = damp(paletteCur.exp, paletteTarget.exp, 1.8, dt);
@@ -625,20 +491,27 @@ function updatePalette(dt) {
   scene.fog.near = paletteCur.fogNear; scene.fog.far = paletteCur.fogFar;
   scene.background.copy(paletteCur.fog);
   renderer.toneMappingExposure = paletteCur.exp;
+  const reflection = name=>name==='city'?.22:name==='future'?.33:.58;
+  const c=state.crossing;
+  const strength=c ? THREE.MathUtils.lerp(reflection(PALETTES[c.from].name),reflection(PALETTES[c.to].name),c.blend) : reflection(paletteTarget.name);
+  scene.environmentIntensity=damp(scene.environmentIntensity,strength,2,dt);
   paper.paperPass.uniforms.ink.value = paletteCur.ink;
   paper.bloom.strength = paletteCur.bloom;
   hemi.intensity = paletteCur.hemi;
   sun.intensity = paletteCur.sunInt;
   fill.intensity = paletteCur.fill;
-  sun.color.lerp(new THREE.Color(paletteTarget.sun), k);
-  fill.color.lerp(new THREE.Color(paletteTarget.fillColor || '#cfe0e8'), k);
-  hemi.color.lerp(new THREE.Color(paletteTarget.top), k * .5).lerp(new THREE.Color('#f4efe2'), .3);
+  sun.color.lerp(tint.set(paletteTarget.sun), k);
+  fill.color.lerp(tint.set(paletteTarget.fillColor), k);
+  hemi.color.lerp(tint.set(paletteTarget.top), k * .5).lerp(warmPaper, .3);
   // water sun
-  const sd = new THREE.Vector3(...paletteTarget.sunDir).normalize();
-  waterSet.pondMat.uniforms.uSunDir.value.copy(sd);
-  waterSet.paddyMat.uniforms.uSunDir.value.copy(sd);
-  waterSet.pondMat.uniforms.uSun.value.copy(new THREE.Color(paletteTarget.sun));
-  waterSet.paddyMat.uniforms.uSun.value.copy(new THREE.Color(paletteTarget.sun));
+  const sd = lightDirection.fromArray(paletteTarget.sunDir).normalize();
+  for(const mat of [waterSet.pondMat,waterSet.paddyMat,waterSet.riverMat,ruralPondMat]){
+    const u=mat.uniforms;
+    u.uSunDir.value.lerp(sd,k); u.uSun.value.copy(sun.color);
+    u.uDeep.value.lerp(tint.set(paletteTarget.waterDeep),k);
+    u.uShallow.value.lerp(tint.set(paletteTarget.waterShallow),k);
+    u.uSky.value.lerp(tint.set(paletteTarget.bot),k);
+  }
 }
 
 // ---------------------------------------------------------------- progress / camera
@@ -650,44 +523,21 @@ function chapterAt(t) {
   }
   return -1;
 }
-function voidAmount(t) {
-  let v = 0;
-  if (t < .055) v = Math.max(v, 1 - smooth((t - .018) / .045));
-  const gaps = [.23, .45, .67, .88];
-  for (const c of gaps) {
-    const d = Math.abs(t - c);
-    v = Math.max(v, 1 - smooth((d - .008) / .028));
-  }
-  return clamp(v, 0, 1);
-}
+function isWideView(){return state.mode==='overview'||state.mode==='prologue';}
 function currentPalette() {
-  if (state.mode === 'overview') return OVERVIEW_PAL;
-  if (state.voidMix > .55) return VOID_PAL;
-  if (state.chapter >= 0) return PALETTES[state.chapter];
-  return state.progress < .045 ? VOID_PAL : PALETTES[clamp(state.chapter, 0, 4)];
+  if(state.mode==='prologue')return introBlend()>.3?PALETTES[0]:OVERVIEW_PAL;
+  if (isWideView()) return OVERVIEW_PAL;
+  if (state.mode === 'landing') return PALETTES[0];
+  if (state.crossing) return flightLight(state.crossing);
+  return PALETTES[routeIndex(state.progress)];
 }
 
-// The original continuous scroll remains the route between islands. In the
-// rural chapter the visitor may also leave the camera rail and walk locally.
-const walk = { enabled: false, position: new THREE.Vector3(), yaw: 0, pitch: 0, height: 1.7, keys: new Set() };
 const walkBuildings = [
   [-7.8,-49,8,5,Math.PI/2], [-24,2,9.5,7,.05], [-40,5,7.2,6,.16],
   [-14,24,8,6.2,.95], [-35,26,6.4,5.4,-.12], [-7,43,7.4,6,1.45],
   [-29,47,10,7.2,.04], [-45,49,6.8,5.4,.2], [-16,61,8.2,6,-1.5],
   [-40,70,7,5.6,.05], [-118,42,6,5,-.12], [82,33,7,5.6,.15],
 ];
-function ruralGround(x, y) {
-  const road = 3*Math.sin((y+145)/52)+1.2*Math.sin((y+20)/19);
-  const flat = Math.max(0,1-Math.abs(x-road)/22);
-  const base = .18*Math.sin(x*.08)*Math.cos(y*.07)+.09*Math.sin((x-y)*.17);
-  let hill = x < -50 ? Math.pow(Math.min(1,(-x-50)/85),1.65)*15 : 0;
-  hill *= clamp((y+80)/60,0,1)*clamp((120-y)/45,0,1);
-  let edge = y > 105 ? Math.pow((y-105)/45,2)*3 : y < -115 ? Math.pow((-y-115)/35,2)*2 : 0;
-  const original = (base+hill+edge)*(1-flat)+.02*flat;
-  const radius = Math.hypot((x-48)/25,(y-38)/16);
-  let t=clamp((radius-.86)/.28,0,1); t=t*t*(3-2*t);
-  return -.28*(1-t)+original*t;
-}
 function ruralWalkable(x, z) {
   const y = -z;
   if (Math.abs(x)>154 || Math.abs(y)>144) return false;
@@ -699,58 +549,41 @@ function ruralWalkable(x, z) {
   }
   // The pond cannot be walked across; its dry rim remains usable.
   if (((x-48)/24.5)**2 + ((y-38)/15.5)**2 < 1) return false;
+  if(y>3 && y<24 && Math.abs(y-17-.03*(x-48))>1.02 && Math.abs(x-48-1.6*Math.sin((y-17)*.14))<2.6*Math.min(1,(y-2)/8)) return false;
   // Keep the observer outside the cart bed and wheels.
   if (Math.abs(x-2.2)<1.25 && y > -53.4 && y < -50.9) return false;
+  if (Math.abs(x+3)<1.58 && Math.abs(y+46.1)<.79) return false;
   return true;
 }
-function setWalk(on) {
-  walk.enabled = !!on;
-  walk.keys.clear();
-  el.walkBtn.setAttribute('aria-pressed', String(walk.enabled));
-  el.walkBtn.setAttribute('aria-label', walk.enabled ? '返回长卷路线' : '自由漫步田埂晨');
-  el.walkBtn.querySelector('span').textContent = walk.enabled ? '返回路线' : '自由漫步';
-  el.walkHelp.hidden = !walk.enabled;
-  el.walkControls.hidden = !walk.enabled;
-  el.walkHelp.textContent = isTouch ? '按方向键行走 · 按住蹲下 · 拖动转身' : 'W A S D 行走 · C 低身 · 拖动画面转身 · Esc 返回长卷';
-  if (!on) return;
-  setAuto(false);
-  state.jumping = null;
-  state.progress = state.target = .1;
-  const start = camera.position.y < 4 && ruralWalkable(camera.position.x, camera.position.z)
-    ? camera.position : new THREE.Vector3(6, 1.7, 64);
-  walk.position.set(start.x, ruralGround(start.x,-start.z)+1.7, start.z);
-  walk.height = 1.7;
-  const direction = new THREE.Vector3();
-  camera.getWorldDirection(direction);
-  walk.yaw = Math.atan2(direction.x,-direction.z);
-  walk.pitch = clamp(Math.asin(clamp(direction.y,-1,1)),-1.2,1.2);
-}
-function updateWalk(dt) {
-  if (!state.modal) {
-    const f = (walk.keys.has('w') ? 1 : 0) - (walk.keys.has('s') ? 1 : 0);
-    const r = (walk.keys.has('d') ? 1 : 0) - (walk.keys.has('a') ? 1 : 0);
-    const length = Math.hypot(f,r) || 1;
-    const dx = (Math.sin(walk.yaw)*f + Math.cos(walk.yaw)*r)/length * dt*2.5;
-    const dz = (-Math.cos(walk.yaw)*f + Math.sin(walk.yaw)*r)/length * dt*2.5;
-    if (ruralWalkable(walk.position.x+dx, walk.position.z)) walk.position.x += dx;
-    if (ruralWalkable(walk.position.x, walk.position.z+dz)) walk.position.z += dz;
+function ruralGround(x, y) {
+  const road = 3*Math.sin((y+145)/52)+1.2*Math.sin((y+20)/19);
+  const flat = Math.max(0,1-Math.abs(x-road)/22);
+  const base = .18*Math.sin(x*.08)*Math.cos(y*.07)+.09*Math.sin((x-y)*.17);
+  let hill = x < -50 ? Math.pow(Math.min(1,(-x-50)/85),1.65)*15 : 0;
+  hill *= clamp((y+80)/60,0,1)*clamp((120-y)/45,0,1);
+  let edge = y > 105 ? Math.pow((y-105)/45,2)*3 : y < -115 ? Math.pow((-y-115)/35,2)*2 : 0;
+  const original = (base+hill+edge)*(1-flat)+.02*flat;
+  const radius = Math.hypot((x-48)/25,(y-38)/16);
+  let t=clamp((radius-.86)/.28,0,1); t=t*t*(3-2*t);
+  let level=-.28*(1-t)+original*t;
+  if(y>2 && y<29){
+    const dx=Math.abs(x-48-1.6*Math.sin((y-17)*.14)),w=Math.min(1,(y-2)/8)*2.65;
+    level=Math.min(level,-.39+(original+.39)*smooth((dx-w)/1.7));
   }
-  walk.height = damp(walk.height, walk.keys.has('c') ? .85 : 1.7, 9, dt);
-  walk.position.y = ruralGround(walk.position.x,-walk.position.z)+walk.height;
-  camera.position.copy(walk.position);
-  camera.fov = 55; camera.updateProjectionMatrix();
-  const cp = Math.cos(walk.pitch);
-  const target = walk.position.clone().add(new THREE.Vector3(Math.sin(walk.yaw)*cp,Math.sin(walk.pitch),-Math.cos(walk.yaw)*cp));
-  camera.lookAt(target); state.camLook = target;
+  // The walkable surface is the bridge deck while crossing its barrel.
+  const bx=x-48,by=y-17;
+  if(Math.abs(by-.03*bx)<1.11 && Math.abs(bx)<4.53)
+    level=Math.max(level,.22+1.12*Math.sqrt(Math.max(0,1-(bx/4.5)**2)));
+  return level;
 }
 function updateCamera(dt) {
-  if (walk.enabled && state.mode === 'travel') { updateWalk(dt); return; }
+  if(state.mode==='prologue'){updateIntroCamera();return;}
   if (state.mode === 'landing') {
-    const distance = camera.aspect < 1.2 ? 1.2 : 1;
-    const drift = reducedMotion ? 0 : Math.sin(state.time * .08) * 3;
-    camera.position.set((265 + drift) * distance, 225 * distance, 300 * distance);
-    camera.fov = 41; camera.updateProjectionMatrix();
-    camera.lookAt(0, 0, 0); state.camLook = new THREE.Vector3(0, 0, 0);
+    const drift = reducedMotion ? 0 : Math.sin(state.time * .07) * .31;
+    camera.position.set(4.6+drift,2.38,61.6);
+    camera.fov = camera.aspect < 1.2 ? 54 : 48; camera.updateProjectionMatrix();
+    state.camLook = new THREE.Vector3(-4.2,2.7,45.1);
+    camera.lookAt(state.camLook);
     return;
   }
   if (state.mode === 'overview') {
@@ -762,20 +595,27 @@ function updateCamera(dt) {
     camera.lookAt(l);
     return;
   }
-  if (state.mode === 'finale') return; // handled in finale update
+  if (state.mode === 'approach') {
+    const trip=state.approach,u=smooth(trip.elapsed/trip.duration);
+    camera.position.copy(trip.from).lerp(trip.to,u);
+    camera.position.y+=12*Math.sin(Math.PI*u);
+    state.camLook=trip.wideLook.clone().lerp(trip.look,u);
+    camera.lookAt(state.camLook);camera.fov=THREE.MathUtils.lerp(46,trip.fov,u);
+    camera.updateProjectionMatrix();return;
+  }
+  if (state.mode === 'finale') return;
   const t = state.progress;
   const p = hermite('pos', t);
   const l = hermite('look', t);
-  const fov = sampleFov(t);
+  if(camera.aspect<1){
+    const street=smooth((t-.504)/.026)*(1-smooth((t-.629)/.013));
+    l[0]+=(1.45-l[0])*smooth((1-camera.aspect)/.50)*.85*street;
+  }
+  const fov = sampleFov(t) + (camera.aspect<.8?5:0);
   // mouse parallax
   const par = reducedMotion ? 0 : 1;
   const mx = state.look.x * par, my = state.look.y * par;
   const target = new THREE.Vector3(l[0] + mx * 4.2, l[1] + my * 2.6, l[2]);
-  // gentle landing drift
-  if (state.mode === 'landing') {
-    p[0] += Math.sin(state.time * .08) * 2.2;
-    p[1] += Math.sin(state.time * .11) * .8;
-  }
   camera.position.set(p[0], p[1], p[2]);
   camera.fov = damp(camera.fov, fov, 6, dt); camera.updateProjectionMatrix();
   camera.lookAt(target);
@@ -784,73 +624,103 @@ function updateCamera(dt) {
 
 function updateZoneVisibility() {
   const show = new Set();
-  if (state.mode === 'overview') { ZONES.forEach(z => show.add(z.id)); }
-  else if (state.mode === 'landing') { show.add('rural'); }
-  else if (state.mode === 'travel' || state.mode === 'finalePrompt') {
-    if (state.voidMix > .08) {
-      const gaps = [.23, .45, .67, .88];
-      let gi = 0, gd = 1e9;
-      gaps.forEach((g, i) => { const d = Math.abs(state.progress - g); if (d < gd) { gd = d; gi = i; } });
-      show.add(ZONES[gi].id);
-      if (ZONES[gi + 1]) show.add(ZONES[gi + 1].id);
-    } else if (state.chapter >= 0) {
-      show.add(ZONES[state.chapter].id);
-    }
+  if (isWideView()) { ZONES.forEach(z => show.add(z.id)); }
+  else if (state.mode === 'landing' || state.mode === 'prologue') { show.add('rural'); }
+  else if (['travel','approach'].includes(state.mode)) {
+    if(state.crossing){
+      show.add(ZONES[state.crossing.from].id);
+      show.add(ZONES[state.crossing.to].id);
+    }else show.add(ZONES[routeIndex(state.progress)].id);
   } else if (state.mode === 'finale' || state.mode === 'ended') { show.add('future'); }
   for (const z of ZONES) {
     const d = zones[z.id];
-    if (d && d.group) d.group.visible = show.has(z.id);
-    if (islandShadowByZone[z.id]) islandShadowByZone[z.id].visible = show.has(z.id) && (state.voidMix > .15 || state.mode === 'overview' || state.mode === 'landing');
+    if (d?.group) {
+      const active=show.has(z.id);
+      d.group.visible=active;
+      for(const group of [d.smokeSprites,d.glowSprites]) if(group) for(const sprite of group) sprite.visible=active;
+      if(d.fireflyPoints) d.fireflyPoints.visible=active;
+    }
+    islandShadowByZone[z.id].visible = show.has(z.id) && (isWideView() || state.voidMix > .002);
   }
-  const all = state.mode === 'overview';
+  const all = isWideView();
+  if(zones.rural?.pond) zones.rural.pond.visible=show.has('rural') && !all && state.progress>.142 && camera.position.y<50 && Math.abs(camera.position.z)<165;
   if (zones.rural?.vehicle) zones.rural.vehicle.visible = all || show.has('rural');
   if (zones.rural?.contact) zones.rural.contact.visible = show.has('rural') && !all;
   if (zones.city?.train) zones.city.train.visible = all || show.has('city');
+  if(zones.city?.road){
+    const wet=show.has('city')&&!all&&camera.position.y<55 && Math.abs(camera.position.z-zones.city.spec.center)<160;
+    zones.city.road.visible=wet;
+    for(const surface of zones.city.asphalt) surface.visible=!wet;
+  }
+  if(zones.city?.rain) zones.city.rain.visible=zones.city.road.visible&&camera.position.y<24&&!reducedMotion;
   if (zones.town?.car) zones.town.car.visible = all || show.has('town');
-  if (zones.rail?.hsr) zones.rail.hsr.visible = all || show.has('rail');
+  if (zones.rail?.hsr) zones.rail.hsr.visible = zones.rail.harmony.visible = all || show.has('rail');
   if (zones.future?.rocket) zones.future.rocket.visible = all || show.has('future') || state.mode === 'finale' || state.mode === 'ended';
 }
 
+let shadowElapsed = 0, lastShadowView = '';
 function updateSkyLights(dt) {
-  state.voidMix = state.mode === 'overview' ? 1 : voidAmount(state.progress);
+  const ov=isWideView();
+  const far=ov&&state.mode!=='overview'?6000:4000;
+  if(camera.far!==far){camera.far=far;camera.updateProjectionMatrix();}
+  const crossing=state.mode==='travel' ? crossingAt(state.progress) : null;
+  state.crossing=crossing;
+  state.voidMix=state.mode==='prologue'?1-introBlend():ov?1:crossing?.mist||0;
   const p = currentPalette();
-  const shadowExtent = state.chapter === 0 && state.mode === 'travel' && state.voidMix < .5 ? 32 : 80;
+  const shadowExtent = routeIndex(state.progress) === 0 && state.mode === 'travel' && state.voidMix < .5 ? 32 : 80;
   if (sun.shadow.camera.right !== shadowExtent) {
     sun.shadow.camera.left = sun.shadow.camera.bottom = -shadowExtent;
     sun.shadow.camera.right = sun.shadow.camera.top = shadowExtent;
     sun.shadow.camera.updateProjectionMatrix();
   }
-  sun.shadow.normalBias = shadowExtent === 32 ? .15 : .6;
+  sun.shadow.normalBias = shadowExtent === 32 ? .095 : .21;
   setPaletteTarget(p);
   updatePalette(dt);
-  sky.setPalette(p);
-  sky.update(dt, camera, state.voidMix);
+  if(crossing) sky.setPalette(PALETTES[crossing.from],PALETTES[crossing.to],crossing.blend);
+  else sky.setPalette(p);
+  sky.update(camera,state.voidMix,state.mode==='prologue'?introBlend()<.55:ov,crossing ? ZONES[crossing.from].center-SPACING/2 : undefined);
   // lights follow the camera look point
   const look = state.camLook || new THREE.Vector3(0, 5, state.progress < .5 ? 0 : -1000);
-  const sd = new THREE.Vector3(...p.sunDir).normalize();
+  const sd = lightDirection.fromArray(p.sunDir).normalize();
   sun.target.position.set(look.x, look.y, look.z);
   sun.position.set(look.x + sd.x * 190, look.y + sd.y * 190 + 25, look.z + sd.z * 190);
   sun.target.updateMatrixWorld();
   fill.position.set(look.x - sd.x * 80 + 30, look.y + 60, look.z - sd.z * 80 + 40);
-  if (state.voidMix > .5) {
+  fill.target.position.copy(look); fill.target.updateMatrixWorld();
+  const shadowView = ov ? 'map' : crossing ? 'flight'+crossing.from : p.name;
+  shadowElapsed += dt;
+  if (shadowView !== lastShadowView || shadowElapsed >= (crossing ? .085 : .05)) {
+    sun.shadow.needsUpdate = true; shadowElapsed = 0; lastShadowView = shadowView;
+  }
+  if (ov && state.mode==='overview') {
     scene.background.copy(new THREE.Color('#f3ecdf'));
     if (scene.fog) {
       scene.fog.color.set('#efe6d5');
-      const portraitOv = state.mode === 'overview' && innerWidth / innerHeight < .85;
       scene.fog.near = ovDistanceNear();
-      scene.fog.far = portraitOv ? 10000 : state.mode === 'overview' ? 7000 : 2800;
+      scene.fog.far = innerWidth / innerHeight < .85 ? 10000 : 7000;
     }
     hemi.intensity = Math.max(hemi.intensity, 1.7);
     sun.intensity = Math.max(sun.intensity, 1.0);
+  }else if(state.mode==='prologue'){
+    const distance=camera.position.distanceTo(state.camLook),u=introBlend();
+    scene.fog.near=Math.max(52,distance*.68);scene.fog.far=Math.max(310,distance+2500*(1-u));
+  }else if(ov){
+    // The five lights stay visible against dusk during the final pullback.
+    scene.fog.near=ovDistanceNear();scene.fog.far=9500;
+  }else if(state.mode==='approach'){
+    const high=1-smooth(state.approach.elapsed/state.approach.duration);
+    scene.fog.near+=130*high;scene.fog.far+=370*high;
+  }else if(crossing){
+    scene.fog.near=THREE.MathUtils.lerp(paletteCur.fogNear,85,crossing.mist);
+    scene.fog.far=THREE.MathUtils.lerp(paletteCur.fogFar,560,crossing.mist);
+    scene.fog.color.lerp(tint.set(p.bot),.23*crossing.mist);
+    hemi.intensity+=.15*crossing.mist;
+  }else if(state.mode==='finale'){
+    const clearSky=smooth((finale.t-2.0)/3.5);
+    scene.fog.near+=clearSky*520; scene.fog.far+=clearSky*3000;
   }
-  const ov = state.mode === 'overview';
-  thread.visible = !ov && state.voidMix > .25;
-  threadGlow.visible = thread.visible;
-  ovThread.visible = ov; ovThreadGlow.visible = ov;
-  threadMat.emissiveIntensity = 1.2 + state.voidMix * 1.2;
-  threadGlowMat.opacity = .12 + state.voidMix * .2;
   islandShadows.visible = true;
-  islandShadows.children.forEach((m) => m.material.opacity = .1 + state.voidMix * .22);
+  islandShadows.children.forEach((m) => m.material.opacity = ov ? .32 : state.voidMix*.19);
 }
 
 function ovDistanceNear() {
@@ -862,21 +732,17 @@ function ovDistanceNear() {
 function updateAmbient(dt) {
   waterSet.pondMat.uniforms.uTime.value = state.time;
   waterSet.paddyMat.uniforms.uTime.value = state.time;
-  // train
+  ruralPondMat.uniforms.uTime.value = state.time;
+  waterSet.riverMat.uniforms.uTime.value = state.time;
+  if(zones.rural?.pond) zones.rural.pond.material.uniforms.time.value=state.time;
+  animateScenery?.(reducedMotion ? 0 : state.time,camera);
   const city = zones.city;
-  if (city && city.train) {
-    const u = smooth((state.progress - .44) / .22);
-    city.train.position.x = -190 + u * 420;
-    city.train.visible = state.progress > .42 && state.progress < .69;
-  }
-  const rail = zones.rail;
-  if (rail && rail.hsr) {
-    const u = smooth((state.progress - .68) / .18);
-    rail.hsr.position.z = -1260 + (0.5 - u) * 180;
-  }
+  if(city?.road) city.road.material.uniforms.time.value=city.rain.material.uniforms.time.value=state.time;
+  trains?.update(dt,state.mode,state.progress,reducedMotion);
+  metro?.update(dt,state.mode,state.progress,reducedMotion);
   // smoke
   for (const z of Object.values(zones)) {
-    if (!z.smokeSprites) continue;
+    if (!z.group.visible || !z.smokeSprites) continue;
     for (const s of z.smokeSprites) {
       const sm = s.userData.smoke;
       const t = state.time * sm.speed + sm.phase;
@@ -896,12 +762,17 @@ function updateAmbient(dt) {
 }
 
 // ---------------------------------------------------------------- UI functions
+
 function setChapterUI(idx, visible) {
   if (idx < 0) { el.chapter.classList.remove('show'); return; }
-  const c = CHAPTER_TITLES[idx];
   if (state.uiChapter !== idx) {
     state.uiChapter = idx;
-    el.chNum.textContent = c.num; el.chYear.textContent = c.year; el.chTitle.textContent = c.title; el.chLine.textContent = c.line;
+    const chapter = ZONES[idx], letter = letters[idx];
+    el.chNum.textContent = chapter.num;
+    el.chYear.textContent = `${chapter.year} · ${letter.distance}`;
+    el.chTitle.textContent = chapter.label;
+    el.chLine.textContent = letter.routeLine;
+    el.chSetting.textContent = letter.setting;
     $$('#timeline .tl-marks button').forEach((b, i) => {
       b.classList.toggle('active', i === idx);
       if (i === idx) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
@@ -913,45 +784,91 @@ function showToast(msg) {
   el.toast.textContent = msg; el.toast.classList.add('show');
   clearTimeout(showToast._t); showToast._t = setTimeout(() => el.toast.classList.remove('show'), 2200);
 }
-function updateLoading() { }
-function startExperience() {
-  if (state.started) return;
-  state.started = true; state.mode = 'travel';
-  el.landing.classList.add('hidden');
-  setTimeout(() => el.landing.classList.add('hidden'), 0);
-  el.hud.classList.remove('hidden');
-  el.timeline.classList.remove('hidden');
-  el.scrollHint.classList.add('show');
-  state.target = .058;
-  el.timeline.classList.remove('hidden');
-  syncUIState(true);
-  if (state.sound) audio.init();
-  setTimeout(() => { if (state.mode === 'travel' && !state.modal) showToast(isTouch ? '上滑向前 · 左右拖动回望' : '滚动向前 · 拖动回望'); }, 900);
+const intro=$('#prologue');
+let openingLights=null;
+function introBlend(){return reducedMotion?0:smooth((state.introTime-5.6)/4);}
+function disposeOpening(){openingLights?.dispose();openingLights=null;}
+function finishPrologue(){
+  if(state.mode!=='prologue')return;
+  disposeOpening();state.mode='travel';state.progress=state.target=ENTRY[0];state.glideSpeed=0;
+  state.look.set(0,0);updateCamera(0);syncUIState(true);el.homeBtn.focus({preventScroll:true});
+}
+function updateIntroCamera(){
+  const pose=overviewPose(),u=introBlend(),p=hermite('pos',ENTRY[0]),l=hermite('look',ENTRY[0]);
+  camera.position.fromArray(pose.pos).lerp(new THREE.Vector3(...p),u);
+  state.camLook=new THREE.Vector3(...pose.look).lerp(new THREE.Vector3(...l),smooth(u/.72));
+  camera.lookAt(state.camLook);camera.fov=THREE.MathUtils.lerp(pose.fov,sampleFov(ENTRY[0])+(camera.aspect<.8?5:0),u);camera.updateProjectionMatrix();
+}
+function playPrologue(dt){
+  state.introTime+=dt;
+  const t=state.introTime,words=$('#introWords'),by=$('#introBy'),between=(a,b)=>smooth((t-a)/.45)*(1-smooth((t-b+.45)/.45));
+  const second=t>=2.8;
+  const line=reducedMotion?'外婆、妈妈、宁宁，三代人的回家路。<br>从田埂到星河，都记着回家吃饭。':
+    second?'从田埂到星河，<br>都记着回家吃饭。':'外婆、妈妈、宁宁，<br>三代人的回家路。';
+  if(words.innerHTML!==line)words.innerHTML=line;
+  by.textContent='回家吃饭 · 一家三代';
+  intro.querySelector('.intro-lines').style.opacity=reducedMotion?1:second?between(2.8,6):between(0,2.8);
+  $('#introEras').style.opacity=String(reducedMotion?1:1-smooth((t-5.6)/.8));
+  $$('#introEras span').forEach((node,i)=>node.classList.toggle('lit',reducedMotion||t>2.7+i*.42));
+  $('#skipIntro').innerHTML=reducedMotion?'进入长卷 <span aria-hidden="true">→</span>':'跳过引入 <span aria-hidden="true">→</span>';
+  openingLights?.update(t,reducedMotion);updateIntroCamera();
+  if(!reducedMotion&&t>=9.6)finishPrologue();
+}
+function startExperience(quick=false){
+  if(state.started)return;
+  resetLetters();state.started=true;state.progress=state.target=ENTRY[0];
+  state.mode=quick===true?'travel':'prologue';state.introTime=0;state.look.set(0,0);syncUIState(true);
+  if(state.sound)audio.init();
+  if(state.mode==='prologue'){openingLights=createOpeningLights(scene,glowTex);playPrologue(0);$('#skipIntro').focus({preventScroll:true});}
+}
+$('#skipIntro').addEventListener('click',finishPrologue);
+function approachIsland(idx) {
+  if(!state.started) startExperience(true);
+  closePanels(false);setAuto(false);disposeFinale();
+  const p=ENTRY[idx],pose=overviewPose();
+  const look=new THREE.Vector3(...hermite('look',p)),to=new THREE.Vector3(...hermite('pos',p));
+  const wideLook=look.clone().lerp(new THREE.Vector3(0,12,ZONES[idx].center),.42);
+  const bearing=new THREE.Vector3(...pose.pos).sub(new THREE.Vector3(...pose.look)).normalize();
+  const from=wideLook.clone().addScaledVector(bearing,camera.aspect<1?235:208);
+  from.y=Math.max(from.y,wideLook.y+89);
+  state.glideSpeed=0;state.progress=state.target=p;state.jumping=null;state.finaleShown=false;state.look.set(0,0);
+  state.chapter=idx;state.watchingFor=-1;state.watchingTime=0;inputDirection=0;trains?.reset();
+  state.approach={from,to,wideLook,look,elapsed:0,duration:2.05,fov:sampleFov(p)+(camera.aspect<.8?5:0)};
+  state.mode=reducedMotion?'travel':'approach';
+  syncUIState(true);setChapterUI(idx,false);audio.setChapter(idx);updateCamera(0);
+  if(reducedMotion) el.homeBtn.focus({preventScroll:true});
 }
 function jumpTo(t) {
-  if (walk.enabled) setWalk(false);
+  state.glideSpeed=0;
+  cancelArrival();
   closePanels(false); setAuto(false);
+  el.toast.classList.remove('show');
   disposeFinale();
   state.finaleShown = false;
+  inputDirection=0;
   state.mode = 'travel';
   state.look.set(0, 0);
-  state.jumping = { from: state.progress, to: clamp(t, 0, 1), t: 0, dur: reducedMotion ? .01 : 1.25 };
-  if (!reducedMotion) {
-    el.ink.classList.add('on');
-    setTimeout(() => el.ink.classList.remove('on'), 650);
-  }
+  const from=state.progress,to=clamp(t,0,1),fromTime=travelTime(from),toTime=travelTime(to);
+  const duration=clamp(Math.abs(toTime-fromTime)/28,1.1,18);
+  state.jumping = {from,to,fromTime,toTime,t:0,dur:reducedMotion ? .01 : duration};
   syncUIState(true);
 }
 function enterOverview() {
-  if (walk.enabled) setWalk(false);
+  const fromEarth=!!earthEnding?.active;
+  cancelArrival();
   if (state.mode === 'overview') return;
+  if (state.mode === 'finale' || state.mode === 'ended') disposeFinale();
   closePanels(false); setAuto(false);
   state.overviewOrigin = state.mode;
   state.returnProgress = state.progress;
   state.mode = 'overview';
+  if(fromEarth){
+    const pose=overviewPose();camera.position.fromArray(pose.pos);state.camLook=new THREE.Vector3(...pose.look);
+    camera.lookAt(state.camLook);camera.fov=pose.fov;camera.updateProjectionMatrix();
+  }
   el.overview.classList.remove('hidden');
   el.hud.classList.add('hidden'); el.timeline.classList.add('hidden'); el.chapter.classList.remove('show');
-  el.hotspot.classList.remove('show'); el.scrollHint.classList.remove('show');
+  el.scrollHint.classList.remove('show');
   buildOverviewLabels();
   syncUIState(true);
   el.ovBack.textContent = state.overviewOrigin === 'landing' ? '返回封面 →' : state.overviewOrigin === 'ended' ? '返回尾声 →' : '回到路上 →';
@@ -965,6 +882,10 @@ function exitOverview(toTravel = false) {
   syncUIState(true);
   if (state.mode === 'landing') el.startBtn.focus({ preventScroll: true });
   else if (state.mode === 'travel') el.overviewBtn.focus({ preventScroll: true });
+  else if (state.mode === 'ended') {
+    earthEnding.begin();finale.t=EARTH_END;earthEnding.update(EARTH_END);renderFrame();
+    el.endOverviewBtn.focus({ preventScroll: true });
+  }
 }
 function buildOverviewLabels() {
   el.ovLabels.innerHTML = '';
@@ -972,10 +893,7 @@ function buildOverviewLabels() {
     const b = document.createElement('button');
     b.className = 'ov-label'; b.type = 'button';
     b.innerHTML = `<i></i><b>${z.num} · ${z.label}</b><em>${z.year}</em>`;
-    b.addEventListener('click', () => {
-      if (!state.started) startExperience();
-      exitOverview(true); jumpTo(ENTRY[ZONES.indexOf(z)]);
-    });
+    b.addEventListener('click', () => approachIsland(ZONES.indexOf(z)));
     b.dataset.zone = z.id;
     el.ovLabels.appendChild(b);
   }
@@ -983,39 +901,158 @@ function buildOverviewLabels() {
 }
 function updateOverviewLabels() {
   if (state.mode !== 'overview') return;
+  const placed=[];
+  const compact=innerWidth>innerHeight && innerHeight<580;
   for (const b of state.ovLabels || []) {
-    const z = ZONES.find(q => q.id === b.dataset.zone);
-    const v = new THREE.Vector3(0, 50, z.center);
-    v.project(camera);
-    const x = (v.x * .5 + .5) * innerWidth, y = (-v.y * .5 + .5) * innerHeight;
-    b.style.left = x + 'px'; b.style.top = y + 'px';
-    b.style.opacity = (v.z < 1 ? 1 : 0);
-    b.inert = v.z >= 1;
+    const z=ZONES.find(q=>q.id===b.dataset.zone);
+    const v=new THREE.Vector3(0,50,z.center).project(camera);
+    let x=(v.x*.5+.5)*innerWidth;
+    const y=(-v.y*.5+.5)*innerHeight;
+    if(compact){
+      const width=b.offsetWidth,height=b.offsetHeight;
+      x=clamp(x,width/2+7,innerWidth-width/2-7);
+      for(const prev of placed){
+        if(y-height<prev.bottom+3 && y>prev.top-3 && x-width/2<prev.right+5)
+          x=prev.right+5+width/2;
+      }
+      placed.push({right:x+width/2,top:y-height,bottom:y});
+    }
+    b.style.left=x+'px';b.style.top=y+'px';
+    b.style.opacity=v.z<1?1:0;b.inert=v.z>=1;
   }
 }
-function openCard() {
-  if (state.mode !== 'travel' || state.chapter < 0) return;
-  const idx = state.chapter;
-  const data = CARDS[idx];
-  if (!data) return;
-  el.cardEyebrow.textContent = data.eyebrow;
-  el.cardTitle.textContent = data.title;
-  el.cardBody.textContent = data.body;
-  el.cardIndex.textContent = `0${idx+1} / 05`;
-  state.collected.add(idx); savePreferences(); updateCollection();
-  openPanel(el.card, el.cardClose);
+function showLetter(idx,{reading=false,archive=false,stop=false}={}) {
+  state.reading=idx;
+  tickets.show(idx,{reading,archive,stop,canLaunch:idx===4 && state.progress>=.97});
+  if(idx===4) prepareReply();
+  updateLetterPages();updateKeepButton(idx);
 }
-function updateCollection() {
-  el.collectedTxt.textContent = `拾光 ${state.collected.size} / 5`;
-  $$('#timeline button[data-ch]').forEach((button, i) => button.classList.toggle('collected', state.collected.has(i)));
+function updateLetterPages(){
+  el.letterPages.hidden=state.delivered===0;
+  el.prevLetter.disabled=state.reading===0;el.nextLetter.disabled=state.reading>=state.delivered;
 }
-const CARDS = [
-  { eyebrow: '1980s · 村口', title: '车把上的马灯', body: '天没亮，路先醒了。板车把一年的收成和一家人的盼望，一起推到镇上去。' },
-  { eyebrow: '1990s · 街心', title: '第一辆自己的车', body: '喇叭响了三声，整条街都回头。车窗摇下来，风里是录像厅和冰棍的味道。' },
-  { eyebrow: '2010s · 车窗', title: '夜班车', body: '绿皮车穿过雨夜，车窗里一格一格的灯。每一格，都是一个正在回家的人。' },
-  { eyebrow: '2020s · 桥上', title: '一杯茶的时间', body: '桥从山河上跨过去。从前要走一天的路，如今只够喝完一杯热茶。' },
-  { eyebrow: '未来 · 星海', title: '回望', body: '从地球出发的人，仍记得村口那条路。所有的远方，都从脚下开始。' },
-];
+function offeredLetter(){return Math.min(routeIndex(state.progress),state.delivered);}
+function updateMail(){
+  if(state.mode!=='travel')return;
+  const p=state.progress;let through=0;
+  if(p>=.270)through=1;if(p>=.504)through=2;
+  if(p>=.715)through=3;
+  if(p>=.930)through=4;
+  if(through>state.delivered){state.delivered=through;if(state.modal===el.card)updateLetterPages();}
+  const idx=offeredLetter();
+  el.mailFrom.textContent=letters[idx].title;
+  el.mailAction.textContent='翻阅票夹';
+  el.memoryBtn.setAttribute('aria-label','翻阅票夹，'+letters[idx].distance);
+}
+const ticketStops=[.128,.342,.572,.812,1];
+const islandEnds=[.200,.405,.629,.847,1.001];
+function holdForTicket(){return state.storyStop?.phase==='ticket';}
+function guideToTicket(){
+  if(!state.autoPages||state.mode!=='travel'||state.modal||state.jumping||state.storyStop)return;
+  const idx=routeIndex(state.progress),stop=ticketStops[idx];
+  if(state.presented.has(idx)||state.progress>=islandEnds[idx])return;
+  const here=travelTime(state.progress),remaining=travelTime(stop)-here,speed=Math.max(0,state.glideSpeed);
+  const movingForward=state.target>state.progress+.000001;
+  // Start braking BEFORE the queued destination reaches the stop. Reserve almost
+  // four seconds of travel so the first half of the slowdown remains visible.
+  if((movingForward&&(remaining<=speed*1.9+2||state.target>=stop))||remaining<=.00001){
+    const resume=state.auto;setAuto(false);
+    state.storyStop={idx,p:Math.max(stop,state.progress),phase:'approach',resume,
+      curve:arrivalCurve(here,speed,Math.max(0,remaining))};
+    state.target=state.storyStop.p;
+    if(remaining<=.00001)state.storyStop.curve.elapsed=state.storyStop.curve.duration;
+  }
+}
+function cancelArrival(){
+  if(el.card.contains(document.activeElement)&&state.modal!==el.card)el.memoryBtn.focus({preventScroll:true});
+  state.arrival=null;
+  if(state.modal!==el.card)tickets.hide();
+  $('#storyNotice').textContent='';
+}
+function beginArrival(idx,{coasting=false}={}){
+  const approach=coasting?state.storyStop:null,speed=state.glideSpeed,metreSpeed=state.metreSpeed;
+  const resume=state.storyStop?.resume??state.auto;
+  state.presented.add(idx);state.delivered=Math.max(state.delivered,idx);
+  openPanel(el.card,$('#ticketFront'));
+  state.arrival={idx,shownAt:state.time};
+  state.storyStop=approach?{...approach,phase:'revealing'}:{idx,p:state.progress,phase:'ticket',resume};
+  if(idx===4&&state.progress>=.996)state.finaleShown=true;
+  state.braking=null;state.target=approach?.p??state.progress;
+  state.glideSpeed=approach?speed:0;state.metreSpeed=approach?metreSpeed:0;
+  state.resumeAfterTicket=resume;inputDirection=0;touch=null;
+  el.card.style.setProperty('--ticket-reveal-duration',(approach?Math.max(.3,approach.curve.duration-approach.curve.elapsed):1.1)+'s');
+  showLetter(idx,{stop:true});
+  el.card.setAttribute('role','dialog');el.card.setAttribute('aria-modal','true');el.card.setAttribute('aria-labelledby','ticketLabel');
+  $('#storyNotice').textContent=letters[idx].frontLabel+'已展开。轻点翻面，再向前滑动即可继续游览。';
+  $('#ticketFront').focus({preventScroll:true});
+}
+function shelveArrival(){
+  if(state.modal===el.card){closePanels();return;}
+  cancelArrival();
+}
+function presentAlongRoute(){
+  const stop=state.storyStop,notice=$('#stopNotice');
+  notice.classList.toggle('show',stop?.phase==='approach'&&!state.modal);
+  if(stop?.phase==='approach'&&stop.curve.duration-stop.curve.elapsed<=1.5&&state.mode==='travel'&&!state.modal){
+    notice.classList.remove('show');beginArrival(stop.idx,{coasting:stop.curve.elapsed<stop.curve.duration});
+  }
+}
+function continueFromTicket(distance=2.28){
+  if(!state.arrival||state.modal!==el.card||state.storyStop?.phase==='revealing')return false;
+  if(!reducedMotion&&state.time-state.arrival.shownAt<1.05)return false;
+  closePanels();setAuto(false);inputDirection=0;
+  advanceByInput(Math.min(2.28,Math.max(.5,distance)));
+  return true;
+}
+function markTicketRead(idx){
+  if(!state.collected.has(idx)){state.collected.add(idx);savePreferences();updateCollection();}
+}
+function readTicket(idx){
+  if(state.modal===el.card){
+    tickets.setSide(true);el.card.setAttribute('aria-labelledby','cardTitle');markTicketRead(idx);$('#cardTitle').focus({preventScroll:true});return;
+  }
+  openCard(idx,true);
+}
+function openCard(which,reading=true){
+  if(state.mode!=='travel'||state.modal)return;
+  const idx=Number.isInteger(which)?which:offeredLetter();
+  const resume=state.auto,speed=state.metreSpeed||state.glideSpeed;
+  state.presented.add(idx);
+  state.target=state.progress;state.jumping=null;inputDirection=0;
+  openPanel(el.card,reading?$('#cardTitle'):$('#ticketFront'));
+  showLetter(idx,{reading,archive:true});
+  el.card.setAttribute('role','dialog');el.card.setAttribute('aria-modal','true');el.card.setAttribute('aria-labelledby',reading?'cardTitle':'ticketLabel');
+  // Discard queued wheel distance, but carry the real velocity into a finite, gentle stop.
+  state.braking=reducedMotion?null:{distance:travelTime(state.progress),speed,elapsed:0,duration:1.6};
+  state.resumeAfterTicket=resume;
+  if(reading)markTicketRead(idx);
+  (reading?$('#cardTitle'):$('#ticketFront')).focus({preventScroll:true});
+}
+function updateCollection(){
+  el.collectedTxt.textContent='拾光 '+state.collected.size+' / 5';
+  $$('#timeline button[data-ch]').forEach((b,i)=>b.classList.toggle('collected',state.collected.has(i)));
+}
+function updateKeepButton(idx){
+  const kept=state.keptLetter===idx;
+  el.keepLetter.setAttribute('aria-pressed',String(kept));el.keepLetter.textContent=kept?'已留住 · 取出':'留住这句话';
+}
+function resetLetters(){
+  cancelArrival();state.storyStop=null;state.braking=null;state.routeVelocity=state.glideSpeed=state.metreSpeed=0;
+  state.keptLetter=null;state.presented.clear();state.watchingFor=-1;state.watchingTime=0;state.resumeAfterTicket=false;
+  state.delivered=0;state.reading=0;trains?.reset();metro?.reset();inputDirection=0;state.replyDraft='';state.wish='';state.pendingLaunch=null;
+}
+function prepareReply(){
+  const kept=state.keptLetter===null?null:letters[state.keptLetter];
+  el.replyQuote.hidden=!kept;el.replyQuote.textContent=kept?'留住的那句话：'+kept.excerpt:'';
+  el.wishInput.value=state.replyDraft;
+  $$('[data-wish]').forEach((button,i)=>button.dataset.wish=button.textContent=letters[4].replies[i]);
+}
+function homeTicketPages(){
+  return letters.map((letter,i)=>({year:ZONES[i].year,words:i===4?'':letter.backText}));
+}
+const tickets=createTicketView({letters,zones:ZONES,onFlip:readTicket,onClose:shelveArrival,
+  onSwipe:distance=>continueFromTicket(distance),
+  onDrag:distance=>{if(!state.modal)advanceByInput(distance)},onDragStart:()=>{if(!state.modal){setAuto(false);state.jumping=null;inputDirection=0;}},onLaunch:launchFinale});
 
 // ---------------------------------------------------------------- audio (original procedural soundscape)
 const audio = new Soundscape((on) => {
@@ -1033,43 +1070,59 @@ function toggleSound() { audio.init(); audio.toggle(); }
 audio.onChange(state.sound);
 
 // ---------------------------------------------------------------- events
+let inputDirection=0,lastWheelAt=-Infinity;
+function advanceByInput(metres) {
+  if (!metres||state.modal||holdForTicket()) return;
+  if(state.storyStop?.phase==='approach'){
+    if(metres>0)return;
+    state.storyStop=null;state.target=state.progress;
+  }
+  const direction=Math.sign(metres), here=travelTime(state.progress);
+  const queued=direction===inputDirection ? travelTime(state.target) : here;
+  inputDirection=direction;
+  state.target=progressAtTime(clamp(queued+metres,here-13,here+13));
+}
 addEventListener('wheel', (e) => {
-  if (state.modal || e.ctrlKey) return;
-  if (state.mode === 'landing') { if (e.deltaY > 20) startExperience(); return; }
-  if (state.mode !== 'travel') return;
-  if (walk.enabled) { e.preventDefault(); return; }
-  e.preventDefault();
-  setAuto(false); state.jumping = null;
-  const pixels = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? innerHeight : 1);
-  state.target = clamp(state.target + clamp(pixels, -160, 160) * .000085, 0, 1);
-  if (state.target > .996) state.target = 1;
-}, { passive: false });
+  if(e.ctrlKey)return;
+  const now=performance.now(),fresh=now-lastWheelAt>170;lastWheelAt=now;
+  const pixels=e.deltaY*(e.deltaMode===1?16:e.deltaMode===2?innerHeight:1);
+  if(state.modal){
+    if(state.modal!==el.card||!state.arrival)return;
+    // Let the text panel and message input keep their own native scrolling.
+    const target=e.target instanceof Element?e.target:null;
+    if(target?.closest('input,textarea,select'))return;
+    const textPanel=target?.closest('#ticketBack');
+    if(textPanel&&((pixels>0&&textPanel.scrollTop+textPanel.clientHeight<textPanel.scrollHeight-2)||(pixels<0&&textPanel.scrollTop>0)))return;
+    e.preventDefault();
+    if(pixels>0&&fresh)continueFromTicket(pixels*.019);
+    return;
+  }
+  if(holdForTicket())return;
+  if(state.mode==='landing'){if(e.deltaY>20)startExperience();return;}
+  if(state.mode!=='travel')return;
+  e.preventDefault();setAuto(false);state.jumping=null;advanceByInput(pixels*.019);
+}, {passive:false});
 
 let touch = null;
 canvas.addEventListener('pointerdown', (e) => {
-  if (state.modal) return;
+  if (state.modal||holdForTicket()) return;
   if (e.pointerType === 'mouse' && e.button !== 0) return;
   setAuto(false); state.jumping = null;
+  inputDirection=0;
   canvas.setPointerCapture(e.pointerId);
   touch = { x: e.clientX, y: e.clientY, lastX: e.clientX, lastY: e.clientY, lookX: state.look.x, lookY: state.look.y, moved: 0, scrolling: state.mode === 'travel' };
   if (state.mode === 'landing') { /* let button handle */ }
 });
 addEventListener('pointermove', (e) => {
   state.mouse.set((e.clientX / innerWidth - .5) * 2, (e.clientY / innerHeight - .5) * 2);
-  if (!touch) return;
-  if (walk.enabled) {
-    walk.yaw += (e.clientX-touch.lastX)*.004;
-    walk.pitch = clamp(walk.pitch-(e.clientY-touch.lastY)*.003,-1.2,1.2);
-    touch.lastX=e.clientX; touch.lastY=e.clientY;
-    return;
-  }
+  if (!touch||state.modal||holdForTicket()) return;
   const dx = e.clientX - touch.x, dy = e.clientY - touch.y;
   touch.moved = Math.max(touch.moved, Math.abs(dx) + Math.abs(dy));
   if (state.mode === 'travel') {
     state.look.x = clamp(touch.lookX - dx / innerWidth * 2, -1, 1);
     if (e.pointerType === 'mouse') state.look.y = clamp(touch.lookY - dy / innerHeight * 1.2, -.8, .8);
     if (e.pointerType !== 'mouse') {
-      state.target = clamp(state.target - (e.clientY - touch.lastY) * .00055, 0, 1);
+      advanceByInput((touch.lastY - e.clientY) * .034);
       touch.lastY = e.clientY;
     }
   }
@@ -1078,44 +1131,42 @@ addEventListener('pointerup', () => { touch = null; });
 addEventListener('pointercancel', () => { touch = null; });
 
 addEventListener('keydown', (e) => {
+  if (e.isComposing || e.keyCode === 229) return;
+  if(state.arrival && e.key==='Escape'){
+    e.preventDefault();shelveArrival();return;
+  }
+  if(state.mode==='prologue'){if(e.key==='Escape'){e.preventDefault();finishPrologue();}return;}
   if (e.key === 'Escape') {
-    if (walk.enabled && !state.modal) { setWalk(false); return; }
-    if (state.modal === el.finale) { closePanels(); state.mode = 'travel'; state.target = .975; state.finaleShown = false; syncUIState(true); }
-    else if (state.modal) closePanels();
+    if (state.modal) closePanels();
     else if (state.mode === 'overview') exitOverview();
     return;
   }
   if (state.modal) {
+    if(state.arrival&&!e.repeat&&['ArrowDown','PageDown'].includes(e.key)&&!e.target.closest('input,textarea,select')){
+      e.preventDefault();continueFromTicket();return;
+    }
+    if(state.modal===el.card&&!tickets.back&&e.key.toLowerCase()==='r'){e.preventDefault();readTicket(state.reading);return;}
     if (e.key === 'Tab') {
-      const stops = [...state.modal.querySelectorAll('button,input,select,textarea,a[href],[tabindex]:not([tabindex="-1"])')].filter(node => !node.disabled && node.getClientRects().length);
+      const stops = [...state.modal.querySelectorAll('button,input,select,textarea,a[href],[tabindex]:not([tabindex="-1"])')].filter(node => !node.disabled && !node.closest('[inert]') && node.getAttribute('tabindex')!=='-1' && node.getClientRects().length);
       const first = stops[0], last = stops.at(-1);
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      if (e.shiftKey && (document.activeElement === first||!stops.includes(document.activeElement))) { e.preventDefault(); last?.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first?.focus(); }
     }
     return;
   }
   if (e.target.closest('input,textarea,select,[contenteditable="true"]') || e.ctrlKey || e.altKey || e.metaKey) return;
-  if (walk.enabled && /^[wasdc]$/i.test(e.key)) { walk.keys.add(e.key.toLowerCase()); e.preventDefault(); return; }
+  if (state.arrival && e.key.toLowerCase() === 'r') { e.preventDefault(); openCard(state.arrival.idx); return; }
   if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('button,a')) return;
   if (state.mode === 'landing' && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); startExperience(); return; }
   if (state.mode === 'travel') {
     if (['ArrowDown','PageDown',' ','ArrowUp','PageUp','Home','End'].includes(e.key)) { setAuto(false); state.jumping = null; }
-    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { state.target = clamp(state.target + .035, 0, 1); e.preventDefault(); }
-    if (e.key === 'ArrowUp' || e.key === 'PageUp') { state.target = clamp(state.target - .035, 0, 1); e.preventDefault(); }
-    if (e.key === 'Home') { jumpTo(0); }
-    if (e.key === 'End') { jumpTo(1); }
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { advanceByInput(4.5); e.preventDefault(); }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') { advanceByInput(-4.5); e.preventDefault(); }
+    if (e.key === 'Home') { approachIsland(0); }
+    if (e.key === 'End') { approachIsland(4); }
   }
   if (e.key === 'm' || e.key === 'M') toggleSound();
 });
-addEventListener('keyup', e => walk.keys.delete(e.key.toLowerCase()));
-addEventListener('blur', () => walk.keys.clear());
-el.walkBtn.addEventListener('click', () => setWalk(!walk.enabled));
-el.walkControls.querySelectorAll('[data-walk]').forEach(button => {
-  const key = button.dataset.walk;
-  button.addEventListener('pointerdown', e => { e.preventDefault(); button.setPointerCapture(e.pointerId); walk.keys.add(key); });
-  for (const event of ['pointerup','pointercancel','lostpointercapture']) button.addEventListener(event, () => walk.keys.delete(key));
-});
-
 el.startBtn.addEventListener('click', startExperience);
 el.overviewBtn.addEventListener('click', () => { audio.sfx('click'); state.mode === 'overview' ? exitOverview() : enterOverview(); });
 el.ovBack.addEventListener('click', () => { audio.sfx('click'); exitOverview(); });
@@ -1125,20 +1176,60 @@ el.infoBtn.addEventListener('click', () => { audio.sfx('click'); openPanel(el.in
 $('#landingInfoBtn').addEventListener('click', () => openPanel(el.info, el.infoClose));
 $('#landingOverviewBtn').addEventListener('click', enterOverview);
 el.infoClose.addEventListener('click', () => closePanels());
-el.cardClose.addEventListener('click', () => closePanels());
-el.memoryBtn.addEventListener('click', openCard);
-el.autoBtn.addEventListener('click', () => { if (state.mode === 'travel' && !state.modal) { if (walk.enabled) setWalk(false); setAuto(!state.auto); if (state.auto) showToast('沿着红线慢慢走 · 手动操作可暂停'); } });
+let scrimTouch=null;
+$('#ticketScrim').addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')scrimTouch={id:e.pointerId,y:e.clientY};});
+$('#ticketScrim').addEventListener('pointerup',e=>{
+  if(scrimTouch?.id===e.pointerId&&scrimTouch.y-e.clientY>40){e.preventDefault();continueFromTicket();}
+  scrimTouch=null;
+});
+$('#ticketScrim').addEventListener('pointercancel',()=>scrimTouch=null);
+$('#ticketScrim').addEventListener('click',()=>{if(state.modal===el.card)closePanels();});
+function turnLetter(by) {
+  const idx=clamp(state.reading+by,0,state.delivered);
+  showLetter(idx,{reading:tickets.back,archive:true});if(tickets.back)markTicketRead(idx);
+  if (by > 0 && el.nextLetter.disabled) el.prevLetter.focus({preventScroll:true});
+  if (by < 0 && el.prevLetter.disabled) el.nextLetter.focus({preventScroll:true});
+}
+el.prevLetter.addEventListener('click', () => turnLetter(-1));
+el.nextLetter.addEventListener('click', () => turnLetter(1));
+el.keepLetter.addEventListener('click', () => {
+  const idx = state.reading;
+  state.keptLetter = state.keptLetter === idx ? null : idx;
+  updateKeepButton(idx);
+});
+el.memoryBtn.addEventListener('click',()=>openCard(offeredLetter(),false));
+// Finish a touch tap explicitly: some Chromium touch sequences omit the
+// compatibility click after a ticket is swiped away. openCard is idempotent.
+let memoryPress=null;
+el.memoryBtn.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')memoryPress={id:e.pointerId,x:e.clientX,y:e.clientY};});
+el.memoryBtn.addEventListener('pointerup',e=>{
+  const start=memoryPress;memoryPress=null;
+  if(start?.id===e.pointerId&&Math.hypot(e.clientX-start.x,e.clientY-start.y)<9){e.preventDefault();openCard(offeredLetter(),false);}
+});
+el.memoryBtn.addEventListener('pointercancel',()=>memoryPress=null);
+el.autoBtn.addEventListener('click', () => { if (state.mode === 'travel' && !state.modal) { setAuto(!state.auto); if (state.auto) showToast('自动漫游中 · 手动操作可暂停'); } });
 el.homeBtn.addEventListener('click', () => {
-  if (walk.enabled) setWalk(false);
-  closePanels(false); setAuto(false); disposeFinale();
+  cancelArrival();
+  closePanels(false);setAuto(false);disposeFinale();disposeOpening();
   state.started = false; state.mode = 'landing'; state.progress = 0; state.target = 0;
   state.jumping = null; state.finaleShown = false; state.chapter = -1;
   el.endCard.classList.remove('show'); el.endCard.inert = true;
-  el.chapter.classList.remove('show'); el.hotspot.classList.remove('show');
+  el.chapter.classList.remove('show');
   syncUIState(true); el.startBtn.focus({ preventScroll: true });
 });
-$$('[data-entry]').forEach(button => button.addEventListener('click', () => { startExperience(); jumpTo(ENTRY[Number(button.dataset.entry)]); }));
-$$('[data-wish]').forEach(button => button.addEventListener('click', () => { el.wishInput.value = button.dataset.wish; el.wishInput.focus(); }));
+$$('[data-entry]').forEach(button => {
+  const idx = Number(button.dataset.entry);
+  button.querySelector('.gallery-desc').textContent = letters[idx].title;
+  button.addEventListener('click', () => approachIsland(idx));
+});
+el.wishInput.addEventListener('input', () => {
+  state.replyDraft=el.wishInput.value;
+});
+$$('[data-wish]').forEach(button => button.addEventListener('click', () => {
+  el.wishInput.value = button.dataset.wish;
+  state.replyDraft = el.wishInput.value;
+  el.wishInput.focus();
+}));
 $('#fullscreenBtn').addEventListener('click', async () => {
   try {
     if (document.fullscreenElement) await document.exitFullscreen();
@@ -1148,150 +1239,134 @@ $('#fullscreenBtn').addEventListener('click', async () => {
 });
 addEventListener('fullscreenchange', () => $('#fullscreenBtn').setAttribute('aria-label', document.fullscreenElement ? '退出全屏' : '进入全屏'));
 document.addEventListener('visibilitychange', () => {
-  if (document.hidden) { setAuto(false); audio.suspend(); }
+  if (document.hidden) { state.resumeAfterTicket=false;setAuto(false); audio.suspend(); }
   else { last = performance.now(); audio.resume(); }
 });
-el.hotspot.addEventListener('click', () => { audio.sfx('click'); openCard(); });
 el.timeline.addEventListener('click', (e) => {
   const b = e.target.closest('button[data-ch]');
   if (!b) return;
   audio.sfx('click');
   const i = Number(b.dataset.ch);
   const z = ZONES[i];
-  jumpTo(ENTRY[i]);
+  approachIsland(i);
 });
-el.launchBtn.addEventListener('click', () => launchFinale());
-el.skipFinale.addEventListener('click', () => { if (state.mode === 'finalePrompt') { state.wish = el.wishInput.value.trim() || '愿山河无恙，路远必达'; closePanels(false); showEnd(); } });
 el.againBtn.addEventListener('click', () => resetExperience());
 el.endOverviewBtn.addEventListener('click', () => { el.endCard.classList.remove('show'); el.endCard.inert = true; enterOverview(); });
-el.wishInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') launchFinale(); });
+el.wishInput.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) launchFinale(); });
 
 const viewportObserver = new ResizeObserver(resizeViewport);
 viewportObserver.observe(el.world);
 
 // ---------------------------------------------------------------- finale
-let finale = { t: 0, active: false, plume: [], endTimer: 0 };
-function disposeFinale() {
-  for (const timer of finale.timers || []) clearTimeout(timer);
-  for (const sprite of [...(finale.plume || []), finale.plumeGlow].filter(Boolean)) {
-    scene.remove(sprite); sprite.material.dispose();
-  }
-  document.querySelectorAll('.lantern').forEach(node => node.remove());
-  finale = { t: 0, active: false, plume: [], timers: [] };
-  const rocket = zones.future?.rocket;
-  if (rocket) { rocket.position.y = 7; rocket.rotation.z = 0; }
+let finale = {t:0,active:false};
+function disposeFinale(){
+  earthEnding?.reset();
+  finale={t:0,active:false};
+  el.launchSignal.hidden=true;
+  $('#homecoming').hidden=true;
   audio.stopLaunch();
 }
-function launchFinale() {
-  if (state.mode !== 'finalePrompt') return;
-  state.wish = el.wishInput.value.trim().slice(0, 24) || '愿山河无恙，路远必达';
-  closePanels(false); setAuto(false);
-  if (reducedMotion) { showEnd(); return; }
-  el.finale.classList.remove('show');
+function launchFinale(skipFlight=false){
+  if(state.mode!=='travel'||state.reading!==4)return;
+  state.wish=state.replyDraft.trim();
+  if(state.progress<.9999){state.pendingLaunch=skipFlight;jumpTo(1);return;}
+  closePanels(false);setAuto(false);disposeFinale();
+  state.look.set(0,0);updateCamera(0);updateSkyLights(0);updateZoneVisibility();
   el.chapter.classList.remove('show');
-  state.mode = 'finale'; state.ended = false;
-  disposeFinale();
-  finale = { t: 0, active: true, plume: [], timers: [], startPos: camera.position.clone(), startLook: (state.camLook || new THREE.Vector3(0, 30, -1750)).clone() };
-  audio.sfx('whoosh');
-  audio.launch();
-  // rocket plume glow
-  const r = zones.future?.rocket;
-  if (r) {
-    const glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTex, transparent: true, opacity: .8,
-      depthWrite: false, color: '#ffb35a', blending: THREE.AdditiveBlending, fog: false }));
-    glow.position.set(r.position.x, r.position.y + 2, r.position.z);
-    glow.scale.set(22, 30, 1); glow.userData.noNormal = true; scene.add(glow); finale.plumeGlow = glow;
-    for (let i = 0; i < 26; i++) {
-      const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: smokeTex, transparent: true, opacity: .6,
-        depthWrite: false, color: '#e8ddca', fog: true }));
-      s.position.set(r.position.x + (Math.random()-.5)*14, r.position.y + Math.random()*6, r.position.z + (Math.random()-.5)*14);
-      s.scale.setScalar(10 + Math.random()*18); s.userData.noNormal = true;
-      s.userData.p = { vy: 6 + Math.random()*14, vx: (Math.random()-.5)*6, vz: (Math.random()-.5)*6, life: 0, max: 4 + Math.random()*4 };
-      scene.add(s); finale.plume.push(s);
-    }
-  }
-  if (!captureMode) {
-    // lanterns
-    for (let i = 0; i < 6; i++) finale.timers.push(setTimeout(() => {
-      const l = document.createElement('div'); l.className = 'lantern'; l.textContent = state.wish;
-      l.style.left = (18 + Math.random() * 64) + 'vw'; l.style.top = (58 + Math.random() * 18) + 'vh';
-      document.getElementById('app').appendChild(l);
-      finale.timers.push(setTimeout(() => l.remove(), 7600));
-    }, i * 450));
-  }
+  state.mode='finale';state.ended=false;finale.active=true;
+  earthEnding.begin();
+  if(reducedMotion||skipFlight){showEnd();renderFrame();return;}
+  audio.sfx('whoosh');audio.launch();syncUIState(true);
 }
-function updateFinale(dt) {
-  if (!finale.active) return;
-  finale.t += dt;
-  const t = finale.t;
-  const r = zones.future?.rocket;
-  const ease = smooth(clamp(t / 7.5, 0, 1));
-  if (r) {
-    r.position.y = 7 + ease * 320;
-    r.rotation.z = Math.sin(t * .7) * .006 * (1 - ease);
-    if (finale.plumeGlow) { finale.plumeGlow.position.set(r.position.x, r.position.y + 3, r.position.z); finale.plumeGlow.scale.set(22 + ease*30, 30 + ease*50, 1); finale.plumeGlow.material.opacity = .8 * (1 - ease*.4); }
-    for (const s of finale.plume) {
-      const p = s.userData.p; p.life += dt;
-      s.position.x += p.vx * dt; s.position.y += p.vy * dt; s.position.z += p.vz * dt;
-      s.material.opacity = Math.max(0, .55 * (1 - p.life / p.max)) * (1 - ease*.3);
-      s.scale.setScalar(10 + p.life * 5 + Math.random() * 2);
-    }
-    const camTarget = new THREE.Vector3(r.position.x, r.position.y + 2, r.position.z);
-    const camPos = new THREE.Vector3(r.position.x - 78, r.position.y + 46, r.position.z + 168);
-    const pull = smooth(clamp((t - 6.0) / 3.0, 0, 1));
-    camera.position.lerp(camPos.lerp(new THREE.Vector3(220, 190, r.position.z + 300), pull), 1 - Math.exp(-dt * 1.8));
-    const look = camTarget.clone().lerp(new THREE.Vector3(0, 60, r.position.z - 80), pull);
-    camera.lookAt(look);
-    camera.fov = 44 + pull * 8; camera.updateProjectionMatrix();
-    state.camLook = look;
-  } else {
-    const pull = smooth(clamp(t / 6, 0, 1));
-    camera.position.lerp(new THREE.Vector3(180, 150, -1550), 1 - Math.exp(-dt * 1.2));
-    camera.lookAt(new THREE.Vector3(0, 20, -1700)); camera.fov = 40 + pull * 10; camera.updateProjectionMatrix();
-  }
-  if (!captureMode && t > 9.3) showEnd();
+function updateFinale(dt){
+  if(!finale.active)return;
+  finale.t=Math.min(EARTH_END,finale.t+dt);
+  earthEnding.update(finale.t);
+  if(!captureMode&&finale.t>=EARTH_END)showEnd();
 }
-function showEnd() {
-  if (state.mode === 'ended') return;
-  state.mode = 'ended';
-  el.endWish.textContent = state.wish;
-  el.endCollection.textContent = state.collected.size === 5 ? '五枚拾光，已织成一段完整的记忆。' : `已拾起 ${state.collected.size} / 5 段记忆 · 来路，仍值得再走一次。`;
+function showEnd(){
+  if(state.mode==='ended')return;
+  if(!earthEnding.active)earthEnding.begin();
+  finale.t=EARTH_END;finale.active=false;earthEnding.update(EARTH_END);
+  state.mode='ended';state.ended=true;
+  el.launchSignal.hidden=true;$('#homecoming').hidden=true;
+  const letter=state.keptLetter===null?null:letters[state.keptLetter];
+  el.endSource.textContent='留住的那句话';el.endQuote.textContent=letter?letter.excerpt:'';
+  el.endSource.parentElement.hidden=!letter;
+  el.endRecipient.textContent='旅途留言';el.endWish.textContent=state.wish;el.endReply.hidden=!state.wish;
+  $('#endAnswer').textContent=endingText;$('#endTitle').textContent='这次，家是地球';
+  el.endCard.dataset.ending='earth';
+  fillHomeTickets($('#endTickets'),homeTicketPages(),true);
   el.endCard.classList.add('show');
-  el.hud.classList.add('hidden'); el.timeline.classList.add('hidden');
-  el.chapter.classList.remove('show'); el.hotspot.classList.remove('show');
-  el.finale.classList.remove('show');
-  closePanels(false); syncUIState(true);
-  el.againBtn.focus({ preventScroll: true });
+  el.hud.classList.add('hidden');el.timeline.classList.add('hidden');el.chapter.classList.remove('show');
+  closePanels(false);syncUIState(true);el.againBtn.focus({preventScroll:true});
 }
-function resetExperience() {
-  el.endCard.classList.add('show');
-  el.endCard.classList.remove('show');
-  disposeFinale(); closePanels(false); setAuto(false);
-  state.mode = 'travel'; state.progress = 0; state.target = .045; state.chapter = -1; state.finaleShown = false; state.ended = false;
-  el.hud.classList.remove('hidden'); el.timeline.classList.remove('hidden');
-  el.endCard.classList.remove('show');
-  el.ink.classList.add('on'); setTimeout(() => el.ink.classList.remove('on'), 500);
-  state.jumping = null; state.look.set(0, 0); syncUIState(true);
+function renderFrame(){
+  if(earthEnding?.active&&['finale','ended'].includes(state.mode))earthEnding.render();
+  else paper.render();
+}
+function resetExperience(){
+  disposeFinale();disposeOpening();closePanels(false);setAuto(false);
+  state.started=false;state.jumping=null;state.finaleShown=false;state.ended=false;state.chapter=-1;
+  startExperience();
 }
 
 // ---------------------------------------------------------------- main loop
-function tick(dt) {
-  if (walk.enabled && state.mode !== 'travel') setWalk(false);
+function tick(dt, draw = true) {
   state.time += reducedMotion ? 0 : dt;
-  if (state.auto && state.mode === 'travel' && !state.modal) state.target = clamp(state.target + dt / 175, 0, 1);
+  if(earthEnding?.active&&['finale','ended'].includes(state.mode)){
+    if(!earthEnding.inOrbit){updateSkyLights(dt);updateZoneVisibility();updateAmbient(dt);}
+    if(state.mode==='finale')updateFinale(dt);
+    else earthEnding.update(EARTH_END);
+    document.body.classList.add('dark-scene');document.body.classList.remove('island-flight');
+    syncUIState();if(draw)renderFrame();return;
+  }
+  if(state.mode==='prologue')playPrologue(dt);
+  if(state.mode==='approach'){
+    state.approach.elapsed+=dt;updateCamera(dt);
+    if(state.approach.elapsed>=state.approach.duration){
+      state.mode='travel';state.approach=null;syncUIState(true);el.homeBtn.focus({preventScroll:true});
+    }
+  }
+  if (state.auto && state.mode === 'travel' && !state.modal && !state.storyStop) {
+    state.target=progressAtTime(travelTime(state.target)+dt*3.65);
+  }
+  guideToTicket();
   if (state.mode === 'travel' || state.mode === 'landing') {
-    if (state.modal) {
-      // Reading a memory or the guide pauses the journey at its current frame.
+    const previousProgress=state.progress;
+    if(state.modal){
+      if(state.storyStop?.phase==='revealing'){
+        const stop=state.storyStop,[distance,speed,done]=sampleArrival(stop.curve,dt);
+        state.progress=done?stop.p:progressAtTime(distance);state.glideSpeed=done?0:speed;
+        if(done){state.target=stop.p;stop.phase='ticket';}
+      }else if(state.braking){
+        const b=state.braking;b.elapsed=Math.min(b.duration,b.elapsed+dt);
+        const u=b.elapsed/b.duration,distance=b.distance+b.speed*b.duration*(u-u*u*u+u*u*u*u/2);
+        state.progress=progressAtTime(clamp(distance,0,travelLength));state.target=state.progress;
+        if(u>=1)state.braking=null;
+      }
+    } else if(state.storyStop?.phase==='approach'){
+      const stop=state.storyStop,[distance,speed,done]=sampleArrival(stop.curve,dt);
+      state.progress=done?stop.p:progressAtTime(distance);state.glideSpeed=done?0:speed;
+    } else if (holdForTicket()) {
+      state.target=state.progress;state.glideSpeed=0;
     } else if (state.jumping) {
       state.jumping.t += dt;
       const u = clamp(state.jumping.t / state.jumping.dur, 0, 1);
-      const e = u < .5 ? 4*u*u*u : 1 - Math.pow(-2*u + 2, 3) / 2;
-      state.progress = state.jumping.from + (state.jumping.to - state.jumping.from) * e;
+      const e = smooth(u);
+      const trip=state.jumping;
+      state.progress = u>=1 ? trip.to : progressAtTime(THREE.MathUtils.lerp(trip.fromTime,trip.toTime,e));
       state.target = state.progress;
       if (u >= 1) state.jumping = null;
-    } else {
-      state.progress = damp(state.progress, state.target, 3.4, dt);
+    } else if (state.progress!==state.target || state.glideSpeed!==0) {
+      const targetDistance=travelTime(state.target);
+      const [distance,speed]=glide(travelTime(state.progress),targetDistance,state.glideSpeed,dt);
+      const settled=Math.abs(distance-targetDistance)<.00001 && Math.abs(speed)<.00005;
+      state.progress=settled ? state.target : progressAtTime(distance);
+      state.glideSpeed=settled ? 0 : speed;
     }
+    state.routeVelocity=dt>0?(state.progress-previousProgress)/dt:0;
+    state.metreSpeed=dt>0?(travelTime(state.progress)-travelTime(previousProgress))/dt:0;
     state.progress = clamp(state.progress, 0, 1);
     const ci = chapterAt(state.progress);
     if (ci !== state.chapter) {
@@ -1301,40 +1376,40 @@ function tick(dt) {
     }
     setChapterUI(state.chapter, state.chapter >= 0 && state.voidMix < .55 && state.mode !== 'overview');
     updateCamera(dt);
-    // hotspot
-    updateHotspot();
     // finale trigger
-    if (state.progress > .996 && state.mode === 'travel' && !state.finaleShown) {
-      state.finaleShown = true; state.mode = 'finalePrompt';
-      el.finale.classList.add('show'); el.hotspot.classList.remove('show');
-      el.chapter.classList.remove('show');
-      openPanel(el.finale, el.wishInput);
+    if (state.progress < .993) state.finaleShown = false;
+    const approachingEnd = state.jumping ? state.jumping.to > .996 : state.target > .996;
+    if (travelLength-travelTime(state.progress)<.045 && approachingEnd && state.mode === 'travel' && !state.modal && !state.storyStop && !state.finaleShown) {
+      state.progress=state.target=1; state.glideSpeed=0;
+      state.finaleShown=true;setAuto(false);
+      if(state.pendingLaunch!==null){const skip=state.pendingLaunch;state.pendingLaunch=null;state.reading=4;launchFinale(skip);}
+      else if(!state.arrival||state.arrival.idx!==4)beginArrival(4);
     }
   } else if (state.mode === 'overview') {
     updateCamera(dt);
   } else if (state.mode === 'finale') {
     updateFinale(dt);
-  } else if (state.mode === 'finalePrompt') {
-    // keep camera at end pose with a slow drift
-    const p = hermite('pos', 1), l = hermite('look', 1);
-    camera.position.set(p[0] + (reducedMotion ? 0 : Math.sin(state.time * .1) * 2), p[1], p[2]);
-    camera.lookAt(new THREE.Vector3(l[0], l[1], l[2])); state.camLook = new THREE.Vector3(l[0], l[1], l[2]);
   }
   updateSkyLights(dt);
   updateZoneVisibility();
   updateAmbient(dt);
+  camera.updateMatrixWorld();
+  updateMail();presentAlongRoute(dt);
   updateOverviewLabels();
-  const darkScene = state.voidMix < .5 && (state.chapter === 2 || state.chapter === 4 || state.mode === 'finale' || state.mode === 'finalePrompt') && state.mode !== 'landing' && state.mode !== 'overview';
+  const darkChapter=i=>i===2 || i===4;
+  const crossing=state.crossing;
+  const night=crossing ? THREE.MathUtils.lerp(+darkChapter(crossing.from),+darkChapter(crossing.to),crossing.blend) : +darkChapter(state.chapter);
+  const darkScene = (night>.5 || state.mode==='finale') && state.mode!=='landing' && state.mode!=='overview';
   document.body.classList.toggle('dark-scene', darkScene);
+  document.body.classList.toggle('island-flight',!!crossing);
+  if(crossing) document.body.style.setProperty('--flight-night',(night*100).toFixed(1)+'%');
   // HUD progress
   el.tlFill.style.width = (state.progress * 100).toFixed(2) + '%';
-  el.journeyPct.textContent = String(Math.round(state.progress * 100)).padStart(2, '0') + '%';
-  el.memoryBtn.disabled = state.chapter < 0;
-  el.walkBtn.hidden = state.mode !== 'travel' || state.chapter !== 0;
-  el.hotspot.inert = !el.hotspot.classList.contains('show') || !!state.modal;
+  const percent = String(Math.round(state.progress * 100)).padStart(2, '0') + '%';
+  if (el.journeyPct.textContent !== percent) el.journeyPct.textContent = percent;
   syncUIState();
-  el.scrollHint.classList.toggle('show', state.mode === 'travel' && state.progress < .08);
-  paper.render();
+  el.scrollHint.classList.toggle('show', state.mode === 'travel' && state.progress < .121);
+  if(draw) renderFrame();
   if (!touch && !isTouch && !reducedMotion) {
     state.look.x = damp(state.look.x, state.mouse.x * .5, 1.5, dt);
     state.look.y = damp(state.look.y, state.mouse.y * .5, 1.5, dt);
@@ -1343,34 +1418,61 @@ function tick(dt) {
 
 let last = performance.now();
 function raf(now) {
-  const dt = Math.min(.05, (now - last) / 1000); last = now;
+  const dt = Math.min(.15, (now - last) / 1000); last = now;
   if (state.ready && !state.frozen && !document.hidden) tick(dt);
   requestAnimationFrame(raf);
 }
 
-// hotspot projection
-function updateHotspot() {
-  if (state.mode !== 'travel' || state.chapter < 0 || state.voidMix > .4) { el.hotspot.classList.remove('show'); return; }
-  const z = ZONES[state.chapter]; const data = zones[z.id];
-  if (!data || !data.hotspot) { el.hotspot.classList.remove('show'); return; }
-  const v = data.hotspot.clone().project(camera);
-  const on = v.z < 1 && v.z > -1 && Math.abs(v.x) < 1.15 && Math.abs(v.y) < 1.1;
-  el.hotspot.classList.toggle('show', on);
-  if (on) {
-    el.hotspot.style.left = ((v.x * .5 + .5) * innerWidth) + 'px';
-    el.hotspot.style.top = ((-v.y * .5 + .5) * innerHeight) + 'px';
+// ---------------------------------------------------------------- boot
+async function prepareRoute() {
+  // A real preview draw uploads the meshes and textures as well as linking the
+  // exact light/material combinations used when two neighbouring islands meet.
+  const size=renderer.getSize(new THREE.Vector2());
+  const originalOutput=paper.composer.renderToScreen;
+  paper.composer.renderToScreen=false;
+  paper.setSize(112,Math.max(48,Math.min(184,Math.round(112/camera.aspect))));
+  const samples = [.10,.186,.206,.214,.235,.315,.411,.455,.545,.635,.672,.7148,.715,.79,.854,.890,.95];
+  state.mode='travel';
+  try {
+    for (const [i,p] of samples.entries()) {
+      state.progress=p;
+      const percent=80+Math.round(19*(i+1)/samples.length);
+      el.loadFill.style.width=percent+'%'; el.loadPct.textContent=percent+'%';
+      $('.load-line').setAttribute('aria-valuenow',String(percent));
+      $('#loadStatus').textContent='准备沿途画面 · '+ZONES[routeIndex(p)].label;
+      await new Promise(done=>requestAnimationFrame(done));
+      updateCamera(1);updateSkyLights(1);updateZoneVisibility();updateAmbient(0);
+      // A nose just inside a tunnel is insufficient to prepare coach materials.
+      if(p===.545 || p===.79) trains.update(p===.545?12:6,state.mode,p,false);
+      const uncull=[];
+      if([.206,.411,.635,.715,.854].includes(p)) scene.traverseVisible(o=>{
+        if((o.isMesh||o.isSprite||o.isPoints) && o.frustumCulled){o.frustumCulled=false;uncull.push(o);}
+      });
+      try{paper.render();}finally{for(const o of uncull)o.frustumCulled=true;}
+    }
+  }finally{
+    paper.composer.renderToScreen=originalOutput;paper.setSize(size.x,size.y);
+    renderer.setRenderTarget(null);
+    state.mode='landing';state.progress=state.target=0;trains?.reset();metro?.reset();
+    updateCamera(1);updateSkyLights(8);updateZoneVisibility();updateAmbient(0);
+    paper.render();renderer.getContext().finish();
   }
 }
-
-// ---------------------------------------------------------------- boot
 async function boot() {
   await loadWorld();
+  await waitForAssetTextures();
+  if(!window.__EARTH_PREVIEW_ONLY){
+    $('#loadStatus').textContent='准备星河尽头的回望';
+    earthEnding=await createEarthEnding({renderer,scene,camera,paper,sky,rocket:zones.future.rocket,smokeTexture:smokeTex,glowTexture:glowTex});
+  }
+  await prepareRoute();
   state.ready = true;
   state.mode = 'landing';
   window.__ready = true;
-  setPaletteTarget(VOID_PAL);
-  sky.setPalette(VOID_PAL);
+  setPaletteTarget(PALETTES[0]);
+  sky.setPalette(PALETTES[0]);
   el.loadFill.style.width = '100%'; el.loadPct.textContent = '100%';
+  $('.load-line').setAttribute('aria-valuenow','100');
   syncUIState(true); resizeViewport(); updateCollection();
   setTimeout(() => {
     el.loading.style.opacity = '0';
@@ -1384,11 +1486,15 @@ export const ready = boot();
 // deterministic capture / inspection API
 window.__changlu = {
   state, scene, camera, renderer, paper, sky, zones, waterSet,
-  setProgress(t, instant = true) { state.progress = clamp(t, 0, 1); state.target = state.progress; if (instant) { state.jumping = null; } },
+  render:renderFrame,
+  get ending(){return earthEnding},
+  get activeCamera(){return earthEnding?.active?earthEnding.camera:camera},
+  setProgress(t, instant = true) { state.glideSpeed=0; state.progress = clamp(t, 0, 1); state.target = state.progress; if (instant) { state.jumping = null; } },
   freeze(v = true) { state.frozen = !!v; },
-  advance(dt = 1 / 24) { tick(dt); paper.render(); },
+  advance(dt = 1 / 24) { tick(dt); },
   scrollTo(p) { state.target = clamp(p, 0, 1); },
   showCard() { openCard(); },
+  receiveLetter(){if(state.mode==='travel' && !state.modal && !state.arrival) beginArrival(offeredLetter());},
   hideCard() { closePanels(); },
   soundInfo() { return audio.info(); },
   info() { const cv = {}; for (const k of Object.keys(zones)) cv[k] = !!zones[k]?.group?.visible; return { progress: state.progress, mode: state.mode, chapter: state.chapter, voidMix: state.voidMix, cam: camera.position.toArray(), look: state.camLook?.toArray?.(), visible: cv }; },
@@ -1399,15 +1505,17 @@ window.__changlu = {
       setChapterUI(ci, ci >= 0);
       if (ci >= 0) audio.setChapter(ci);
     }
-    for (let i = 0; i < steps; i++) { updateCamera(.1); updateSkyLights(.1); updateAmbient(.1); }
-    updateZoneVisibility(); updateHotspot(); updateOverviewLabels();
+    for (let i = 0; i < steps; i++) { updateCamera(.1); updateSkyLights(.1); }
+    updateZoneVisibility(); updateAmbient(0); camera.updateMatrixWorld(); updateMail(); updateOverviewLabels();
     paper.render();
   },
-  step(dt) { tick(dt); },
-  start: startExperience,
+  step(dt) { tick(dt, false); },
+  start: () => startExperience(true),
+  prologue: () => startExperience(),
+  automaticLetters(on=true){state.autoPages=on;if(!on){state.storyStop=null;cancelArrival();}},
   overview: enterOverview,
   exitOverview,
-  launch: () => { state.mode = 'finalePrompt'; launchFinale(); },
+  launch: () => { state.mode='travel';state.reading=4;state.progress=state.target=1;launchFinale(); },
   showEnd,
   photo(id) {
     const poses = {
@@ -1415,7 +1523,7 @@ window.__changlu = {
       overview: null,
     };
     document.body.classList.add('photo');
-    if (id === 'overview') { enterOverview(); document.querySelectorAll('#hud,#timeline,#chapter,#hotspot,.ov-head,.ov-foot').forEach(e => e.style.display = 'none'); return; }
+    if (id === 'overview') { enterOverview(); document.querySelectorAll('#hud,#timeline,#chapter,.ov-head,.ov-foot').forEach(e => e.style.display = 'none'); return; }
     state.mode = 'travel'; const t = poses[id]?.p ?? .09; this.setProgress(t); state.chapter = chapterAt(t); tick(0.001);
   },
   resumeUI() { document.body.classList.remove('photo'); location.reload(); },

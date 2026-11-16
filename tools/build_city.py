@@ -9,6 +9,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import bpy  # noqa: E402
 import blib as B  # noqa: E402
+from model_craft import Batch
 
 B.reset(2012)
 rng = random.Random(2012)
@@ -20,7 +21,6 @@ matte = B.vmat("CityMatte", 0.9)
 concrete = B.vmat("CityConcrete", 0.94)
 metal = B.vmat("CityMetal", 0.45, 0.55)
 stone = B.vmat("CityStone", 0.92)
-tree_m = B.vmat("CityTree", 0.95)
 glass = B.mat("CityGlass", "#0d1a22", rough=0.16, metal=0.5, double_sided=True)
 warm = B.mat("CityWarm", "#ffbe78", rough=0.5, emission="#ffb86a", emis_strength=1.55, double_sided=True)
 cool = B.mat("CityCool", "#a9dcff", rough=0.4, emission="#a8d8ff", emis_strength=1.15, double_sided=True)
@@ -90,11 +90,11 @@ def win_right(x, y, z, w, h, material):
 
 def pick_window(r):
     v = r.random()
-    if v < .10:
+    if v < .52:
         return dark
-    if v < .34:
+    if v < .70:
         return cool
-    if v < .47:
+    if v < .78:
         return pale
     return warm
 
@@ -117,149 +117,18 @@ def sign_on_side(x, y, z, w, h, side, key, mat=signs):
     add(ob)
 
 
-def tower(x, y, w, d, h, style="glass", seed=1, name="Tower", sign_key=None, billboard=None):
-    r = random.Random(seed)
-    podium_h = 7.5 if style != "res" else 5.5
-    # podium
-    add(B.box("Podium", (w + 4, d + 4, podium_h), (x, y, podium_h / 2), color="#4a4c4e",
-              material=concrete, bevel=.06))
-    add(B.box("PodiumCap", (w + 4.4, d + 4.4, .25), (x, y, podium_h + .1), color="#2c2e31", material=metal))
-    # storefront glass on the avenue side
-    side = "east" if x < 0 else "west"
-    sx = x + (1 if x < 0 else -1) * ((w + 4) / 2 + .04)
-    for i in range(max(2, int(d / 4.2))):
-        yy = y - d / 2 + (i + .5) * d / max(2, int(d / 4.2))
-        mat = [warm, cool, pale][r.randrange(3)]
-        if side == "east":
-            win_right(sx, yy, 1.5, d / max(2, int(d / 4.2)) * .62, 2.2, mat)
-        else:
-            win_left(sx, yy, 1.5, d / max(2, int(d / 4.2)) * .62, 2.2, mat)
-    # awning
-    ax = x + (1 if x < 0 else -1) * ((w + 4) / 2 + 1.2)
-    add(B.box("Awning", (2.4, d * .82, .12), (ax, y, 4.1), color="#3a2728" if r.random() < .5 else "#243a3a",
-              material=matte, bevel=.02))
-    if sign_key:
-        sign_on_side(x + (1 if x < 0 else -1) * ((w + 4) / 2 + .08), y, podium_h + 1.2, min(9, d * .65), 2.1, side, sign_key)
-        add(B.box("SignFrame", (.16, min(9, d * .65) + .4, 2.5),
-                  (x + (1 if x < 0 else -1) * ((w + 4) / 2 + .05), y, podium_h + 1.15),
-                  color="#17181a", material=metal))
-    # shaft sections
-    sections = [(w, d, podium_h, h)]
-    if style == "step" and h > 100:
-        sections = [(w, d, podium_h, h * .62), (w * .8, d * .8, h * .62, h * .84), (w * .62, d * .62, h * .84, h)]
-    for si, (sw, sd, z0, z1) in enumerate(sections):
-        add(B.box("Shaft", (sw, sd, z1 - z0), (x, y, (z0 + z1) / 2),
-                  color="#3d4045" if style != "res" else "#57524a", material=concrete, bevel=.05))
-        n_floors = max(1, int((z1 - z0) / 3.4))
-        n_bays = max(3, int(sd / 1.75))
-        n_bays_x = max(3, int(sw / 1.75))
-        # floor bands
-        for f in range(1, n_floors):
-            z = z0 + f * 3.4
-            add(B.box("FloorBand", (sw + .24, sd + .24, .14), (x, y, z),
-                      color="#2a2c30", material=metal))
-        # vertical mullions on glass towers
-        if style in ("glass", "step"):
-            for side_i, axis in enumerate(("yn", "yp", "xn", "xp")):
-                for k in range(1, n_bays + 1):
-                    if axis in ("yn", "yp"):
-                        xx = x - sd / 2 + k * sd / (n_bays + 1)
-                        yy = y - sd / 2 - .05 if axis == "yn" else y + sd / 2 + .05
-                        add(B.box("Mullion", (.08, .08, z1 - z0), (xx, yy, (z0 + z1) / 2),
-                                  color="#5a6068", material=metal))
-                    else:
-                        yy = y - sw / 2 + k * sw / (n_bays_x + 1)
-                        xx = x - sw / 2 - .05 if axis == "xn" else x + sw / 2 + .05
-                        add(B.box("Mullion", (.08, .08, z1 - z0), (xx, yy, (z0 + z1) / 2),
-                                  color="#5a6068", material=metal))
-        # windows
-        for f in range(1, n_floors):
-            z = z0 + f * 3.4 + .8
-            # front / back
-            for side_kind in ("front", "back"):
-                yy = y - sd / 2 - .06 if side_kind == "front" else y + sd / 2 + .06
-                for k in range(n_bays_x):
-                    ww = sw - 1.0
-                    cx = x - ww / 2 + (k + .5) * ww / n_bays_x
-                    if r.random() < .13:
-                        continue
-                    mat = pick_window(r)
-                    if side_kind == "front":
-                        win_front(cx, yy, z, min(1.8, ww / n_bays * .72), 1.75, mat)
-                    else:
-                        win_back(cx, yy, z, min(1.8, ww / n_bays * .72), 1.75, mat)
-            # left / right
-            for side_kind in ("left", "right"):
-                xx = x - sw / 2 - .06 if side_kind == "left" else x + sw / 2 + .06
-                for k in range(n_bays):
-                    ww = sd - 1.0
-                    cy = y - ww / 2 + (k + .5) * ww / n_bays
-                    if r.random() < .13:
-                        continue
-                    mat = pick_window(r)
-                    if side_kind == "left":
-                        win_left(xx, cy, z, min(1.8, ww / n_bays_x * .72), 1.75, mat)
-                    else:
-                        win_right(xx, cy, z, min(1.8, ww / n_bays_x * .72), 1.75, mat)
-        # balconies / AC on residential and grid towers
-        if style in ("res", "grid"):
-            for f in range(2, n_floors, 2):
-                z = z0 + f * 3.4 + .3
-                yy = y - sd / 2 - .55
-                add(B.box("Balcony", (min(6.0, sw * .55), 1.1, .16), (x, yy, z),
-                          color="#6a645b", material=concrete, bevel=.02))
-                for k in range(6):
-                    add(B.box("Rail", (.06, .06, .6), (x - min(6.0, sw * .55) / 2 + .3 + k * min(6.0, sw * .55) / 6, yy - .5, z + .3),
-                              color="#3b3b39", material=metal))
-                if r.random() < .35:
-                    add(B.quad("Laundry", [(x - 1.2, yy - .56, z + .2), (x + .2, yy - .56, z + .2),
-                                           (x + .2, yy - .56, z + 1.0), (x - 1.2, yy - .56, z + 1.0)],
-                               r.choice(["#a94a3c", "#d9c7a0", "#4f6e78", "#c2a75f"]), matte))
-        # AC units
-        for k in range(max(2, int(h / 30))):
-            cx = x + r.uniform(-sw / 2 + 1, sw / 2 - 1)
-            z = z0 + r.uniform(2, max(3, z1 - z0 - 2))
-            add(B.box("AC", (.9, .45, .55), (cx, y - sd / 2 - .3, z), color="#7a7a72", material=metal))
-    # crown
-    top_h = h
-    add(B.box("Crown", (w + .5, d + .5, .6), (x, y, top_h + .1), color="#26282c", material=metal))
-    if style in ("glass", "step"):
-        for side_i in range(2):
-            add(B.box("CrownNeon", (w * .9, .12, .16), (x, y - d / 2 - .06, top_h - 2 + side_i * 1.1),
-                      color="#7fe8e0", material=neonCyan))
-    # roof equipment
-    add(B.box("Mech", (w * .42, d * .42, 3.0), (x, y + d * .05, top_h + 1.5), color="#34373b", material=concrete))
-    add(B.cylinder("Tank", 1.4, 2.6, (x - w * .25, y + d * .2, top_h + 1.3), segments=10,
-                   color="#6a6d70", material=metal))
-    add(B.cylinder("Antenna", .10, r.uniform(4, 12), (x + w * .22, y - d * .15, top_h + 4),
-                   segments=6, color="#6a6d70", material=metal))
-    add(B.sphere("Beacon", .28, (x + w * .22, y - d * .15, top_h + 8.2), color="#ff3020", material=red, segments=8, rings=5))
-    # billboard
-    if billboard:
-        bw, bh = 16, 6.5
-        add(B.box("BBFrame", (bw + .8, .4, bh + .8), (x, y - d / 2 - .9, top_h + 8), color="#1a1c1f", material=metal))
-        sign_on_side(x, y - d / 2 - 1.12, top_h + 8, bw, bh, "south", billboard)
-        for k in range(3):
-            add(B.box("BBPost", (.2, .2, 6), (x - bw * .35 + k * bw * .35, y - d / 2 - .9, top_h + 3),
-                      color="#2a2c2f", material=metal))
-        for k in range(4):
-            add(B.box("BBLight", (.18, .18, .18), (x - bw * .4 + k * bw * .27, y - d / 2 - 1.3, top_h + 8 + bh / 2 + .5),
-                      color="#ffd9a0", material=lamp))
-    return
+def tower(x,y,w,d,h,style="glass",seed=1,sign_key=None):
+    from city_architecture import building
+    add(building(x,y,w,d,h,style,seed))
+    # Tenant fascias sit on the arcade, just above its glazing.
+    if sign_key and seed in (1,2,4,5,9,10,12,14):
+        side = 1 if x<0 else -1
+        sign_on_side(x+side*(w/2+1.85),y,6.95,min(8.4,d*.51),1.18,
+                     "east" if side>0 else "west", sign_key)
 
-
-def tower_simple(x, y, w, d, h, seed=1, color="#3f4247"):
-    """Cheap distant tower with a few lit windows."""
-    r = random.Random(seed)
-    add(B.box("DistantTower", (w, d, h), (x, y, h / 2), color=color, material=concrete, bevel=.03))
-    for f in range(3, int(h / 4), 3):
-        for k in range(3):
-            if r.random() < .5:
-                win_quad([(x - w * .3 + k * w * .2, y - d / 2 - .05, f),
-                          (x - w * .22 + k * w * .2, y - d / 2 - .05, f),
-                          (x - w * .22 + k * w * .2, y - d / 2 - .05, f + 1.2),
-                          (x - w * .3 + k * w * .2, y - d / 2 - .05, f + 1.2)],
-                         r.choice([warm, cool, pale]))
+def tower_simple(x,y,w,d,h,seed=1):
+    from city_architecture import building
+    add(building(x,y,w,d,h,("step","glass","res")[seed%3],seed,far=True))
 
 
 # ---------------------------------------------------------------- street furniture
@@ -271,15 +140,33 @@ def street_lamp(x, y, side=1, h=8.0):
 
 
 def street_tree(x, y, h=5.5):
-    add(B.tree("CityTree", (x, y, .15), h, h * .48, "#2e4a39", "#4b3d2e", tree_m, matte, rng))
+    from planted_trees import plant
+    add(plant('avenue',x,y,.44,h,h*.58))
     add(B.box("TreePlanter", (2.0, 2.0, .45), (x, y, .22), color="#54514a", material=stone, bevel=.03))
 
 
 def car(x, y, rot=0, color="#6b2e2e", scale=1.0, z=0.0):
     objs = []
-    objs.append(B.box("CarBody", (4.2, 1.8, .62), (0, 0, .55), color=color, material=concrete, bevel=.12))
-    objs.append(B.box("CarCabin", (2.3, 1.55, .62), (0, -.1, 1.05), color="#17262c", material=glass, bevel=.1))
-    objs.append(B.box("CarRoof", (2.0, 1.5, .1), (0, -.1, 1.38), color=color, material=concrete, bevel=.02))
+    def skin(name, sections, tint, material):
+        verts, faces = [], []
+        for px, half_w, lower, upper, crown in sections:
+            verts.extend([(px,-half_w*.93,lower),(px,-half_w,upper),(px,-half_w*.74,crown),
+                          (px,half_w*.74,crown),(px,half_w,upper),(px,half_w*.93,lower)])
+        for k in range(len(sections)-1):
+            for j in range(6):
+                a=k*6+j; b=k*6+(j+1)%6
+                faces.append((a,b,b+6,a+6))
+        faces.extend([tuple(reversed(range(6))),tuple(range(len(verts)-6,len(verts)))])
+        objs.append(B._finish(name,verts,faces,tint,material,smooth=False))
+    skin("Pressed body",[(-2.1,.7,.37,.61,.72),(-1.81,.89,.29,.72,.86),(-.6,.92,.26,.75,.88),
+                         (.88,.91,.27,.73,.83),(1.73,.83,.31,.61,.69),(2.12,.69,.37,.53,.57)],color,concrete)
+    skin("Glazed cabin",[(-1.42,.75,.77,.81,.83),(-.67,.78,.82,1.18,1.42),
+                         (.29,.74,.80,1.23,1.46),(1.04,.76,.78,.84,.87)],"#253d48",glass)
+    objs.append(B.box("Painted roof",(.96,1.14,.064),(-.18,0,1.44),color=color,material=concrete,bevel=.03))
+    for side in (-1,1):
+        objs.append(B.tube("Window pillar",[(-.27,side*.78,.82),(-.31,side*.62,1.39)],.048,color,metal))
+        objs.append(B.tube("Belt trim",[(-1.47,side*.83,.79),(.79,side*.82,.80)],.024,"#929c9d",metal))
+        objs.append(B.box("Mirror",(.22,.19,.14),(.52,side*.94,1.02),color=color,material=metal,bevel=.04))
     for sx in (-1.3, 1.3):
         for sy in (-.78, .78):
             objs.append(B.cylinder("Wheel", .34, .22, (sx, sy, .34), rot=(math.pi / 2, 0, 0),
@@ -346,25 +233,50 @@ def viaduct():
     for px in range(-150, 151, 30):
         add(B.box("ViaPier", (2.2, 3.2, z - .3), (px, 5, (z - .3) / 2), color="#55544e", material=concrete, bevel=.04))
     # rails, sleepers, catenary
-    for sy in (-2.3, 2.3):
-        add(B.box("Rail", (320, .12, .12), (0, 5 + sy, z + .72), color="#8a8a86", material=metal))
-        for k in range(-156, 157, 10):
-            add(B.box("Sleeper", (1.2, .35, .08), (k, 5 + sy, z + .66), color="#6a665c", material=matte))
+    rail_head_width = .074
+    for side in (-1,1):
+        offset = side * (1.435 + rail_head_width) / 2
+        add(B.box("Rail", (320, rail_head_width, .12), (0, 5 + offset, z + .795), color="#8a8a86", material=metal))
+    sleepers = Batch()
+    for k in range(431):
+        sleepers.box((-159.1+k*.74,5,z+.6975),(.24,2.62,.075),"#787670")
+    add(sleepers.object("Cross-track concrete sleepers",matte))
     for px in range(-150, 151, 25):
         add(B.cylinder("CatPole", .12, 8.5, (px, 5 + 3.7, z + 4.9), segments=6, color="#4a4c50", material=metal))
         add(B.box("CatArm", (0.1, 3.4, .1), (px, 5 + 2.0, z + 8.9), color="#4a4c50", material=metal))
     for sy in (-2.3, 2.3):
         add(B.tube("CatWire", [(-158, 5 + sy, z + 8.7), (158, 5 + sy, z + 8.7)], .018, "#3e3f42", metal, segments=4))
-    # station
-    add(B.box("StationPlatform", (70, 8.0, .5), (-78, 5, z + .2), color="#6d6a60", material=stone))
-    add(B.box("StationRoof", (74, 9.0, .25), (-78, 5, z + 5.4), color="#2c3033", material=metal))
-    for px in range(-112, -43, 8):
-        add(B.box("StationCol", (.35, .35, 4.9), (px, 5, z + 2.9), color="#5d5d56", material=metal))
-        add(B.box("StationLight", (1.0, .25, .12), (px, 5, z + 5.1), color="#ffd9a0", material=lamp))
-    sign_on_side(-78, 5 - 4.2, z + 4.4, 8, 2.2, "south", "platform")
-    # stairs from street
-    for i in range(8):
-        add(B.box("StationStep", (4.0, 1.0, .35), (-30, 5 - 5.8 + i * .9, z - i * .55), color="#55544e", material=stone))
+    # The north platform joins a two-flight stair, on the west pedestrian side.
+    deck_top = z+1.18
+    add(B.box("StationPlatform",(96,6.4,.50),(-65,10.2,deck_top-.25),color="#858376",material=stone))
+    add(B.box("StationRoof",(97,6.6,.25),(-63.5,10.2,z+5.4),color="#485867",material=metal))
+    fixtures = Batch()
+    for px in range(-110,-13,8):
+        fixtures.box((px,10.7,z+3.25),(.30,.30,4.15),"#758789")
+        fixtures.box((px,8.35,z+5.21),(1.65,.21,.11),"#ebc79b")
+    fixtures.box((-65,7.66,deck_top+.014),(95.5,.31,.028),"#d5ab68")
+    steps=40
+    landing=.16+(deck_top-.16)/2
+    rise=(deck_top-.16)/(steps*2)
+    for level,(xx,direction) in enumerate(((-15.9,1),(-13.45,-1))):
+        start_y=8.12 if direction==1 else 21.12
+        for j in range(steps):
+            yy=start_y+direction*(j+.5)*.325
+            top=.16+(level*steps+j+1)*rise
+            fixtures.box((xx,yy,top-.13),(2.24,.331,.26),"#8d908a")
+            fixtures.box((xx,yy-direction*.142,top+.008),(2.15,.037,.016),"#c3b494")
+        for sx in (-1,1):
+            rail_x=xx+sx*1.09
+            for j in range(0,steps+1,5):
+                yy=start_y+direction*j*.325
+                foot=.16+(level*steps+j)*rise
+                fixtures.rod((rail_x,yy,foot-.05),(rail_x,yy,foot+1.02),.036,"#7e9290")
+            for dz in (.48,1.02):
+                fixtures.rod((rail_x,start_y,.16+level*steps*rise+dz),
+                             (rail_x,start_y+direction*13,.16+(level+1)*steps*rise+dz),.045,"#b5bdad")
+    fixtures.box((-15.27,7.53,deck_top-.15),(4.6,1.16,.30),"#88928c")
+    fixtures.box((-14.67,22.02,landing-.15),(4.72,1.8,.30),"#88928c")
+    add(fixtures.object("Platform tactile strip and switchback stairs",metal))
 
 
 def expressway():
@@ -381,7 +293,7 @@ def expressway():
     # cars
     for i in range(7):
         px = -110 + i * 34
-        car(px, -85 + (3.5 if i % 2 else -3.5), math.pi / 2 if i % 2 else -math.pi / 2,
+        car(px, -85 + (3.5 if i % 2 else -3.5), 0 if i % 2 else math.pi,
             ["#aeb7b6", "#2f3a40", "#6a2e2e", "#d4c6a2"][i % 4], 1.0, z + .75)
     # gantry sign
     add(B.box("Gantry", (26, .5, .5), (20, -85, z + 8), color="#3c3e42", material=metal))
@@ -454,27 +366,7 @@ def comm_tower():
 
 
 
-def street_neon_row():
-    keys = ["yeshi", "chalou", "shufang", "yingyuan", "bianli", "changluli", "mian", "huoguo", "yaodian", "neon_ye"]
-    for i, xx in enumerate((-34, -74, -108, 34, 74, 108)):
-        side = "east" if xx < 0 else "west"
-        key = keys[i % len(keys)]
-        sx = xx + (1 if xx < 0 else -1) * 16
-        sign_on_side(sx, -88 + i * 27, 5.6, 8.5, 2.2, side, key)
-        add(B.box("NeonBar", (.12, .12, 7.2), (sx + (1 if xx < 0 else -1) * .1, -92 + i * 27, 5.2),
-                  color="#ff4f8b" if i % 2 else "#53e0e0", material=neonPink if i % 2 else neonCyan))
-    # overhead gantry
-    for px in (-10, 10):
-        add(B.cylinder("GantryPole", .18, 10, (px, 18, 5), segments=8, color="#3c3e42", material=metal))
-    add(B.box("GantryBeam", (22, .4, .5), (0, 18, 10), color="#3c3e42", material=metal))
-    sign_on_side(0, 18.3, 8.6, 13, 3.2, "south", "changluli")
-    # giant led screen
-    add(B.box("LEDFrame", (22, .5, 12), (-24, -30, 18), color="#17181a", material=metal))
-    sign_on_side(-24, -29.7, 18, 20, 10, "south", "yeshi")
-    # reflection strips
-    for i, (px, py) in enumerate([(-9, -4), (9, -30), (-9, -56), (9, 12), (-9, 58), (9, 76)]):
-        add(B.box("Reflect", (1.6, 12, .02), (px, py, .12),
-                  color="#ff4f8b" if i % 2 else "#53e0e0", material=neonPink if i % 2 else neonCyan))
+
 
 def river():
     add_water(B.quad("Water_River", [(-160, 50, .05), (160, 50, .05), (160, 80, .05), (-160, 80, .05)],
@@ -513,27 +405,31 @@ def river():
 
 # ---------------------------------------------------------------- main
 def main():
-    add(B.ground_slab("CityBase", 320, 300, 9, colors=("#3c3a35", "#4a4740", "#565247", "#403e37")))
+    add(B.ground_slab("CityBase", 320, 300, 9, cap=False, colors=("#3c3a35", "#4a4740", "#565247", "#403e37")))
     add(B.terrain("CityTerrain", 320, 300, 64, 60, lambda x, y: 0.0,
                   lambda x, y, z: "#383a38" if abs(x) < 14 else ("#3d443c" if y > 90 else "#44443f"),
                   matte))
     # avenue
-    add(B.road_ribbon("Avenue", [(0, y) for y in range(-150, 151, 2)], 18, "#2b2d2f", matte, z=.06, crown=.02, segments_width=4))
+    wet = B.vmat("Rain darkened asphalt",.28,.13)
+    add(B.road_ribbon("Avenue", [(0, y) for y in range(-150, 151, 2)], 18, "#35434b", wet, z=.075, crown=0, segments_width=4))
     for x in (-12.5, 12.5):
-        add(B.road_ribbon("Sidewalk", [(x, y) for y in range(-150, 151, 2)], 5.5, "#4b4c49", stone, z=.16, crown=0, segments_width=2))
+        for start, end in [(-150,-85),(-75,-25),(-15,35),(45,150)]:
+            add(B.road_ribbon("Sidewalk", [(x,start),(x,end)], 5.5, "#4b4c49", stone, z=.18, crown=0, segments_width=2))
     for x in (-6, 0, 6):
-        add(B.road_line("Lane", [(x, y) for y in range(-150, 151, 4)], .12, "#bdb69a", matte, z=.09, dash=3.0))
+        add(B.road_line("Lane", [(x, y) for y in range(-150, 151, 4)], .12, "#bdb69a", matte, z=.135, dash=3.0))
     # cross streets
     for cy in (-80, -20, 40):
-        add(B.road_ribbon("CrossStreet", [(x, cy) for x in range(-160, 161, 2)], 10, "#2b2d2f", matte, z=.055, crown=.02, segments_width=3))
+        for start, end in [(-160,-9),(9,160)]:
+            add(B.road_ribbon("CrossStreet", [(start,cy),(end,cy)], 10, "#2b2d2f", matte, z=.075, crown=0, segments_width=3))
         for sx in (-13, 13):
             for k in range(9):
-                add(B.box("Crosswalk", (.7, 5.5, .03), (sx - 4 + k * 1.0, cy, .10), color="#c6c0a6", material=matte))
+                add(B.box("Crosswalk", (.7, 5.5, .03), (sx - 4 + k * 1.0, cy, .143), color="#c6c0a6", material=matte))
     # zebra at y=95
     for k in range(12):
-        add(B.box("Zebra", (1.0, 4.0, .03), (-8 + k * 1.45, 95, .10), color="#c6c0a6", material=matte))
+        add(B.box("Zebra", (1.0, 4.0, .03), (-8 + k * 1.45, 95, .143), color="#c6c0a6", material=matte))
 
-    street_neon_row()
+    from city_architecture import noodle_corner
+    add(noodle_corner())
     river()
     viaduct()
     expressway()
@@ -557,8 +453,7 @@ def main():
     ]
     for i, t in enumerate(towers):
         x, y, w, d, h, style, seed, key = t
-        billboard = key if h > 100 else None
-        tower(x, y, w, d, h, style, seed, sign_key=key, billboard=billboard)
+        tower(x, y, w, d, h, style, seed, sign_key=key)
     # distant silhouettes north and south
     for i in range(9):
         tower_simple(-140 + i * 34, -135 + rng.uniform(-6, 6), rng.uniform(12, 20), rng.uniform(12, 20),
@@ -587,9 +482,16 @@ def main():
         for yy in (54, 64, 76):
             street_lamp(sx, yy, 0, 5.5)
     # food street under viaduct
-    for i in range(5):
-        px = -30 + i * 13
-        add(B.box("Stall", (6, 3.2, 2.6), (px, 10.5, 1.3), color="#5b3a2c", material=matte, bevel=.03))
+    for i,px in enumerate((-39,-28,-16,17,30)):
+        add(B.box("Stall rear", (5.9,.18,2.63), (px,12.0,1.32), color="#71513d", material=matte, bevel=.03))
+        add(B.box("Stall counter", (5.8,.68,.95), (px,9.6,.48), color="#916647", material=matte, bevel=.03))
+        for sx in (-2.84,2.84):
+            add(B.cylinder("Canopy post",.065,2.87,(px+sx,9.02,1.44),color="#60726b",material=metal,segments=8))
+        for shelf in (.96,1.76):
+            add(B.box("Pantry shelf",(5.2,.4,.09),(px,11.65,shelf),color="#b08d65",material=matte))
+            for k in range(7):
+                add(B.cylinder("Pantry jars",.12,.27,(px-2.02+k*.66,11.48,shelf+.17),
+                               color=["#b98760","#dfbe79","#668474"][k%3],material=matte,segments=9))
         add(B.box("StallAwning", (6.8, 3.8, .12), (px, 10.5, 2.9), color="#8f3a2c" if i % 2 else "#35584d", material=matte))
         add(B.box("StallLight", (.6, .3, .16), (px, 8.7, 2.6), color="#ffd9a0", material=lamp))
     # plaza sculpture near river
@@ -599,7 +501,7 @@ def main():
                .12, "#ffc46b", neonWarm, segments=5, cyclic=True))
     # cars on avenue
     for i, (cx, cy) in enumerate([(5, 28), (-5, 12), (5, -8), (-5, 44), (5, 70)]):
-        car(cx, cy, 0 if i % 2 else math.pi, ["#b8b2a2", "#3a4a52", "#7a2e2e", "#2e3a33"][i % 4])
+        car(cx, cy, math.pi/2 if i%2 else -math.pi/2, ["#b8b2a2", "#3a4a52", "#93524d", "#2e3a33"][i % 4])
     # FX
     B.empty("FX_Hotspot", (-78, 5 - 4.2, 15.6))
     B.empty("FX_Smoke_1", (10, 10.5, 3.4))
@@ -612,6 +514,9 @@ def main():
             ALL.append(ob)
 
     B.join_materials("City", ALL)
+    from era_fixtures import install
+    install("city")
+    bpy.ops.file.pack_all()
     B.save_blend(os.path.join(B.ROOT, "assets", "zones", "city.blend"))
     B.export_glb(os.path.join(B.ROOT, "assets", "zones", "city.glb"))
     print("CITY EXPORTED", os.path.getsize(os.path.join(B.ROOT, "assets", "zones", "city.glb")))

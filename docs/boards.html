@@ -127,7 +127,7 @@
   /* finale */
   .b5 .grid{display:grid;grid-template-columns:1380px 1fr;gap:58px;margin-top:36px;flex:1;min-height:0}
   .b5 .big{height:1180px}
-  .b5 .big img{object-position:50% 42%}
+  .b5 .big img{object-position:12% 42%}
   .b5 .side{display:flex;flex-direction:column}
   .b5 .side h2{font-size:52px;line-height:1.35}
   .b5 .side .body{margin-top:22px}
@@ -137,210 +137,49 @@
   .list div{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid var(--faint);font-size:13px;letter-spacing:.05em}
   .list span{font-family:var(--sans);font-size:9px;letter-spacing:.16em;color:var(--soft);text-align:right}
   .seal{position:absolute;right:128px;bottom:92px;width:118px;height:118px;border:2px solid var(--red);color:var(--red);display:grid;place-items:center;font-size:25px;letter-spacing:.16em;line-height:1.25;text-align:center;transform:rotate(-2deg);z-index:3}
+
+  .poster-head{display:flex;justify-content:space-between;gap:80px;align-items:flex-end;margin:44px 0 35px}
+  .poster-head h2{max-width:1450px}.poster-head .body{max-width:655px}
+  .ch figure figcaption{display:none}.ch:nth-child(1) img{object-position:49% center}.ch:nth-child(2) img{object-position:58% center}
+  .ch:nth-child(3) img{object-position:50% center}.ch:nth-child(4) img{object-position:62% center}.ch:nth-child(5) img{object-position:68% center}
+  .heroimg img{object-fit:cover;object-position:49% center}
+  .detail-shots{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0 18px}.detail-shots figure{height:309px}
+  .b3 .shots{display:grid;grid-template-rows:auto 1fr;align-content:start}.b3 .shots figure:nth-child(1){height:543px}
+  .b3 .shots figure:nth-child(2),.b3 .shots figure:nth-child(3){max-height:340px}
+  .b3 .shots figure img{object-fit:contain;object-position:center;background:var(--paper2)}
+  .poster-head+.grid{margin-top:10px}.heroimg figcaption,.detail-shots figcaption,.big figcaption,.shots figcaption,.endthumb figcaption{background:rgba(26,29,27,.72);padding:5px 11px;color:#fff8e9;letter-spacing:.09em}
+
 </style>
 </head>
 <body>
-
-<!-- 01 · 概念 -->
 <section class="board b1">
-  <header class="top">
-    <div class="brand"><div class="mark">山河</div><div><b>山河织路</b><span>A LONG SCROLL OF TIME</span></div></div>
-    <div class="meta">2026 新锐设计竞赛 · 华灿奖<br>创意赛道 / 数字媒体设计</div>
-  </header>
-
-  <div class="hero">
-    <div>
-      <div class="eyebrow">一部可漫游的立体长卷</div>
-      <h1>山河<br>织路</h1>
-      <div class="en">ONE ROAD, FIVE CHINESE TIMES</div>
-      <p class="lede">一条路，把五段中国时间<br>织在一起。</p>
-      <p class="body" style="margin-top:26px;max-width:790px">
-        从田埂出发，穿过街市、城市与山河，最后通向星河。路不是背景，路是针脚——它把乡土与城市、旧日与未来、人与土地缝在一起。
-      </p>
-      <div class="fuse">
-        <div><b>时间的融合</b><span>五个时代由一条连续的路缝合，转场是“织过去”，不是“切过去”。</span></div>
-        <div><b>空间的融合</b><span>田埂、街市、都市、山河、太空并置成一轴立体长卷。</span></div>
-        <div><b>技术的融合</b><span>Blender 程序化建模 · WebGL 实时渲染 · 程序合成声音。</span></div>
-        <div><b>情感的融合</b><span>每个时代一件载具、一句“路上的人话”，宏大叙事落回日常。</span></div>
-      </div>
-      <div class="quote">所有远方，<em>都从脚下出发。</em></div>
-    </div>
-    <div>
-      <figure class="heroimg">
-        <img src="../qa/overview_crop.png" alt="五座时代之岛与红线总览">
-        <figcaption style="color:rgba(35,31,25,.6);text-shadow:none">展卷 · 五座时代之岛 / 一根红线</figcaption>
-      </figure>
-      <div class="isles">
-        <div><b>壹</b><em>1980s</em><span>田埂晨</span><i>路是走出来的。</i></div>
-        <div><b>贰</b><em>1990s</em><span>街市暮</span><i>路通向更大的世界。</i></div>
-        <div><b>叁</b><em>2010s</em><span>城夜雨</span><i>路把远方变成日常。</i></div>
-        <div><b>肆</b><em>2020s</em><span>山河速</span><i>路让山河彼此相拥。</i></div>
-        <div><b>伍</b><em>未来</em><span>星河远</span><i>路从脚下，通向星辰。</i></div>
-      </div>
-    </div>
-  </div>
-
-  <footer><span>01 / 05　概念 · 一条路的时间</span><span class="red">全流程原创 · 几何 / 贴图 / 声音 / 交互 / 影像</span><span>山河织路 · 2026</span></footer>
-</section>
-
-<!-- 02 · 五幕 -->
-<section class="board b2">
-  <header class="top">
-    <div class="brand"><div class="mark">五幕</div><div><b>山河织路</b><span>FIVE ISLANDS, ONE THREAD</span></div></div>
-    <div class="meta">02 / 05　五幕 · 载具与时代<br>320m × 300m × 5 座悬浮岛</div>
-  </header>
-
-  <div class="head">
-    <h2>五幕 · 时间在一条路上展开</h2>
-    <p class="body" style="width:700px">每一幕都是一座 320m 见方的立体微缩景观：地形、建筑、植被、人物的痕迹与一件载具。五座岛悬在纸白虚空里，被同一根红线缝住。</p>
-  </div>
-
-  <div class="chapters">
-    <div class="ch"><div class="dot"></div><figure><img src="../qa/h5_rural.png" alt="田埂晨"></figure><div class="num">壹</div><h3>田埂晨</h3><div class="year">1980s · 村口</div><div class="line">路是走出来的。</div><div class="veh">载具 / 人力车</div></div>
-    <div class="ch"><div class="dot"></div><figure><img src="../qa/h5_town.png" alt="街市暮"></figure><div class="num">贰</div><h3>街市暮</h3><div class="year">1990s · 街心</div><div class="line">路通向更大的世界。</div><div class="veh">载具 / 汽车</div></div>
-    <div class="ch"><div class="dot"></div><figure><img src="../qa/h5_city.png" alt="城夜雨"></figure><div class="num">叁</div><h3>城夜雨</h3><div class="year">2010s · 车窗</div><div class="line">路把远方变成日常。</div><div class="veh">载具 / 绿皮火车</div></div>
-    <div class="ch"><div class="dot"></div><figure><img src="../qa/h5_rail.png" alt="山河速"></figure><div class="num">肆</div><h3>山河速</h3><div class="year">2020s · 桥上</div><div class="line">路让山河彼此相拥。</div><div class="veh">载具 / 高速动车</div></div>
-    <div class="ch"><div class="dot"></div><figure><img src="../qa/h5_future.png" alt="星河远"></figure><div class="num">伍</div><h3>星河远</h3><div class="year">未来 · 星海</div><div class="line">路从脚下，通向星辰。</div><div class="veh">载具 / 重型火箭</div></div>
-  </div>
-
-  <div class="chorus">
-    <div class="q">从脚步到车轮，<br>从钢轨到星轨。<em>路在变，方向没变。</em></div>
-    <div><b>五件载具</b><span>人力车 · 汽车 · 绿皮火车<br>高速动车 · 重型火箭</span></div>
-    <div><b>五种速度</b><span>4 km/h · 60 km/h · 120 km/h<br>350 km/h · 逃逸速度</span></div>
-    <div><b>一条红线</b><span>在纸白虚空中<br>把五座岛缝成一轴长卷</span></div>
-  </div>
-
-  <footer><span>02 / 05　五幕 · 一条红线穿过五种速度</span><span>低饱和纸感 · 真实构造细节 · 同一套光照语法</span><span>山河织路 · 2026</span></footer>
-</section>
-
-<!-- 03 · 交互 -->
-<section class="board b3">
-  <header class="top">
-    <div class="brand"><div class="mark">漫游</div><div><b>山河织路</b><span>WALK INTO THE SCROLL</span></div></div>
-    <div class="meta">03 / 05　交互 · 漫游 / 拾光 / 展卷<br>PC + 移动端 · 键盘 / 滚轮 / 触摸</div>
-  </header>
-
-  <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;margin:34px 0 0">
-    <h2>交互 · 走进去，而不是观看</h2>
-    <p class="body" style="width:720px">滚动或上滑让镜头沿红线前进；点击载具旁的“拾光”展开纸卡；右上角“展卷”拉到纸白虚空，五座岛尽收眼底；终点写下愿望，点亮火箭。</p>
-  </div>
-
-  <div class="grid">
-    <div>
-      <div class="journey">
-        <div class="step"><div class="k">01 / 启程</div><b>落在田埂上空</b><p>点击“启程”，红线从画面里穿出，镜头俯冲入村。</p></div>
-        <div class="step"><div class="k">02 / 漫游</div><b>沿红线前进</b><p>滚轮 / 触摸上滑前进，下滑回望；拖动改变视线；章节标题与年份淡入。</p></div>
-        <div class="step"><div class="k">03 / 拾光</div><b>点击载具</b><p>人力车、汽车、车窗、桥塔、火箭，各有一张纸卡与一句“路上的人话”。</p></div>
-        <div class="step"><div class="k">04 / 展卷</div><b>俯瞰五座岛</b><p>镜头升到纸白虚空，红线把五座岛连成一轴；点击任一岛跳回该幕。</p></div>
-        <div class="step"><div class="k">05 / 放灯</div><b>为未来点一盏灯</b><p>写下或选择一句愿望，火箭升空，孔明灯与星屑一起升起，愿望随灯飘远。</p></div>
-      </div>
-      <div class="gestures">
-        <div class="chip"><b>SCROLL</b>滚动 / 上滑前进</div>
-        <div class="chip"><b>DRAG</b>拖动回望</div>
-        <div class="chip"><b>CLICK</b>点击拾光</div>
-        <div class="chip"><b>ESC</b>退出展卷</div>
-        <div class="chip"><b>A11Y</b>减少动态 / 键盘可达</div>
-      </div>
-    </div>
-    <div class="shots">
-      <figure><img src="../qa/ui_card.png" alt="拾光纸卡"><figcaption>拾光 · 一张纸卡，一句人话</figcaption></figure>
-      <figure class="map"><img src="../qa/overview_crop.png" alt="展卷总览"><figcaption style="color:rgba(35,31,25,.62);text-shadow:none">展卷 · 五座岛与一根红线</figcaption></figure>
-      <figure><img src="../qa/ui_finale_prompt.png" alt="为未来放灯"><figcaption>放灯 · 终点写下愿望</figcaption></figure>
-    </div>
-  </div>
-
-  <div class="notes">
-    <div><b>移动端</b><span>DPR 上限 1.5 · 触摸上滑 · 纸卡自适应屏宽 · 低性能自动关闭泛光</span></div>
-    <div><b>可及性</b><span>方向键 / 空格漫游 · Esc 退出展卷 · 尊重 prefers-reduced-motion</span></div>
-    <div><b>克制</b><span>默认静音 · 无强制引导 · 每幕只有一个拾光点，不打断漫游</span></div>
-  </div>
-
-  <footer><span>03 / 05　交互 · 四种动作，一条连续的线</span><span>默认安静 · 声音可关 · 低性能设备自动降级</span><span>山河织路 · 2026</span></footer>
-</section>
-
-<!-- 04 · 工艺 -->
-<section class="board b4">
-  <header class="top">
-    <div class="brand"><div class="mark">工艺</div><div><b>山河织路</b><span>HANDMADE MODEL, REAL-TIME</span></div></div>
-    <div class="meta">04 / 05　技术 · 程序化建模 / 实时渲染<br>无外部模型 · 无外部图片 · 无外部音乐</div>
-  </header>
-
-  <div class="head" style="display:flex;justify-content:space-between;align-items:flex-end;margin:34px 0 0">
-    <h2>工艺 · 手作模型的数字实现</h2>
-    <p class="body" style="width:760px">所有几何由 Blender 4.2 Python 脚本生成；所有贴图由脚本绘制；所有声音由 WebAudio 实时合成。没有下载的模型、图片或音乐。</p>
-  </div>
-
-  <div class="grid">
-    <div>
-      <div class="pipe">
-        <div class="p"><div class="n">01 / MODEL</div><div><b>程序化建模</b><p>自建构件库：瓦屋顶、窗棂、阳台、空调、电线、桁架、斜拉索、火箭喷管；按材质合并，导出 glTF。</p></div></div>
-        <div class="p"><div class="n">02 / SCENE</div><div><b>五座 320m 岛</b><p>独立 GLB 置于同一条世界轴线，间隔 120m 纸白虚空；地形、建筑、植被、人物痕迹同源。</p></div></div>
-        <div class="p"><div class="n">03 / REAL-TIME</div><div><b>Three.js r169</b><p>连续相机曲线 + 章节时间轴；天空 / 雾 / 光照随章节插值；水面、雨、烟、星、孔明灯；Bloom + 纸纹 + 暗角。</p></div></div>
-        <div class="p"><div class="n">04 / SOUND</div><div><b>程序合成声音</b><p>五段可循环的时代氛围随章节交叉淡化；风声、车铃、火车、火箭由 WebAudio 节点合成，默认静音。</p></div></div>
-        <div class="p"><div class="n">05 / SHIP</div><div><b>在线 + 离线</b><p>几何量化为 Meshopt，在线版约 12MB；单文件离线版内嵌全部资产，双击即可观看。</p></div></div>
-      </div>
-      <div class="craft-quote">“不做写实照片感，也不做低幼低多边形。<br>用真实构造细节，撑起<em>手作模型</em>的可信度。”</div>
-    </div>
-    <div>
-      <div class="stats">
-        <div class="stat"><b>5</b><span>时代之岛<br>320m × 300m each</span></div>
-        <div class="stat"><b>5</b><span>原创载具<br>1.8m — 200m</span></div>
-        <div class="stat"><b>12MB</b><span>在线首包<br>全量 5 岛 + 5 载具</span></div>
-      </div>
-      <figure class="craftshot"><img src="../qa/h5_rail.png" alt="山河速"><figcaption>山河速 · 斜拉桥 / 动车 / 晨雾</figcaption></figure>
-      <div class="small" style="margin-bottom:10px">视觉系统 / 纸白 · 墨 · 中国红 · 五个时代的色温</div>
-      <div class="palette">
-        <div class="sw" style="background:#f3ecdf"><span>纸白 #F3ECDF</span></div>
-        <div class="sw" style="background:#231f19"><span>墨 #231F19</span></div>
-        <div class="sw" style="background:#a8332a"><span>中国红 #A8332A</span></div>
-        <div class="sw" style="background:#6d7a4e"><span>秧绿 #6D7A4E</span></div>
-        <div class="sw" style="background:#b1784a"><span>琥珀 #B1784A</span></div>
-        <div class="sw" style="background:#2b3c55"><span>夜蓝 #2B3C55</span></div>
-        <div class="sw" style="background:#6fb6ae"><span>极光青 #6FB6AE</span></div>
-      </div>
-      <div class="spec">
-        <div><b>建模</b>Blender 4.2 / Python / 自建 blib 构件库</div>
-        <div><b>渲染</b>Three.js / 自定义纸张与墨线后期</div>
-        <div><b>资产</b>glTF + Meshopt + WebP 纹理</div>
-        <div><b>帧率</b>桌面 1080p 目标 60fps；移动端降级</div>
-        <div><b>影像</b>确定性帧渲染 / Playwright + FFmpeg</div>
-        <div><b>可复现</b>脚本 / 资产 / 构建命令随源提交</div>
-      </div>
-      <div class="budget"><span>桌面 1080p / 目标 60fps</span><span>移动端 DPR 1.5 / 自动降级</span><span>在线首包 12MB / Meshopt</span></div>
-    </div>
-  </div>
-
-  <footer><span>04 / 05　工艺 · 每一块瓦、每一根线都可追溯</span><span>技术不是装饰，技术是质感本身</span><span>山河织路 · 2026</span></footer>
-</section>
-
-<!-- 05 · 尾声 -->
-<section class="board b5">
-  <header class="top">
-    <div class="brand"><div class="mark">尾声</div><div><b>山河织路</b><span>LIGHT A LAMP FOR THE FUTURE</span></div></div>
-    <div class="meta">05 / 05　尾声 · 为未来放灯<br>All the distances begin under our feet.</div>
-  </header>
-
-  <div class="grid">
-    <figure class="big"><img src="../qa/finale_clean.png" alt="火箭升空"><figcaption>星河远 · 火箭升空 / 为未来放一盏灯</figcaption></figure>
-    <div class="side">
-      <div class="eyebrow">终点站 · 星河港</div>
-      <h2>把宏大叙事<br>收束为一次点击。</h2>
-      <p class="body">在终点，输入或选择一句愿望，点亮火箭。孔明灯与星屑一起升起，愿望以纸上小字随灯飘远。所有远方，都从脚下出发。</p>
-      <figure class="endthumb"><img src="../qa/ui_end.png" alt="尾声"><figcaption>尾声 · 所有远方，都从脚下出发</figcaption></figure>
-      <div class="list">
-        <div>实时 H5 · 在线 + 离线单文件<span>PC / MOBILE</span></div>
-        <div>1080p 演示视频 · 约 1 分 42 秒 · 原创配乐<span>MP4 / H.264 + AAC</span></div>
-        <div>设计展板 · 5 张<span>2400 × 1500</span></div>
-        <div>交互流程图 / 设计说明<span>PDF</span></div>
-        <div>源文件与构建脚本<span>BLEND / PY / JS</span></div>
-      </div>
-      <div class="quote" style="font-size:27px;margin-top:30px">所有远方，<em>都从脚下出发。</em></div>
-    </div>
-  </div>
-
-  <div class="seal">山河<br>织路</div>
-  <footer><span>05 / 05　尾声 · 一条路，把五段中国时间织在一起</span><span>全流程原创 · 2026 华灿奖</span><span>山河织路 · 2026</span></footer>
-</section>
-
+<header class="top"><div class="brand"><div class="mark">山河</div><div><b>山河织路</b><span>A LONG SCROLL OF TIME</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>01 / 05　概念与入口</div></header>
+<div class="hero"><div><div class="eyebrow">一部可漫游的立体长卷</div><h1>山河<br>织路</h1><div class="en">ONE ROAD THROUGH FIVE ERAS</div>
+<p class="lede">“到了，<br>给家里捎个信。”</p>
+<p class="body" style="max-width:740px;margin-top:28px">小禾小时候坐绿皮车回家，隔着雨窗就认出妈妈的伞。多年后，女儿从星河港出发，轮到小禾守着一句平安。一家四代人的五封信，从田埂一直捎到星河。</p>
+<div class="fuse"><div><b>等人回家</b><span>外婆走田埂，天黑靠门口的灯认路。小禾坐动车过江，能赶回去给妈妈擀面。</span></div><div><b>写信的人</b><span>妈妈曾是留灯的孩子。到了小禾的女儿出发那天，几代人都站过送别的那个位置。</span></div></div></div>
+<div><figure class="heroimg"><img src="../qa/edition/final/rural-route.jpg" alt="壹 · 田埂晨　/　从一车晚稻启程"><figcaption>壹 · 田埂晨　/　从一车晚稻启程</figcaption></figure><div class="isles"><div><b>壹</b><em>1980s</em><span>田埂晨</span><i>人力车</i></div><div><b>贰</b><em>1990s</em><span>街市暮</span><i>方灯轿车</i></div><div><b>叁</b><em>2010s</em><span>城夜雨</span><i>绿皮火车</i></div><div><b>肆</b><em>2020s</em><span>山河速</span><i>跨江动车</i></div><div><b>伍</b><em>未来</em><span>星河远</span><i>重型火箭</i></div></div></div></div>
+<footer><span>01 / 05　作品概念</span><span>实时交互 · PC / 移动端</span><span>山河织路 · 2026</span></footer></section>
+<section class="board b2"><header class="top"><div class="brand"><div class="mark">五幕</div><div><b>山河织路</b><span>FIVE ACTS</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>02 / 05　五个时代的生活场景</div></header>
+<div class="poster-head"><h2>小禾家的五封信</h2><p class="body">字条留在灶边，票根托人捎回，短信从晚点的车上发出。每一幕里，都有一个写信的人和一个等消息的人。</p></div>
+<div class="chapters"><div class="ch"><div class="dot"></div><figure class=""><img src="../qa/edition/final/rural-route.jpg" alt="田埂晨"><figcaption>田埂晨</figcaption></figure><div class="num">壹</div><h3>田埂晨</h3><div class="year">1980s</div><div class="line">外婆留下字条去赶早市。“粥在锅里，门口那盏灯记得点。”</div><div class="veh">载具 / 人力车</div></div><div class="ch"><div class="dot"></div><figure class=""><img src="../qa/edition/final/town-route.jpg" alt="街市暮"><figcaption>街市暮</figcaption></figure><div class="num">贰</div><h3>街市暮</h3><div class="year">1990s</div><div class="line">妈妈在电影票背面写给外婆。“妈，我到县城了。下回带你坐前排。”</div><div class="veh">载具 / 方灯轿车</div></div><div class="ch"><div class="dot"></div><figure class=""><img src="../qa/edition/final/city-route.jpg" alt="城夜雨"><figcaption>城夜雨</figcaption></figure><div class="num">叁</div><h3>城夜雨</h3><div class="year">2010s</div><div class="line">小禾隔着雨窗给妈妈发短信。“车还没停稳，我就认出了你的伞。”</div><div class="veh">载具 / 绿皮火车</div></div><div class="ch"><div class="dot"></div><figure class=""><img src="../qa/edition/final/rail-route.jpg" alt="山河速"><figcaption>山河速</figcaption></figure><div class="num">肆</div><h3>山河速</h3><div class="year">2020s</div><div class="line">妈妈听说小禾要回家做饭。“面粉在第二格。今天等你回来擀面。”</div><div class="veh">载具 / 跨江动车</div></div><div class="ch"><div class="dot"></div><figure class=""><img src="../qa/edition/final/future-route.jpg" alt="星河远"><figcaption>星河远</figcaption></figure><div class="num">伍</div><h3>星河远</h3><div class="year">未来</div><div class="line">女儿在点火前给小禾留言。“妈，今晚换你抬头找我。”</div><div class="veh">载具 / 重型火箭</div></div></div>
+<div class="chorus"><div class="q">从村口的<em>木轮</em>，<br>到江面上的钢轨。</div><div><b>人手留下的痕迹</b><span>麻袋缠绳、竹筛经纬、成叠的报纸。</span></div><div><b>工程的尺度</b><span>桥腹桁件、分离的钢轨、向两端散开的斜拉索。</span></div><div><b>旅途的终点</b><span>在星河港摊开沿途留下的信，亲自给写信的人回一句。</span></div></div>
+<footer><span>02 / 05　作品实景</span><span>人力车 / 轿车 / 绿皮车 / 动车 / 火箭</span><span>山河织路 · 2026</span></footer></section>
+<section class="board b3"><header class="top"><div class="brand"><div class="mark">漫游</div><div><b>山河织路</b><span>INTERACTION</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>03 / 05　体验顺序与操作</div></header>
+<div class="poster-head"><h2>观众决定在哪里停留</h2><p class="body">轻拨滚轮前行。临近信里的地点，镜头放慢，书页展开。观众可以自由经过五幕，也可以停下来，把想回复的那一封留到终点。</p></div>
+<div class="grid"><div><div class="journey">
+<div class="step"><div class="k">01 / 启程</div><b>进入长卷</b><p>女儿问妈妈会在哪里看点火。小禾翻开旧书。</p></div><div class="step"><div class="k">02 / 漫游</div><b>沿路前行</b><p>在岛间可停可退。桥上松手，仍能看到列车驶进两岸山洞。</p></div><div class="step"><div class="k">03 / 停留</div><b>拆开家信</b><p>到达信中的地方，书页在中央展开。合上继续，或留一封到终点。</p></div><div class="step"><div class="k">04 / 展卷</div><b>俯瞰五座岛</b><p>点哪座岛，就从那里的远景推近。也可返回原处。</p></div><div class="step"><div class="k">05 / 回信</div><b>把回话捎回去</b><p>对着原信写一句话。点亮火箭，或直接看往来两句话。</p></div></div><div class="gestures"><div class="chip"><b>WASD / C</b>第一幕步行 / 低身</div><div class="chip"><b>ESC</b>返回</div><div class="chip"><b>M</b>切换声音</div></div></div>
+<div class="shots"><figure class=""><img src="../qa/optimized/desktop-overview.png" alt="展卷 · 选择一座岛"><figcaption>展卷 · 选择一座岛</figcaption></figure><figure class=""><img src="../qa/edition/final/card.jpg" alt="县城 · 电影票背面"><figcaption>县城 · 电影票背面</figcaption></figure><figure class=""><img src="../qa/edition/final/wish.jpg" alt="终点 · 给妈妈回信"><figcaption>终点 · 给妈妈回信</figcaption></figure></div></div>
+<div class="notes"><div><b>移动端</b><span>触摸漫游，步行时显示方向控件。</span></div><div><b>可及性</b><span>键盘焦点、弹层返回和系统减少动态。</span></div><div><b>本机偏好</b><span>首次静音，已拾光章节和声音偏好随本机保存。</span></div></div>
+<footer><span>03 / 05　交互流程</span><span>桌面键鼠 / 触摸操作</span><span>山河织路 · 2026</span></footer></section>
+<section class="board b4"><header class="top"><div class="brand"><div class="mark">工艺</div><div><b>山河织路</b><span>MODEL / SURFACE / LIGHT</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>04 / 05　构造与美术规范</div></header>
+<div class="poster-head"><h2>把细节放在眼睛会停留的地方</h2><p class="body">近处画出墙皮、瓦楞与雨伞的折线，街巷和桥梁承担空间，云层和山脊退到远处。五幕共用三阶明暗与随距离减淡的轮廓。</p></div>
+<div class="grid"><div><div class="pipe"><div class="p"><div class="n">01 / 农具</div><div><b>谷站与收稻人</b><p>白墙露出旧灰泥，谷筛和麻袋摆在檐下。土路边沿是倒向一侧的稻草。</p></div></div><div class="p"><div class="n">02 / 街市</div><div><b>果摊与楼上住家</b><p>条纹篷、木筐和水果有真实体积，楼上画有阳台、衣物与窗台花盆。</p></div></div><div class="p"><div class="n">03 / 桥梁</div><div><b>跨江动车与双线轨道</b><p>松林沿坡展开，阔叶树聚在水边。列车穿过石券拱口，进到山体里的隧道。</p></div></div><div class="p"><div class="n">04 / 星港</div><div><b>弧顶温室与种植台</b><p>育苗盘、灌溉管和补光灯布在拱窗下。温室外，银绿和暖铜色庭树沿水岸栽植。</p></div></div></div><div class="craft-quote">绘景采用 AI 辅助制作。列车沿用《轨上清风》，树木选自 Quaternius 的 CC0 模型，乡村保留 CC0 基础材质。来源见<em>设计说明</em>。</div></div>
+<div><div class="stats"><div class="stat"><b>12 节</b><span>每列过桥动车</span></div><div class="stat"><b>1.435 m</b><span>模型中的轨距</span></div><div class="stat"><b data-offline-size>50.8 MiB</b><span>离线交互作品</span></div></div><div class="detail-shots"><figure class=""><img src="../qa/edition/final/granary-front.jpg" alt="谷站与收稻人"><figcaption>谷站与收稻人</figcaption></figure><figure class=""><img src="../qa/edition/final/produce-stall.jpg" alt="果摊与阳台"><figcaption>果摊与阳台</figcaption></figure><figure class=""><img src="../qa/edition/final/rail-route.jpg" alt="双线桥与两岸"><figcaption>双线桥与两岸</figcaption></figure><figure class=""><img src="../qa/edition/final/winter-garden.jpg" alt="温室与种植步道"><figcaption>温室与种植步道</figcaption></figure></div>
+<div class="palette"><div class="sw" style="background:#f3ecdf"><span>纸白 #F3ECDF</span></div><div class="sw" style="background:#231f19"><span>墨 #231F19</span></div><div class="sw" style="background:#a8332a"><span>朱红 #A8332A</span></div><div class="sw" style="background:#6d7a4e"><span>稻田灰绿 #6D7A4E</span></div><div class="sw" style="background:#b1784a"><span>集市琥珀 #B1784A</span></div><div class="sw" style="background:#2b3c55"><span>城市夜蓝 #2B3C55</span></div><div class="sw" style="background:#6fb6ae"><span>星港青 #6FB6AE</span></div></div></div></div>
+<footer><span>04 / 05　模型工艺与色彩</span><span>Blender · Three.js · WebGL 2</span><span>山河织路 · 2026</span></footer></section>
+<section class="board b5"><header class="top"><div class="brand"><div class="mark">尾声</div><div><b>山河织路</b><span>LETTERS FROM HOME</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>05 / 05　在星河港回信</div></header>
+<div class="grid"><figure class="big"><img src="../qa/edition/final/launch.jpg" alt="星河远 · 发射段实时画面"><figcaption>星河远 · 发射段实时画面</figcaption></figure><div class="side"><div class="eyebrow">终点站 / 星河港</div><h2>这一次，<br>轮到你回信。</h2><p class="body">女儿说，今晚换你抬头找我。在星河港给写信的人回一句，再从塔下看火箭越飞越远。天空里亮起一颗心，尾声把来信和回话留在同一页。</p><figure class="endthumb"><img src="../qa/edition/final/end.jpg" alt="尾声 · 来信与回话"><figcaption>尾声 · 来信与回话</figcaption></figure>
+<div class="list"><div>交互作品<span>PC / 移动端 · WebGL 2</span></div><div>演示影像<span>1920 × 1080 · 24 fps · 102 s</span></div><div>展板<span>2400 × 1500 · 五张</span></div><div>随附说明<span>设计说明 / 交互流程图</span></div></div><div class="quote">“票根<em>我收好了。</em>”</div></div></div><div class="seal">山河<br>织路</div><footer><span>05 / 05　尾声</span><span>灯火与归途</span><span>山河织路 · 2026</span></footer></section>
 </body>
 </html>

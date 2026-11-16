@@ -1,0 +1,7 @@
+Earth Clouds — Solar System Scope / INOVE
+Source: https://www.solarsystemscope.com/textures/
+Original file: https://www.solarsystemscope.com/textures/download/8k_earth_clouds.jpg
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+License URL: https://creativecommons.org/licenses/by/4.0/
+Downloaded 2026-11-12. The original 8192 x 4096 texture is included without image edits.
+Used as cloud-density and shadow data; rendered with layered lighting, opacity, atmospheric tint and perspective in the live Earth epilogue of 山河织路.

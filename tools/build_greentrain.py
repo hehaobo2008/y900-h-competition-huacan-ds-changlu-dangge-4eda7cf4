@@ -108,7 +108,7 @@ def carriage(cy, length=24.0, is_loco=False):
     for by in (-length / 2 + 4.0, length / 2 - 4.0):
         add(B.box("Bogie", (2.2, 3.2, .55), (0, cy + by, .48), color="#292a27", material=under, bevel=.04))
         for wy in (-1.0, 1.0):
-            for wx in (-1.05, 1.05):
+            for wx in (-.78, .78):
                 add(B.cylinder("Wheel", .44, .26, (wx, cy + by + wy, .44), rot=(0, math.pi / 2, 0),
                                segments=14, color="#141513", material=metal))
             add(B.cylinder("Axle", .11, 2.3, (0, cy + by + wy, .44), rot=(0, math.pi / 2, 0),
@@ -164,8 +164,8 @@ def locomotive(cy, length=20.0):
     for by in (-length/2 + 3.5, length/2 - 3.5):
         add(B.box("Bogie", (2.2, 3.3, .55), (0, cy + by, .48), color="#292a27", material=under, bevel=.04))
         for wy in (-1.0, 1.0):
-            for wx in (-1.05, 1.05):
-                add(B.cylinder("Wheel", .46, .26, (wx, cy + by + wy, .44), rot=(0, math.pi/2, 0),
+            for wx in (-.78, .78):
+                add(B.cylinder("Wheel", .46, .26, (wx, cy + by + wy, .46), rot=(0, math.pi/2, 0),
                                segments=14, color="#141513", material=metal))
     # cab steps
     for sx in (-1.2, 1.2):
@@ -179,7 +179,7 @@ def locomotive(cy, length=20.0):
 def main():
     # four carriages + loco at the front, line centred at origin
     # loco from y=38..58, carriages behind
-    locomotive(48)
+    locomotive(42.5)
     for i in range(4):
         carriage(20 - i * 25.0)
     # a pantograph on carriage 2
@@ -189,10 +189,10 @@ def main():
     add(B.tube("PantoArm", [(-.65, cy + 2, 4.2), (0, cy + 1.2, 5.3), (.65, cy + 2, 4.2)],
                .035, "#3a3a35", metal, segments=4))
     add(B.tube("PantoBar", [(-.9, cy + 1.4, 5.3), (.9, cy + 1.4, 5.3)], .035, "#3a3a35", metal, segments=4))
-    # headlight glow on loco
-    add(B.sphere("HeadGlow", .35, (0, 58.2, 1.65), scale=(2.2, .5, .8), color="#fff0c0", material=head,
-                 segments=10, rings=6))
+    add(B.box("Drawbar",(.34,.92,.22),(0,32.42,.82),color="#474842",material=metal))
     joined = B.join_materials("GreenTrain", ALL, skip_prefixes=())
+    from era_fixtures import install
+    joined.extend(install("green_train"))
     root = B.empty("GreenTrainRoot", (0, 0, 0))
     for ob in joined:
         ob.parent = root

@@ -1,0 +1,31 @@
+{
+  "title": "Stylized Nature MegaKit",
+  "author": "Quaternius",
+  "edition": "Standard (68-model free edition)",
+  "license": "CC0-1.0",
+  "source": "https://quaternius.com/packs/stylizednaturemegakit.html",
+  "distribution": "https://opengameart.org/content/stylized-nature-megakit",
+  "archiveSha256": "298f6732b872e4cf7b30e6e7abf9641c7f6dc6b326df37ac089533ed7e3d58c9",
+  "modelsByChapter": {
+    "town": [
+      "CommonTree_1",
+      "CommonTree_2"
+    ],
+    "city": [
+      "CommonTree_3",
+      "CommonTree_4"
+    ],
+    "rail": [
+      "CommonTree_5",
+      "Pine_2",
+      "Pine_3",
+      "Pine_4"
+    ],
+    "future": [
+      "TwistedTree_1",
+      "TwistedTree_2",
+      "TwistedTree_4",
+      "TwistedTree_5"
+    ]
+  }
+}

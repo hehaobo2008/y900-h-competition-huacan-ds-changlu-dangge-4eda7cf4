@@ -5,7 +5,7 @@ const browser = await chromium.launch({headless:true, executablePath:process.env
 const page = await browser.newPage({viewport:{width:1280,height:720},deviceScaleFactor:1});
 const errors=[];
 page.on('pageerror', e=>errors.push(e.message));
-await page.goto('http://127.0.0.1:18371/?capture=1', {waitUntil:'networkidle'});
+await page.goto(new URL('?capture=1',process.env.CAPTURE_URL || 'http://127.0.0.1:8137/').href, {waitUntil:'networkidle'});
 await page.waitForFunction(()=>window.__ready || window.__error);
 await page.waitForTimeout(1600);
 await page.evaluate(()=>{__changlu.start();__changlu.setProgress(.1);__changlu.settle(40);__changlu.advance(.016);});
@@ -40,6 +40,6 @@ await page.locator('[data-ch="1"]').click();
 await page.waitForFunction(()=>__changlu.state.progress > .25,null,{timeout:10000});
 assert.equal(errors.length,0,errors.join('\n'));
 const result={before,after,crouched,lookBefore,lookAfter,afterTransition:await page.evaluate(()=>__changlu.info()),errors};
-fs.writeFileSync('qa/rural_realism/walk_check.json',JSON.stringify(result,null,2));
+fs.writeFileSync(process.env.WALK_REPORT || 'qa/rural_realism/walk_check.json',JSON.stringify(result,null,2));
 console.log(JSON.stringify(result,null,2));
 await browser.close();

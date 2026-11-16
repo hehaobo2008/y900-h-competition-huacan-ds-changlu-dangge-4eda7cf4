@@ -2,7 +2,7 @@ import { chromium } from 'playwright';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 const root = process.cwd();
-const browser = await chromium.launch({ headless: true, executablePath: 'C:/Users/HC/AppData/Local/ms-playwright/chromium-1234/chrome-win64/chrome.exe' });
+const browser = await chromium.launch({ headless: true, executablePath: process.env.CHROME || chromium.executablePath() });
 for (const [src, out, landscape] of [
   ['docs/flow.html', 'docs/交互流程图.pdf', true],
   ['docs/design.html', 'docs/设计说明.pdf', false],

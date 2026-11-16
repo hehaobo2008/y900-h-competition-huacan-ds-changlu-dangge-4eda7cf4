@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4f1e9">
+<meta name="description" content="五件纸上旧物，记录一家三代的回家路。从田埂到星河，以时代的变化映照远行与团圆。">
+<title>山河织路 · 一部可漫游的立体长卷</title>
+<link rel="icon" href="./assets/textures/seal.png">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body data-mode="loading">
+<svg class="svg-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24"><path d="m12 4-5 4H3v8h4l5 4V4Zm4 4c2 2 2 6 0 8m3-11c4 4 4 10 0 14"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="1"/><path d="m3 6 9 7 9-7M3 18l6-5m12 5-6-5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24"><path d="M4 9V4h5m6 0h5v5M4 15v5h5m6 0h5v-5"/></symbol>
+</defs></svg>
+<div id="app">
+  <div id="world"><canvas id="gl" aria-label="五座时代之岛组成的三维山河长卷"></canvas>
+    <div class="world-top"><span class="live-dot"></span>实时三维长卷<span>SCENE 01 / 05</span></div>
+    <div class="world-caption"><span>壹 · 田埂晨 <i>1980s</i></span><span>外婆留了一张字条。</span></div>
+    <div class="world-coordinate" aria-hidden="true">山川为纸，岁月成卷</div>
+  </div>
+  <div id="grain" aria-hidden="true"></div><div id="ink" aria-hidden="true"></div>
+
+  <section id="loading" class="screen" aria-label="正在加载作品">
+    <div class="load-inner"><div class="load-seal">织</div><span class="overline">SHAN HE · A JOURNEY THROUGH TIME</span>
+      <div class="load-brand">正在展开山河<span>请稍候，远方正在抵达。</span></div>
+      <div class="load-line" role="progressbar" aria-label="场景加载进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="loadFill"></i></div>
+      <div class="load-meta"><span id="loadStatus">准备五座时代之岛</span><span id="loadPct">0%</span></div>
+      <p class="load-note">五段时间，一路相逢。</p>
+    </div>
+  </section>
+  <section id="errorScreen" class="screen hidden" role="alert" inert>
+    <div class="load-inner"><div class="load-seal">路</div><span class="overline">旅程暂未展开</span><h2>山河，还在等你。</h2><p>画面暂时没能展开，请重新尝试。</p><button id="retryBtn" class="solid-btn" type="button">继续展开 <svg><use href="#i-arrow"/></svg></button></div>
+  </section>
+
+  <section id="landing" class="screen hidden" inert aria-labelledby="workTitle">
+    <header class="landing-header"><a class="wordmark" href="./" aria-label="山河织路首页"><span class="small-seal">山<br>河</span><span>山河织路<small>SHAN HE · ZHI LU</small></span></a>
+      <nav aria-label="作品导航"><span class="nav-current">作品 · 2026</span><button id="landingOverviewBtn" type="button">五幕长卷 <svg><use href="#i-grid"/></svg></button><button id="landingInfoBtn" type="button">关于作品 <svg><use href="#i-info"/></svg></button></nav>
+    </header>
+    <div class="landing-inner"><div class="eyebrow"><span class="eyebrow-line"></span>一部可漫游的立体长卷</div>
+      <div class="title-row"><h1 id="workTitle" class="title">山河<br><span>织路</span></h1><span class="vertical-note">以路为线 · 以时代为卷</span></div>
+      <p class="subtitle">回家吃饭 · 一家人的远行与归途</p>
+      <p class="poem">外婆、妈妈、宁宁，三代人的回家路。<br>从田埂到星河，都记着回家吃饭。</p>
+      <div class="landing-cta"><button id="startBtn" class="solid-btn" type="button">展开长卷 <svg><use href="#i-arrow"/></svg></button><button id="landingSoundBtn" class="landing-sound" type="button" aria-pressed="false"><svg><use href="#i-sound"/></svg><span>开启声音</span></button></div>
+      <div class="gesture-hint"><span class="mouse-glyph"></span>轻滑前行 · 点开沿途的旧物</div>
+    </div>
+    <div class="chapter-gallery" aria-label="选择一幕开始漫游">
+      <button data-entry="0" type="button"><span class="gallery-number">01 <i>1980s</i></span><span class="gallery-title">田埂晨 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc"></span></button>
+      <button data-entry="1" type="button"><span class="gallery-number">02 <i>1990s</i></span><span class="gallery-title">街市暮 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc"></span></button>
+      <button data-entry="2" type="button"><span class="gallery-number">03 <i>2010s</i></span><span class="gallery-title">城夜雨 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc"></span></button>
+      <button data-entry="3" type="button"><span class="gallery-number">04 <i>2020s</i></span><span class="gallery-title">山河速 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc"></span></button>
+      <button data-entry="4" type="button"><span class="gallery-number">05 <i>未来</i></span><span class="gallery-title">星河远 <svg><use href="#i-arrow"/></svg></span><span class="gallery-desc"></span></button>
+    </div>
+    <footer class="landing-foot"><span>手绘动画景观 × 交互叙事</span><span><i class="live-dot"></i> 实时三维作品 <b>融 · 合</b></span></footer>
+  </section>
+
+  <section id="prologue" aria-label="一家三代的回家路" inert hidden>
+    <div class="intro-lines" aria-live="polite"><small id="introBy">回家吃饭 · 一家三代</small><p id="introWords">外婆、妈妈、宁宁，<br>三代人的回家路。</p></div>
+    <div id="introEras" aria-label="五个时代"><span>1980s</span><span>1990s</span><span>2010s</span><span>2020s</span><span>未来</span></div>
+    <button id="skipIntro" type="button">跳过引入 <span aria-hidden="true">→</span></button>
+  </section>
+  <header id="hud" class="hidden" inert>
+    <button id="homeBtn" class="brand" type="button" aria-label="回到作品封面"><span class="small-seal">山<br>河</span><span class="brand-copy"><span class="brand-mark">山河织路</span><span class="brand-sub">A JOURNEY THROUGH TIME</span></span></button>
+    <nav class="hud-actions" aria-label="漫游工具">
+      <button id="autoBtn" type="button" aria-label="开始自动漫游" aria-pressed="false"><svg><use href="#i-play"/></svg><span id="autoTxt">自动漫游</span></button>
+      <button id="memoryBtn" type="button" aria-label="翻阅沿途票夹" aria-controls="ticketLayer" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6C8 3 5 4 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-3 0-6-1-10 2Zm0 0v15"/></svg><span>票夹</span></button>
+      <button id="overviewBtn" type="button" aria-label="展开长卷"><svg><use href="#i-grid"/></svg><span>展卷</span></button>
+      <button id="soundBtn" type="button" aria-label="开启声音" aria-pressed="false" class="muted"><svg><use href="#i-sound"/></svg><span id="soundTxt">声音关</span></button>
+      <button id="fullscreenBtn" type="button" aria-label="进入全屏"><svg><use href="#i-expand"/></svg><span>全屏</span></button>
+      <button id="infoBtn" type="button" aria-label="作品与操作说明" aria-expanded="false"><svg><use href="#i-info"/></svg><span>说明</span></button>
+    </nav>
+  </header>
+
+  <div id="chapter" aria-live="polite"><div class="ch-num"><span id="chNum">壹</span><i></i></div><div class="ch-body"><div class="ch-year" id="chYear"></div><h2 class="ch-title" id="chTitle">田埂晨</h2><p class="ch-setting" id="chSetting"></p><p class="ch-line" id="chLine"></p></div></div>
+  <div id="travelMeta" class="travel-meta hidden" inert><span id="journeyPct">00%</span><span class="meta-rule"></span><span id="collectedTxt">拾光 0 / 5</span><span id="mailFrom" hidden></span><span id="mailAction" hidden></span></div>
+
+  <div id="stopNotice" class="stop-notice" role="status" aria-live="polite">沿途拾光 · 一张票里的往事</div>
+  <div id="ticketScrim" aria-hidden="true"></div>
+  <span id="storyNotice" class="sr-only" role="status"></span>
+  <section id="ticketLayer" class="ticket-layer" role="group" aria-label="沿途票页" data-side="front" inert>
+    <div id="ticketRotor" class="ticket-rotor">
+      <button id="ticketFront" class="ticket-face ticket-front" type="button" aria-expanded="false" aria-controls="ticketBack">
+        <span id="objectTicketFace" class="object-ticket-face" aria-hidden="true"></span>
+        <span id="railTicketFace" class="rail-ticket-face" hidden aria-hidden="true"></span>
+        <span class="ticket-print">
+          <span class="ticket-meta"><small id="ticketYear"></small><small id="ticketSerial"></small></span>
+          <span id="ticketLabel" class="ticket-label"></span>
+          <span id="ticketText" class="ticket-route"></span>
+          <span class="ticket-rule" aria-hidden="true"></span>
+          <span class="ticket-baseline"><span id="ticketDistance"></span><span class="ticket-hint">轻点翻面 <i aria-hidden="true">↻</i></span></span>
+        </span>
+        <span class="ticket-stub" aria-hidden="true"><span id="ticketStub">存根</span><i></i></span>
+      </button>
+      <article id="ticketBack" class="ticket-face ticket-back" aria-hidden="true" inert>
+        <div id="ticketBackContent">
+          <div id="ticketReverseBrand" class="ticket-reverse-brand" aria-hidden="true"></div>
+          <div class="ticket-back-top"><span id="cardEyebrow"></span><span id="cardIndex"></span></div>
+          <p id="ticketBackLabel" class="ticket-back-label"></p>
+          <h3 id="cardTitle" tabindex="-1"></h3>
+          <p id="cardBody"></p>
+          <div id="ticketComposer" hidden>
+            <label for="wishInput">给这段旅程留一句话 <small>可留白 · 最多 24 字</small></label>
+            <input id="wishInput" type="text" maxlength="24" autocomplete="off" placeholder="写下一句回家的话">
+            <div class="ticket-presets" aria-label="选择旅途留言"><button type="button" data-wish></button><button type="button" data-wish></button><button type="button" data-wish></button></div>
+            <p id="replyQuote" class="kept-quote" hidden></p>
+          </div>
+          <div class="ticket-read-actions"><button id="keepLetter" type="button" aria-pressed="false">留住这句话</button><button id="cardClose" type="button">继续游览 <span aria-hidden="true">→</span></button></div>
+        </div>
+      </article>
+    </div>
+    <div id="ticketFlipHint" class="ticket-flip-hint" hidden>轻点车票 · 翻到背面 <span aria-hidden="true">↻</span></div>
+    <div id="ticketTools" class="ticket-tools"><nav id="letterPages" aria-label="翻阅票夹" hidden><button id="prevLetter" type="button" aria-label="上一张票">← 上一张</button><button id="nextLetter" type="button" aria-label="下一张票">下一张 →</button></nav><button id="shelveTicket" type="button">先收好</button></div>
+    <div id="ticketLaunchActions" class="ticket-launch-actions" hidden><button id="launchBtn" type="button">点亮归途 <span aria-hidden="true">↗</span></button><button id="skipFinale" type="button">直接看尾声</button></div>
+  </section>
+
+  <nav id="timeline" class="timeline hidden" aria-label="时代章节" inert><div class="tl-line"><i id="tlFill"></i></div><div class="tl-marks">
+    <button data-ch="0" type="button" aria-label="第一幕 田埂晨 1980年代"><span class="tl-dot"></span><b>壹</b><em>田埂晨</em><small>1980s</small></button>
+    <button data-ch="1" type="button" aria-label="第二幕 街市暮 1990年代"><span class="tl-dot"></span><b>贰</b><em>街市暮</em><small>1990s</small></button>
+    <button data-ch="2" type="button" aria-label="第三幕 城夜雨 2010年代"><span class="tl-dot"></span><b>叁</b><em>城夜雨</em><small>2010s</small></button>
+    <button data-ch="3" type="button" aria-label="第四幕 山河速 2020年代"><span class="tl-dot"></span><b>肆</b><em>山河速</em><small>2020s</small></button>
+    <button data-ch="4" type="button" aria-label="第五幕 星河远 未来"><span class="tl-dot"></span><b>伍</b><em>星河远</em><small>未来</small></button>
+  </div></nav>
+  <div id="scrollHint" class="scroll-hint"><span></span>轻滑前行 · 轻点翻票</div>
+  <section id="overview" class="overview hidden" inert aria-label="五幕长卷总览"><div class="ov-head"><div class="ov-kicker">一家三代 · 回家吃饭</div><h2 class="ov-title">家有<br>多远？</h2><p>外婆的田埂、妈妈的县城、宁宁的远方。五件纸上旧物，连起一家三代的归途。</p></div><div id="ovLabels" class="ov-labels"></div><div class="ov-foot"><button id="ovBack" type="button">回到路上 <svg><use href="#i-arrow"/></svg></button><span>选择一座岛，走进那段时间</span></div></section>
+
+  <aside id="info" class="info" role="dialog" aria-modal="true" aria-labelledby="infoTitle" inert><button id="infoClose" class="card-close" type="button" aria-label="关闭作品说明"><svg><use href="#i-close"/></svg></button><div class="info-eyebrow">关于作品 / VIEWING GUIDE</div><h3 id="infoTitle">回家吃饭</h3><p class="info-intro">从外婆灶边的字条，到妈妈的电影票、宁宁求学的绿皮车票和下班回家的高铁票，最后是一张通向星河的登船牌。铁路、桥梁与城市的发展，改变着远行的距离与团圆的日常。一家三代都记着回家吃饭。人物与家庭往事为虚构创作。</p><div class="info-grid"><div><b>沿着路走</b><span>轻滑、滚轮或方向键控制进退。展卷后可以直接选一幕走进去。</span></div><div><b>遇见旧物</b><span>靠近故事节点，镜头提前放慢，票面在减速过程中逐渐浮现。轻点或按 R 翻面，在票外再向前滑动即可继续；“票夹”可随时回看。</span></div><div><b>翻到另一面</b><span>票背是一句家常话和一小段往事。读完继续游览，也可以留住喜欢的一句。</span></div><div><b>点亮归途</b><span>登船牌背面可以留下旅途留言，也可留白。点亮归途，目送火箭远去，回望整颗地球。</span></div></div><p class="info-note">↑ ↓ 控制进退 · 空格前进 · M 切换声音 · Esc 返回<br>声音由程序实时合成。拾光印记与声音偏好保存在本机。<br>绘景与人物使用 AI 辅助绘制。第二至五幕的树木选自 Quaternius 的 CC0 模型。三种列车沿用《轨上清风》，乡村保留 Poly Haven 的 CC0 材质。<br>地球地表：NASA Earth Observatory · Blue Marble。云层：<a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noopener">Solar System Scope / INOVE</a>，按 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> 使用；原图用于分层光照、云影与色彩调整。</p><div class="info-foot">2026 · 融 / 合 · 原创数字媒体设计</div></aside>
+
+  <section id="homecoming" class="homecoming" hidden aria-hidden="true">
+    <p id="homecomingWords" class="homecoming-words"></p>
+    <div id="flightTickets" class="home-tickets"></div>
+    <p id="homecomingVerse" class="homecoming-verse">所有远方，都从脚下出发。<br>最远的那条路，是回家的路。</p>
+  </section>
+  <section id="earthCaption" class="earth-caption" hidden aria-hidden="true" aria-live="polite">
+    <h2 id="earthTitle">这次，家是地球</h2>
+    <p id="earthLine">那些回家的路，都在这颗星球上。</p>
+  </section>
+  <section id="endCard" class="endcard" aria-live="polite" inert><div class="end-inner">
+    <h2 id="endTitle">这次，家是地球</h2>
+    <div class="end-actions"><button id="againBtn" type="button">再走一程 <svg><use href="#i-arrow"/></svg></button><button id="endOverviewBtn" type="button">展开长卷 <svg><use href="#i-grid"/></svg></button></div>
+    <details id="endRecord" class="end-record"><summary>沿途票根</summary><div class="end-record-panel">
+      <div class="end-kicker">山河织路 · 回家吃饭</div><p id="endAnswer"></p>
+      <div class="end-correspondence"><div><small id="endSource"></small><p id="endQuote"></p></div><div id="endReply" hidden><small id="endRecipient"></small><p id="endWish"></p></div></div>
+      <div id="endTickets" class="home-tickets end-tickets" aria-label="沿途的五张票背"></div>
+      <p class="end-theme">所有远方，都从脚下出发。</p>
+    </div></details>
+  </div></section>
+  <div id="launchSignal" hidden aria-hidden="true"><svg viewBox="0 0 32 32"><path class="signal-star" d="M16 1 18 13 29 16 18 18 16 30 14 18 3 16 14 14Z"/><path class="signal-heart" d="M16 25C13 22 5 17 5 12a6 6 0 0 1 11-3 6 6 0 0 1 11 3c0 5-8 10-11 13Z"/></svg></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</div>
+<noscript><div class="noscript">请开启 JavaScript，以展开这轴实时三维长卷。</div></noscript>
+<script src="./app.js"></script>
+</body>
+</html>

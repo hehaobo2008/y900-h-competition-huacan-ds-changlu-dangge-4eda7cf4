@@ -1,0 +1,949 @@
+{
+  "trains": {
+    "steam": {
+      "desktop": {
+        "bytes": 8861040,
+        "sha256": "8f661958708c0e1aab2ecf3a217bc462952144cf29fff4c5ce5c3dbffc22e864",
+        "triangles": 249999,
+        "bounds": {
+          "min": [
+            -1.5498707294464111,
+            0.0,
+            -26.299654006958008
+          ],
+          "max": [
+            1.5498707294464111,
+            4.602588176727295,
+            0.0
+          ]
+        },
+        "width": 3.0997414588928223,
+        "height": 4.602588176727295,
+        "length": 26.299654006958008,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 5637992,
+            "dimensions": [
+              4096,
+              4096
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/steam-desktop.glb",
+        "textureSize": 4096,
+        "imageQuality": 95,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -26.299654006958008,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.05523105812072754,
+          "vertices": 271,
+          "leftX": -0.7969160079956055,
+          "rightX": 0.8210898637771606,
+          "xExtent": [
+            -1.0513556003570557,
+            1.061234712600708
+          ],
+          "proxyCenterSpacing": 1.6180058717727661
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 249999,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 16729360,
+          "uncompressedSHA256": "1ae0dbbd419f58dd3a610b74f7b17c02def1a9bbd0bd7d5c37efdb6d177fc323",
+          "encodedGeometryBytes": 3221441,
+          "reductionPercent": 47.033000664699664,
+          "embeddedImageSHA256": [
+            "9da7f13ddea252de4b23e208448cb58cde501bd0c37cb58e0e6eaffcd93b487d"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.5498707294464111,
+              0,
+              -26.299654006958008
+            ],
+            "max": [
+              1.5498805046081543,
+              4.602599143981934,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 1.0967254638671875e-05,
+          "browserWASMAndJSVerified": true
+        },
+        "editableSource": "assets/runtime/trains/steam-desktop.blend",
+        "editableSourceSHA256": "e56bb055e5b6a78c33ca925364f66e525f8e2867dc529ac5b600a3b6c34f4118"
+      },
+      "mobile": {
+        "bytes": 3962872,
+        "sha256": "8d618ac7af5d132454d086298859c0397a131170e9175a295a91c0f74413aa0b",
+        "triangles": 180000,
+        "bounds": {
+          "min": [
+            -1.5490729808807373,
+            0.0,
+            -26.29567527770996
+          ],
+          "max": [
+            1.5490729808807373,
+            4.602169036865234,
+            0.0
+          ]
+        },
+        "width": 3.0981459617614746,
+        "height": 4.602169036865234,
+        "length": 26.29567527770996,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 1499478,
+            "dimensions": [
+              2048,
+              2048
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/steam-mobile.glb",
+        "textureSize": 2048,
+        "imageQuality": 92,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -26.29567527770996,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.055226028442382814,
+          "vertices": 222,
+          "leftX": -0.7970502972602844,
+          "rightX": 0.8205983638763428,
+          "xExtent": [
+            -1.0657554864883423,
+            1.0513675212860107
+          ],
+          "proxyCenterSpacing": 1.6176486611366272
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 180000,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 9741288,
+          "uncompressedSHA256": "b229a4a7085480580d97a369e390e441bece17683ecdfc7a22108621f1c91b70",
+          "encodedGeometryBytes": 2461792,
+          "reductionPercent": 59.3188087653296,
+          "embeddedImageSHA256": [
+            "602eb489b11f1e0b273604d1519d3b3c1e4f6341d843ba18ca398a765b82dd34"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.5490729808807373,
+              0,
+              -26.29567527770996
+            ],
+            "max": [
+              1.5490808486938477,
+              4.602179050445557,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 1.0013580322265625e-05,
+          "browserWASMAndJSVerified": true
+        },
+        "editableSource": "assets/runtime/trains/steam-mobile.blend",
+        "editableSourceSHA256": "65fce96489b80cc39b4d82d4ebddc1f30538c70807e28e289b0bf42ed417b972"
+      }
+    },
+    "green": {
+      "desktop": {
+        "bytes": 8188888,
+        "sha256": "315d70c2e762c901cea731dd862071bd2188cd579d602497480f616b44d1fd0d",
+        "triangles": 249999,
+        "bounds": {
+          "min": [
+            -1.5501883029937744,
+            0.0,
+            -24.461843490600586
+          ],
+          "max": [
+            1.5501883029937744,
+            4.648212909698486,
+            0.0
+          ]
+        },
+        "width": 3.100376605987549,
+        "height": 4.648212909698486,
+        "length": 24.461843490600586,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 4980052,
+            "dimensions": [
+              4096,
+              4096
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/green-desktop.glb",
+        "textureSize": 4096,
+        "imageQuality": 95,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -24.461843490600586,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.05577855491638184,
+          "vertices": 2555,
+          "leftX": -0.7289121150970459,
+          "rightX": 0.7338953018188477,
+          "xExtent": [
+            -0.899520218372345,
+            0.9111797213554382
+          ],
+          "proxyCenterSpacing": 1.4628074169158936
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 249999,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 16061116,
+          "uncompressedSHA256": "fd7db1cb82b6dfeafd09fa253daae16f06f39e3af6d21a3afacad198b2640462",
+          "encodedGeometryBytes": 3207199,
+          "reductionPercent": 49.014202998098014,
+          "embeddedImageSHA256": [
+            "ebec4d4a0fc4ae63c9d119527656c002a5fd8b79ddb9428dccc71ba94c347be6"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.5501883029937744,
+              0,
+              -24.461843490600586
+            ],
+            "max": [
+              1.550189733505249,
+              4.6482110023498535,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 1.9073486328125e-06,
+          "browserWASMAndJSVerified": true
+        },
+        "editableSource": "assets/runtime/trains/green-desktop.blend",
+        "editableSourceSHA256": "44b99901d5115a84dbc781304752253d9a0766ad789f7f0311fd9bb713dc03bf"
+      },
+      "mobile": {
+        "bytes": 3879804,
+        "sha256": "634b2dfc5f4238788fc8e27561e1ab9b727713b17659b6b3dc07a82574c2f271",
+        "triangles": 180000,
+        "bounds": {
+          "min": [
+            -1.5501883029937744,
+            0.0,
+            -24.46538734436035
+          ],
+          "max": [
+            1.5501883029937744,
+            4.657810688018799,
+            0.0
+          ]
+        },
+        "width": 3.100376605987549,
+        "height": 4.657810688018799,
+        "length": 24.46538734436035,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 1411699,
+            "dimensions": [
+              2048,
+              2048
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/green-mobile.glb",
+        "textureSize": 2048,
+        "imageQuality": 92,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -24.46538734436035,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.055893728256225586,
+          "vertices": 1661,
+          "leftX": -0.7344254851341248,
+          "rightX": 0.7336747646331787,
+          "xExtent": [
+            -0.8994789719581604,
+            0.9111797213554382
+          ],
+          "proxyCenterSpacing": 1.4681002497673035
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 180000,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 9678276,
+          "uncompressedSHA256": "4f2fde5337f19baf73e64ab435afafaceee9e1613da0f21e363ac5004189b91b",
+          "encodedGeometryBytes": 2466469,
+          "reductionPercent": 59.91224056846488,
+          "embeddedImageSHA256": [
+            "e3dc2c0ec519643fc806b6db895546a18d5d69e4b907b3cc3605ce83a02b9cc8"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.5501883029937744,
+              0,
+              -24.46538734436035
+            ],
+            "max": [
+              1.5501956939697266,
+              4.657820701599121,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 1.0013580322265625e-05,
+          "browserWASMAndJSVerified": true
+        },
+        "editableSource": "assets/runtime/trains/green-mobile.blend",
+        "editableSourceSHA256": "fb96fcc0dd6ab0f52091ccb18529fa5dc517f6b4f5304c84daa2e4605592cc6c"
+      }
+    },
+    "crh": {
+      "desktop": {
+        "bytes": 8771552,
+        "sha256": "83532e7f9c01330d97d7b24163562502ce7fbc354f2640146d410580bef597a8",
+        "triangles": 249998,
+        "bounds": {
+          "min": [
+            -1.6900463104248047,
+            0.0,
+            -23.748140335083008
+          ],
+          "max": [
+            1.6900463104248047,
+            4.884258270263672,
+            0.0
+          ]
+        },
+        "width": 3.3800926208496094,
+        "height": 4.884258270263672,
+        "length": 23.748140335083008,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 2,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 3557427,
+            "dimensions": [
+              4096,
+              4096
+            ]
+          },
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 3048221,
+            "dimensions": [
+              4096,
+              4096
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/crh-desktop.glb",
+        "textureSize": 4096,
+        "imageQuality": 95,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -23.748140335083008,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.058611099243164065,
+          "vertices": 1554,
+          "leftX": -0.8688430786132812,
+          "rightX": 0.8608512878417969,
+          "xExtent": [
+            -0.9625619649887085,
+            0.944831132888794
+          ],
+          "proxyCenterSpacing": 1.7296943664550781
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 249998,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 15312116,
+          "uncompressedSHA256": "91d28f65dc6b4305d492ba56588d58807ffcc8fd38d8f9bbdd1a7b7d7a962030",
+          "encodedGeometryBytes": 2164225,
+          "reductionPercent": 42.71495853349073,
+          "embeddedImageSHA256": [
+            "d16ff3a91cc14760efa48a52707f81c09aee8b73e6a5517866d97d7a4acbb741",
+            "a5389cc985b5ad3df01a1fbd451d1a0d5e9ba3bfd7325fef104bd82ae19773b4"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.6900463104248047,
+              0,
+              -23.748140335083008
+            ],
+            "max": [
+              1.690056324005127,
+              4.884247779846191,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 1.049041748046875e-05,
+          "browserWASMAndJSVerified": true
+        },
+        "coach": {
+          "bytes": 1096324,
+          "sha256": "f8c0eda532c7bd82a4b71376f767b11e52b3cf193097bbff9bf70fd062cf7c2c",
+          "triangles": 11048,
+          "bounds": {
+            "min": [
+              -1.690000057220459,
+              0.0,
+              -22.01000213623047
+            ],
+            "max": [
+              1.690000057220459,
+              4.224999904632568,
+              0.0
+            ]
+          },
+          "width": 3.380000114440918,
+          "height": 4.224999904632568,
+          "length": 22.01000213623047,
+          "meshCount": 1,
+          "materials": 4,
+          "images": 1,
+          "embeddedImages": [
+            {
+              "mimeType": "image/jpeg",
+              "bytes": 390310,
+              "dimensions": [
+                1536,
+                1024
+              ]
+            }
+          ],
+          "url": "assets/runtime/trains/crh-coach-desktop-v3.glb",
+          "editableSource": "assets/runtime/trains/crh-coach-desktop-v3.blend",
+          "editableSourceSHA256": "76a98c77f9d9da4762f07e7364ba08d3a1e15c1696b29cc59f8f842d8552b049",
+          "gap": 0.7,
+          "headKind": "crh",
+          "profile": "desktop",
+          "production": "real photograph research -> built-in imagegen orthographic atlas -> Blender projected UV and mechanical modelling",
+          "textureSize": 1536,
+          "atlas": "assets/runtime/visual-v3/crh-modeling-atlas-v3.png",
+          "wheelTreadCentreSpacing": 1.435,
+          "coordinateSystem": "Y-up; ground Y=0; front -Z; tail Z=0; 1 unit=1 m",
+          "license": "AI-generated project asset; real reference research only"
+        },
+        "editableSource": "assets/runtime/trains/crh-desktop.blend",
+        "editableSourceSHA256": "6a2f05826fdf6d835f10380ffa150108f979535139afecda82f8afe96e246abd"
+      },
+      "mobile": {
+        "bytes": 3870232,
+        "sha256": "da027859a87b1d9652fe264ef1240ced84f621fa95c86b27803ef4628b395bd0",
+        "triangles": 180000,
+        "bounds": {
+          "min": [
+            -1.6901171207427979,
+            0.0,
+            -23.74793243408203
+          ],
+          "max": [
+            1.6901171207427979,
+            4.884275913238525,
+            0.0
+          ]
+        },
+        "width": 3.3802342414855957,
+        "height": 4.884275913238525,
+        "length": 23.74793243408203,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 2,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 1106640,
+            "dimensions": [
+              2048,
+              2048
+            ]
+          },
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 984129,
+            "dimensions": [
+              2048,
+              2048
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/crh-mobile.glb",
+        "textureSize": 2048,
+        "imageQuality": 92,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -23.74793243408203,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.05861131095886231,
+          "vertices": 1291,
+          "leftX": -0.8692799210548401,
+          "rightX": 0.8607168197631836,
+          "xExtent": [
+            -0.962697446346283,
+            0.9439505338668823
+          ],
+          "proxyCenterSpacing": 1.7299967408180237
+        },
+        "runtimeReimportVerified": true,
+        "runtimeReimportTriangles": 180000,
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 8782376,
+          "uncompressedSHA256": "e385a1719d5f613001f9b7cc92e92314d95f5098713ab71eb20bf4c7fec368cf",
+          "encodedGeometryBytes": 1777790,
+          "reductionPercent": 55.93183439196865,
+          "embeddedImageSHA256": [
+            "fc969f8aabf8c071309b94c9fc4701b8ded79ec1167b7cf6e56a4e8eee49f599",
+            "3d4d007a6c2ec9b373bb03e818cabc3494404b88f0288264c7abc12e2b7c0fbc"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.6901171207427979,
+              0,
+              -23.74793243408203
+            ],
+            "max": [
+              1.6901144981384277,
+              4.884273052215576,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 2.86102294921875e-06,
+          "browserWASMAndJSVerified": true
+        },
+        "coach": {
+          "bytes": 527628,
+          "sha256": "5d40dd77c79e46ec41ac355080b7e4f27c2853d26890725e38b0fc49207dfd73",
+          "triangles": 6120,
+          "bounds": {
+            "min": [
+              -1.690000057220459,
+              0.0,
+              -22.01000213623047
+            ],
+            "max": [
+              1.690000057220459,
+              4.224999904632568,
+              0.0
+            ]
+          },
+          "width": 3.380000114440918,
+          "height": 4.224999904632568,
+          "length": 22.01000213623047,
+          "meshCount": 1,
+          "materials": 4,
+          "images": 1,
+          "embeddedImages": [
+            {
+              "mimeType": "image/jpeg",
+              "bytes": 141115,
+              "dimensions": [
+                1024,
+                683
+              ]
+            }
+          ],
+          "url": "assets/runtime/trains/crh-coach-mobile-v3.glb",
+          "editableSource": "assets/runtime/trains/crh-coach-mobile-v3.blend",
+          "editableSourceSHA256": "bee2da7221559c7c474b472d45902615522cce1416b859d020e64f2943b4bb25",
+          "gap": 0.7,
+          "headKind": "crh",
+          "profile": "mobile",
+          "production": "real photograph research -> built-in imagegen orthographic atlas -> Blender projected UV and mechanical modelling",
+          "textureSize": 1024,
+          "atlas": "assets/runtime/visual-v3/crh-modeling-atlas-v3.png",
+          "wheelTreadCentreSpacing": 1.435,
+          "coordinateSystem": "Y-up; ground Y=0; front -Z; tail Z=0; 1 unit=1 m",
+          "license": "AI-generated project asset; real reference research only"
+        },
+        "editableSource": "assets/runtime/trains/crh-mobile.blend",
+        "editableSourceSHA256": "fd1d5907b110c1487dd89b9723c5c01f3ab9b6c47b9bcc67d9f0576ef2067d10"
+      }
+    },
+    "cr400af": {
+      "desktop": {
+        "bytes": 9696428,
+        "sha256": "4c967da6347a7ef07617bf596738d5b7b090548cc611fc49a4d928eb63cb5424",
+        "triangles": 399999,
+        "bounds": {
+          "min": [
+            -1.6800310611724854,
+            0.0,
+            -23.506900787353516
+          ],
+          "max": [
+            1.6800310611724854,
+            3.9842264652252197,
+            0.0
+          ]
+        },
+        "width": 3.3600621223449707,
+        "height": 3.9842264652252197,
+        "length": 23.506900787353516,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 6021290,
+            "dimensions": [
+              4096,
+              4096
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/cr400af-desktop.glb",
+        "textureSize": 4096,
+        "imageQuality": 95,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -23.506900787353516,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.04781071758270264,
+          "vertices": 891,
+          "leftX": -0.7600107192993164,
+          "rightX": 0.7305189967155457,
+          "xExtent": [
+            -0.9922560453414917,
+            0.9662245512008667
+          ],
+          "proxyCenterSpacing": 1.490529716014862
+        },
+        "promotedFromVariant": "cr400af-desktop-protectnose400k",
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 21289128,
+          "uncompressedSHA256": "1b379e4657e38de0254daf6e592e2546b59a8ef40d1ff9cf03fcb14baebdf607",
+          "encodedGeometryBytes": 3673479,
+          "reductionPercent": 54.45361594894822,
+          "embeddedImageSHA256": [
+            "354cd5cac0730f5326c5ec9a88c35f9edf0fffc3c0e570e3bafac867152db39e"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.6800310611724854,
+              0,
+              -23.506900787353516
+            ],
+            "max": [
+              1.6800384521484375,
+              3.9842300415039062,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 7.3909759521484375e-06,
+          "browserWASMAndJSVerified": true,
+          "sourceCandidateTag": "cr400af-desktop-protectnose400k"
+        },
+        "coach": {
+          "bytes": 1089732,
+          "sha256": "eb77d49ef92cac2e21274523515f198016d7ef585ce1a413b039e21add5248b8",
+          "triangles": 11048,
+          "bounds": {
+            "min": [
+              -1.6799999475479126,
+              0.0,
+              -22.01000213623047
+            ],
+            "max": [
+              1.6799999475479126,
+              4.224999904632568,
+              0.0
+            ]
+          },
+          "width": 3.359999895095825,
+          "height": 4.224999904632568,
+          "length": 22.01000213623047,
+          "meshCount": 1,
+          "materials": 4,
+          "images": 1,
+          "embeddedImages": [
+            {
+              "mimeType": "image/jpeg",
+              "bytes": 383708,
+              "dimensions": [
+                1536,
+                1024
+              ]
+            }
+          ],
+          "url": "assets/runtime/trains/cr400af-coach-desktop-v3.glb",
+          "editableSource": "assets/runtime/trains/cr400af-coach-desktop-v3.blend",
+          "editableSourceSHA256": "b429538459d0c50d367d55364f55e721d5763f892e8e97acc8437cf0dab524ca",
+          "gap": 0.7,
+          "headKind": "cr400af",
+          "profile": "desktop",
+          "production": "real photograph research -> built-in imagegen orthographic atlas -> Blender projected UV and mechanical modelling",
+          "textureSize": 1536,
+          "atlas": "assets/runtime/visual-v3/cr400af-modeling-atlas-v3.png",
+          "wheelTreadCentreSpacing": 1.435,
+          "coordinateSystem": "Y-up; ground Y=0; front -Z; tail Z=0; 1 unit=1 m",
+          "license": "CC BY-SA 4.0 (CR400AF atlas photo reference by N509FZ)"
+        },
+        "protectedFrontMeters": 2.5,
+        "editableSource": "assets/runtime/trains/cr400af-desktop-protectnose400k.blend",
+        "editableSourceSHA256": "d3a9e062cbfa350e3e45386a5555df805517133de92362dab50c27d44c8db89c",
+        "decodedTriangles": 399999,
+        "decoderValidation": {
+          "report": "docs/runtime-trains/compressed/cr400af-desktop-protectnose400k-browser.json",
+          "method": "real Chrome GLTFLoader r149; WASM and JavaScript fallback",
+          "candidateSHA256": "4c967da6347a7ef07617bf596738d5b7b090548cc611fc49a4d928eb63cb5424",
+          "threeRevision": "149",
+          "primitiveCount": 1,
+          "wasmAndJSArraysIdentical": true,
+          "finiteDecodedAttributes": true,
+          "matchedDecodedVertices": 327509,
+          "unmatchedDecodedVertices": 0
+        }
+      },
+      "mobile": {
+        "bytes": 4781836,
+        "sha256": "2dd4804772b0854fcbb0f1f5e19e6679547729c2fe808c1266f32cb8b3ed653a",
+        "triangles": 320000,
+        "bounds": {
+          "min": [
+            -1.6847401857376099,
+            0.0,
+            -23.508596420288086
+          ],
+          "max": [
+            1.6847401857376099,
+            3.9852757453918457,
+            0.0
+          ]
+        },
+        "width": 3.3694803714752197,
+        "height": 3.9852757453918457,
+        "length": 23.508596420288086,
+        "meshCount": 1,
+        "materials": 1,
+        "images": 1,
+        "embeddedImages": [
+          {
+            "mimeType": "image/jpeg",
+            "bytes": 1681962,
+            "dimensions": [
+              2048,
+              2048
+            ]
+          }
+        ],
+        "url": "assets/runtime/trains/cr400af-mobile.glb",
+        "textureSize": 2048,
+        "imageQuality": 92,
+        "uvMethod": "collapse modifier interpolated source atlas UV",
+        "groundY": 0.0,
+        "headZ": -23.508596420288086,
+        "tailZ": 0.0,
+        "wheelContactProxy": {
+          "method": "median x of negative/positive vertices in bottom 1.2% height band; wheel contact proxy, not surveyed gauge",
+          "bandHeight": 0.04782330894470215,
+          "vertices": 490,
+          "leftX": -0.7584630250930786,
+          "rightX": 0.7614109516143799,
+          "xExtent": [
+            -0.985960066318512,
+            0.9718626737594604
+          ],
+          "proxyCenterSpacing": 1.5198739767074585
+        },
+        "promotedFromVariant": "cr400af-mobile-protectnose320k",
+        "compression": {
+          "method": "Draco",
+          "extension": "KHR_draco_mesh_compression",
+          "positionQuantizationBits": 20,
+          "normalQuantizationBits": 16,
+          "texcoordQuantizationBits": 20,
+          "level": 6,
+          "decoderVersion": "1.5.5",
+          "threeRevision": "149",
+          "uncompressedBytes": 14236948,
+          "uncompressedSHA256": "5f31bdd50dc702b1f9491466d7083b7d7c86328c8fa286f6897d9aae65badd50",
+          "encodedGeometryBytes": 3098217,
+          "reductionPercent": 66.41249234035271,
+          "embeddedImageSHA256": [
+            "d0737baef9d6c784f609bec60d84899ac1b61151145b455cd4cc699524292e60"
+          ],
+          "decodedBounds": {
+            "min": [
+              -1.6847401857376099,
+              0,
+              -23.508596420288086
+            ],
+            "max": [
+              1.6847413778305054,
+              3.9852797985076904,
+              0
+            ]
+          },
+          "decodedBoundsMaxDeltaM": 4.0531158447265625e-06,
+          "browserWASMAndJSVerified": true,
+          "sourceCandidateTag": "cr400af-mobile-protectnose320k"
+        },
+        "coach": {
+          "bytes": 531356,
+          "sha256": "31eec496dbf44e0e2449b5ceda26642d4666797663de6a01b4fc61ea3234d840",
+          "triangles": 6120,
+          "bounds": {
+            "min": [
+              -1.6799999475479126,
+              0.0,
+              -22.01000213623047
+            ],
+            "max": [
+              1.6799999475479126,
+              4.224999904632568,
+              0.0
+            ]
+          },
+          "width": 3.359999895095825,
+          "height": 4.224999904632568,
+          "length": 22.01000213623047,
+          "meshCount": 1,
+          "materials": 4,
+          "images": 1,
+          "embeddedImages": [
+            {
+              "mimeType": "image/jpeg",
+              "bytes": 144829,
+              "dimensions": [
+                1024,
+                683
+              ]
+            }
+          ],
+          "url": "assets/runtime/trains/cr400af-coach-mobile-v3.glb",
+          "editableSource": "assets/runtime/trains/cr400af-coach-mobile-v3.blend",
+          "editableSourceSHA256": "153f77486ca4e4250bb5dba8e4c8f517ced4c0c722e9a999c4cb8ae07b1155ad",
+          "gap": 0.7,
+          "headKind": "cr400af",
+          "profile": "mobile",
+          "production": "real photograph research -> built-in imagegen orthographic atlas -> Blender projected UV and mechanical modelling",
+          "textureSize": 1024,
+          "atlas": "assets/runtime/visual-v3/cr400af-modeling-atlas-v3.png",
+          "wheelTreadCentreSpacing": 1.435,
+          "coordinateSystem": "Y-up; ground Y=0; front -Z; tail Z=0; 1 unit=1 m",
+          "license": "CC BY-SA 4.0 (CR400AF atlas photo reference by N509FZ)"
+        },
+        "protectedFrontMeters": 2.5,
+        "editableSource": "assets/runtime/trains/cr400af-mobile-protectnose320k.blend",
+        "editableSourceSHA256": "7063db7ceff7ff2c0041aa3271d0d807277391a32368d60db62ab9c7193070a3",
+        "decodedTriangles": 320000,
+        "decoderValidation": {
+          "report": "docs/runtime-trains/compressed/cr400af-mobile-protectnose320k-browser.json",
+          "method": "real Chrome GLTFLoader r149; WASM and JavaScript fallback",
+          "candidateSHA256": "2dd4804772b0854fcbb0f1f5e19e6679547729c2fe808c1266f32cb8b3ed653a",
+          "threeRevision": "149",
+          "primitiveCount": 1,
+          "wasmAndJSArraysIdentical": true,
+          "finiteDecodedAttributes": true,
+          "matchedDecodedVertices": 272650,
+          "unmatchedDecodedVertices": 0
+        }
+      }
+    }
+  },
+  "version": 1,
+  "coordinateSystem": "Y-up; center X=0; minimum Y=0; head toward -Z; tail Z=0; 1 unit=1 m",
+  "production": "automated Blender derivatives of immutable accepted masters",
+  "compression": {
+    "method": "Draco",
+    "decoderVersion": "1.5.5",
+    "profiles": 12,
+    "parameters": {
+      "positionBits": 20,
+      "normalBits": 16,
+      "uvBits": 20,
+      "level": 6
+    },
+    "policy": "Compression of high-fidelity runtime derivatives; accepted masters and editable blends unchanged",
+    "latestRevision": "protected CR400AF nose and independent CRH/CR400AF coaches"
+  },
+  "consistPolicy": "CRH and CR400AF preserve accepted driving car and add an independently rebuilt passenger coach; no second driving cab. Composite bounds normalized in the loader."
+}

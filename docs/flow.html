@@ -67,121 +67,52 @@
   .callout{border:1px solid var(--line);padding:4mm;margin-top:4mm;background:rgba(255,255,255,.18)}
   .callout b{font-size:9pt;font-weight:500;letter-spacing:.08em}
   .callout p{font-size:6.6pt;line-height:1.8;color:var(--soft);margin-top:1.4mm}
+  .grid2 table,.grid2 .spec div,.grid2 .callout p{font-size:7.6pt}
+  .grid2 .spec b,.grid2 th{font-size:6pt}
 </style>
 </head>
 <body>
 
 <section class="page">
-  <header>
-    <div class="brand"><div class="mark">山河</div><div><b>山河织路</b><span>A LONG SCROLL OF TIME</span></div></div>
-    <div class="meta">2026 新锐设计竞赛 · 华灿奖 / 数字媒体设计<br>交互流程图 · INTERACTION FLOW / 01</div>
-  </header>
-
-  <div class="eyebrow">一条红线 · 七次状态 · 四种动作</div>
-  <h1>交互流程图</h1>
-  <p class="sub">用户不是在“播放”一段动画，而是在一条连续的线上行走：滚动或上滑前进，拖动回望，点击拾光，展卷俯瞰，最后写下一个愿望。</p>
-
-  <div class="flow">
-    <div class="node"><div class="n">01 / ENTRY</div><b>启程</b><p>纸白虚空中的乡村岛；标题、诗句、启程按钮。</p><div class="tag">点击 / 回车 → 入村</div></div>
-    <div class="node"><div class="n">02 / TRAVEL</div><b>漫游</b><p>镜头沿红线前进；章节标题与年份淡入；可回望。</p><div class="tag">滚轮 / 触摸上滑 / 方向键</div></div>
-    <div class="node hot"><div class="n">03 / PAUSE</div><b>拾光</b><p>载具旁的纸卡：一个年代、一句“路上的人话”。</p><div class="tag">点击载具 / 再次点击关闭</div></div>
-    <div class="node"><div class="n">04 / OVERVIEW</div><b>展卷</b><p>升到纸白虚空，五座岛与一根红线尽收眼底。</p><div class="tag">右上角“展卷” / Esc</div></div>
-    <div class="node"><div class="n">05 / ARRIVE</div><b>终点</b><p>星河港；输入或选择一句愿望。</p><div class="tag">滚动到底 → 自动浮出</div></div>
-    <div class="node hot"><div class="n">06 / LAUNCH</div><b>放灯</b><p>火箭升空；孔明灯与星屑一起升起。</p><div class="tag">点击“点亮” / 输入愿望</div></div>
-    <div class="node"><div class="n">07 / END</div><b>尾声</b><p>“所有远方，都从脚下出发。”</p><div class="tag">再看一遍 / 展开长卷</div></div>
-  </div>
-
-  <div class="lanes">
-    <div class="lane">
-      <h3>漫游分支 / TRAVEL</h3>
-      <div class="row"><b>SCROLL</b><span>滚轮或上滑 → 前进；下滑 → 回望；进度条同步。</span></div>
-      <div class="row"><b>DRAG</b><span>按住拖动 → 改变视线；松手回正；不改变进度。</span></div>
-      <div class="row"><b>KEYS</b><span>↑ / ↓ / 空格 → 前进后退；Home / End → 首尾。</span></div>
-      <div class="row"><b>JUMP</b><span>点击时间轴章节 → 水墨遮罩 + 1.25s 飞行。</span></div>
-    </div>
-    <div class="lane">
-      <h3>展卷分支 / OVERVIEW</h3>
-      <div class="row"><b>ENTER</b><span>右上角“展卷” → 镜头升空；HUD 隐去。</span></div>
-      <div class="row"><b>ISLAND</b><span>点击任一岛标签 → 飞回该幕；恢复 HUD。</span></div>
-      <div class="row"><b>EXIT</b><span>Esc / “回到路上” → 回到进入前的位置。</span></div>
-      <div class="row"><b>THREAD</b><span>总览中的红线是真实的路：五岛共享同一根曲线。</span></div>
-    </div>
-    <div class="lane">
-      <h3>尾声分支 / FINALE</h3>
-      <div class="row"><b>WISH</b><span>输入 ≤24 字，或使用默认“愿山河无恙，路远必达”。</span></div>
-      <div class="row"><b>SKIP</b><span>“直接看结局” → 跳过升空，进入尾声。</span></div>
-      <div class="row"><b>AGAIN</b><span>“再看一遍” → 回到启程，重置载具与状态。</span></div>
-      <div class="row"><b>SCROLL</b><span>“展开长卷” → 尾声后再次进入总览。</span></div>
-    </div>
-  </div>
-
-  <div class="legend"><span><i class="r"></i>有停留 / 有反馈的关键节点</span><span><i></i>线性推进节点</span><span>状态：landing → travel → pause → overview → finalePrompt → finale → ended</span></div>
-
-  <div class="rhythm">
-    <div class="rh"><b>五幕节奏 / CHAPTER RHYTHM</b><span>滚动进度 · 镜头速度 · 声音床 · 拾光台词</span></div>
-    <div class="beats">
-      <div class="beat"><div class="bh"><span>壹 / 1980s</span><span>0–18%</span></div><b>田埂晨</b><div class="bar" style="--p:6%"></div><span>贴地慢行，村口停一拍；镜头略低，看见车把上的马灯。</span><em>风声 / 鸟鸣 / 木轮</em><i>“路是走出来的。”</i></div>
-      <div class="beat"><div class="bh"><span>贰 / 1990s</span><span>18–38%</span></div><b>街市暮</b><div class="bar" style="--p:37%"></div><span>横移穿过主街，梧桐与招牌从两侧掠过；速度第一次加快。</span><em>市声 / 车铃 / 广播</em><i>“路通向更大的世界。”</i></div>
-      <div class="beat"><div class="bh"><span>叁 / 2010s</span><span>38–58%</span></div><b>城夜雨</b><div class="bar" style="--p:62%"></div><span>升到高架上方，雨夜俯瞰；绿皮车穿城，霓虹在湿地面拉长。</span><em>雨声 / 车流 / 远笛</em><i>“路把远方变成日常。”</i></div>
-      <div class="beat"><div class="bh"><span>肆 / 2020s</span><span>58–76%</span></div><b>山河速</b><div class="bar" style="--p:81%"></div><span>高速前推，斜拉索一根根掠过；从桥面跃到云海之上。</span><em>风噪 / 钢轨节奏</em><i>“路让山河彼此相拥。”</i></div>
-      <div class="beat"><div class="bh"><span>伍 / 未来</span><span>76–100%</span></div><b>星河远</b><div class="bar" style="--p:96%"></div><span>升至发射场上空，火箭点火；镜头停住，把最后一眼留给星河。</span><em>低频 / 脉冲 / 轰鸣</em><i>“路从脚下，通向星辰。”</i></div>
-    </div>
-    <div class="closing"><span>五幕之间没有黑场：只有纸白虚空、一根红线与一次呼吸。</span><b>总时长约 102 秒 · 每幕一个停留点</b></div>
-  </div>
-
-  <footer><span>01 / 02　交互流程图 · 一条连续的线</span><span>山河织路 · 2026 华灿奖 · 数字媒体设计</span><span>全流程原创</span></footer>
-</section>
-
+<header><div class="brand"><div class="mark">路线</div><div><b>山河织路</b><span>VISITOR JOURNEY</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>操作流程 / 01</div></header>
+<div class="eyebrow">主路线 / 从第一次进入到再次展卷</div><h1>交互流程图</h1>
+<p class="sub">发射前夜，女儿问妈妈会在哪里看她。小禾答，在门口的灯下。一本旧册子记下了一家四代人的五次出门与等候。沿途可以回翻，选中的信会在终点再次摊开。</p>
+<div class="flow" style="grid-template-columns:repeat(5,1fr)">
+<div class="node "><div class="n">01 / ENTRY</div><b>封面</b><p>女儿问起点火的明晚，小禾想起门口那盏灯。</p><div class="tag">走进长卷 / 直选章节</div></div>
+<div class="node "><div class="n">02 / TRAVEL</div><b>漫游</b><p>滑行到信中地点，书页在中央展开。合上后继续。</p><div class="tag">滚轮 / 触摸 / 方向键</div></div>
+<div class="node hot"><div class="n">03 / REPLY</div><b>星港回信</b><p>重读来信，给写信人回一句，也可留白。</p><div class="tag">输入最多 24 个字</div></div>
+<div class="node hot"><div class="n">04 / LAUNCH</div><b>点亮</b><p>在塔下仰望火箭飞远，光点化成一颗心。</p><div class="tag">点亮 / 回车</div></div>
+<div class="node "><div class="n">05 / END</div><b>尾声</b><p>来信与观众的回话留在同一页，可重走或展卷。</p><div class="tag">再走一遍 / 展开长卷</div></div>
+</div>
+<div class="lanes">
+<div class="lane"><h3>从漫游进入 / 家信与步行</h3><div class="row"><b>MEMORY</b><span>镜头放慢，中央浮起书脊，封面翻开。工具栏“家书”可回翻。点“留到终点回信”选中或取消。</span></div><div class="row"><b>WALK</b><span>第一幕可进入自由漫步。WASD 行走，C 低身，拖动转身。触屏显示方向控件。</span></div><div class="row"><b>RETURN</b><span>Esc 或“返回路线”退出步行，回到编排好的镜头。</span></div></div>
+<div class="lane"><h3>从封面、漫游或尾声进入 / 展卷</h3><div class="row"><b>MAP</b><span>点击“展卷”，在同一视图中看到五座岛。</span></div><div class="row"><b>ISLAND</b><span>点岛标签，直接从目标岛的远景推入街面。</span></div><div class="row"><b>BACK</b><span>Esc 或“回到路上”返回此前界面。</span></div></div>
+<div class="lane"><h3>漫游中的其他动作</h3><div class="row"><b>AUTO</b><span>自动漫游在来信处等候，合书后续行。手动输入可暂停。</span></div><div class="row"><b>JUMP</b><span>点击时间轴标记，沿原路线前往该幕。Home 返回开头，End 前往终点。</span></div><div class="row"><b>SOUND</b><span>点击声音按钮或按 M 切换。音量状态随本机偏好恢复。</span></div></div>
+</div>
+<div class="legend"><span><i class="r"></i>回信与发射节点</span><span><i></i>主路线</span><span>可随时合书，自由步行、展卷或回翻。未选信时，终点摊开女儿的留言。</span></div>
+<div class="rhythm"><div class="rh"><b>五幕节奏</b><span>沿路线的进度区间 / 标记为章节入口</span></div><div class="beats">
+<div class="beat"><div class="bh"><span>壹 / 1980s</span><span>4.5–21.5%</span></div><b>田埂晨</b><div class="bar" style="--p:10%"></div><span>木轮和晒谷台处停留，再沿村路前行。</span><em>风声、鸟鸣</em><i>“粥在锅里，门口那盏灯记得点。”</i></div><div class="beat"><div class="bh"><span>贰 / 1990s</span><span>25–43%</span></div><b>街市暮</b><div class="bar" style="--p:31.5%"></div><span>贴着主街看报亭、汽车与车顶行李。</span><em>市声、车铃</em><i>“妈，我到县城了。下回带你坐前排。”</i></div><div class="beat"><div class="bh"><span>叁 / 2010s</span><span>47–65%</span></div><b>城夜雨</b><div class="bar" style="--p:54.5%"></div><span>从高架下仰望绿皮车，湿路承接倒影。</span><em>雨声、远笛</em><i>“车还没停稳，我就认出了你的伞。”</i></div><div class="beat"><div class="bh"><span>肆 / 2020s</span><span>69–86%</span></div><b>山河速</b><div class="bar" style="--p:79%"></div><span>先看复兴号与和谐号交会，再收到妈妈的语音。</span><em>风声、钢轨节奏</em><i>“面粉在第二格。今天等你回来擀面。”</i></div><div class="beat"><div class="bh"><span>伍 / 未来</span><span>90–100%</span></div><b>星河远</b><div class="bar" style="--p:95%"></div><span>先见山城、风机，再贴近发射塔与火箭。</span><em>低频、脉冲</em><i>“妈，今晚换你抬头找我。”</i></div>
+</div><div class="closing"><span>沿两岸与云层飞越，可在途中停留或折返。</span><b>浏览器体验由观众控制进度 · 演示片时长 102 秒</b></div></div>
+<footer><span>01 / 02　主路线与可选操作</span><span>山河织路 · 数字媒体设计</span></footer></section>
 <section class="page">
-  <header>
-    <div class="brand"><div class="mark">规范</div><div><b>山河织路</b><span>STATE / INPUT / FALLBACK</span></div></div>
-    <div class="meta">2026 新锐设计竞赛 · 华灿奖 / 数字媒体设计<br>交互流程图 · INTERACTION FLOW / 02</div>
-  </header>
-
-  <div class="eyebrow">状态、输入、降级</div>
-  <h1 style="font-size:26pt">状态机与适配规范</h1>
-
-  <div class="grid2">
-    <div>
-      <table>
-        <thead><tr><th style="width:20%">状态</th><th style="width:26%">进入条件</th><th>镜头 / UI</th><th style="width:20%">退出</th></tr></thead>
-        <tbody>
-          <tr><td><b>loading</b></td><td>资源并行加载</td><td>纸白进度页；加载完成后进入 landing。</td><td>全部就绪</td></tr>
-          <tr><td><b>landing</b></td><td>首屏</td><td>乡村岛高空；标题、诗句、启程；HUD 隐藏。</td><td>点击 / 回车</td></tr>
-          <tr><td><b>travel</b></td><td>启程后</td><td>连续相机曲线；章节标题、时间轴、拾光点。</td><td>滚到底 / 展卷</td></tr>
-          <tr><td><b>pause</b></td><td>点击拾光</td><td>当前镜头保持；纸卡从左侧浮出；不暂停声音。</td><td>关闭 / 继续滚动</td></tr>
-          <tr><td><b>overview</b></td><td>点击展卷</td><td>纸白虚空俯视；五岛、红线、标签；HUD 隐藏。</td><td>Esc / 岛 / 回到路上</td></tr>
-          <tr><td><b>finalePrompt</b></td><td>进度 &gt; .996</td><td>终点镜头；纸卡：愿望输入、点亮、直接看结局。</td><td>点亮 / 跳过</td></tr>
-          <tr><td><b>finale</b></td><td>点击点亮</td><td>火箭 7.5s 升空；镜头跟随；9.3s 后自动进入尾声。</td><td>自动 / 跳过</td></tr>
-          <tr><td><b>ended</b></td><td>尾声</td><td>“所有远方，都从脚下出发。”；两个动作。</td><td>再看一遍 / 展卷</td></tr>
-        </tbody>
-      </table>
-
-      <div class="callout">
-        <b>关键不变量</b>
-        <p>无论从哪条路径返回，<b>进度、章节与声音</b>必须一致：总览只改变镜头，不改变进度；章节跳转由同一条缓动曲线完成；尾声“展开长卷”回到总览，而不是重置故事。</p>
-      </div>
-    </div>
-
-    <div>
-      <div class="spec">
-        <div><b>输入映射</b>滚轮 / 触摸上滑：前进 · 触摸下滑：回望 · 按住拖动：视线 · 点击拾光：纸卡 · Esc：退出展卷 · ← → / ↑ ↓ / 空格：键盘漫游 · Enter：启程。</div>
-        <div><b>移动端</b>DPR 上限 1.5；关闭泛光、阴影 1024；卡片自适应屏宽；触摸目标 ≥ 44px；横竖屏均可用。</div>
-        <div><b>可及性</b>所有按钮可聚焦；Esc 退出模态；尊重 prefers-reduced-motion：界面过渡与动画减弱，3D 漫游保留；声音默认开启但可一键静音；正文使用系统宋体回退。</div>
-        <div><b>性能预算</b>在线首包约 12MB（5 岛 + 5 载具 + 纹理）；桌面 1080p 60fps 目标；移动端自动降级；加载失败显示纸白错误页并可重试。</div>
-        <div><b>离线</b>单文件 HTML 内嵌全部 GLB / 贴图 / 字体回退；双击打开，无需服务器；WebAudio 在首次点击后启动（浏览器自动播放策略）。</div>
-        <div><b>状态持久化</b>不写入账号或云端；仅保留当前会话的进度、声音开关与愿望文本；“再看一遍”清空会话状态。</div>
-      </div>
-
-      <div class="callout" style="border-color:rgba(168,51,42,.45)">
-        <b>设计取舍</b>
-        <p>不做自由第一人称：观众只需要“向前”，不需要迷路。镜头是编排好的，但速度与停留由观众决定；总览是唯一的“上帝视角”，让五段时间第一次同时出现。</p>
-      </div>
-    </div>
-  </div>
-
-  <footer><span>02 / 02　状态机与适配规范</span><span>版本 1.0 · 2026-10</span><span>山河织路 · 2026</span></footer>
-</section>
-
+<header><div class="brand"><div class="mark">规范</div><div><b>山河织路</b><span>STATE / INPUT / FALLBACK</span></div></div><div class="meta">2026 华灿奖参赛作品 / 数字媒体设计<br>状态与适配 / 02</div></header><div class="eyebrow">状态、输入、恢复</div><h1 style="font-size:26pt">每次停留都有返回路径</h1>
+<div class="grid2"><div><table><thead><tr><th>状态</th><th>怎样进入</th><th>观众看到什么</th><th>怎样离开</th></tr></thead><tbody>
+<tr><td><b>加载</b></td><td>打开作品</td><td>加载资源并预绘沿途场景。出现异常时显示原因及恢复入口。</td><td>成功后进入封面</td></tr>
+<tr><td><b>封面</b></td><td>加载完成 / 返回封面</td><td>手绘动画风格的实时村口、五幕目录、声音与说明。</td><td>启程 / 选择章节 / 展卷</td></tr>
+<tr><td><b>漫游</b></td><td>从封面、时间轴或总览进入</td><td>从村口出发，穿过五幕。星港先看山城与温室，再到发射台。</td><td>手动推进 / 展卷 / 尾声</td></tr>
+<tr><td><b>家信</b></td><td>抵达地点 / 点家书</td><td>读背景和原文，翻看之前的信，或留一封到终点回复。</td><td>关闭按钮 / Esc</td></tr>
+<tr><td><b>自由步行</b></td><td>第一幕点击自由漫步</td><td>行走、转身与低身，允许近看物件。</td><td>返回路线 / Esc</td></tr>
+<tr><td><b>展卷</b></td><td>点击展卷</td><td>五岛同框；点岛后从当地远景缓缓推近。</td><td>岛标签 / 返回 / Esc</td></tr>
+<tr><td><b>回信</b></td><td>进度超过 99.6%</td><td>来信摘句、输入框、三句应答、点亮和直接看尾声。</td><td>点亮 / 跳过 / Esc</td></tr>
+<tr><td><b>发射与尾声</b></td><td>点亮 / 直接看尾声</td><td>火箭升高、飞远，约十一秒后心形微光隐去，来信与答复同页。</td><td>重走 / 展卷</td></tr>
+</tbody></table><div class="callout"><b>回到路上</b><p>收起家信后可以在原地继续。展卷返回会恢复进入时的界面，选择岛标签才会改变目标章节。</p></div></div>
+<div><div class="spec">
+<div><b>键盘</b>↑ / ↓ 或 PageUp / PageDown 控制前后，空格前进，Esc 关闭纸卡或退出展卷。弹层内 Tab 循环并在关闭时归还焦点。</div>
+<div><b>触屏</b>长滑临近来信时缓缓收住，书页展开，合书后继续。横拖转向，步行时使用屏上方向键。</div>
+<div><b>显示与运动</b>移动低画质像素比上限 1.5，阴影贴图 1024，关闭泛光。开启系统减少动态后缩短跳转，收束发射镜头。</div>
+<div><b>本机存储</b>已拾取的章节和声音偏好保存在本机。回信草稿仅保留在本次行程，重新启程时清空。</div>
+<div><b>运行方式</b>PC 与移动浏览器使用 WebGL 2。桌面可双击离线 HTML。第一次打开时静音，点击声音按钮后开始播放。</div>
+</div><div class="callout"><b>检验入口</b><p>回归从封面按钮、键盘、触控和离线文件分别进入。另测总览返回、留白与跳过、重复发射与加载失败恢复。</p></div></div></div>
+<footer><span>02 / 02　状态与适配</span><span>2026 年 11 月</span><span>山河织路</span></footer></section>
 </body>
 </html>

@@ -1650,6 +1650,47 @@ def lushe_extra(P, c):
          bevel=0.03)
 
 
+def grain_shop():
+    # Street frontage faces west. Keep the side alley to the cinema open.
+    from scene_lettering import letters
+    P=[]
+    wood=B.vmat('County shop timber',.86)
+    x,y=13.56,55.0
+    facex=9.86
+    boxp(P,"Grain shop stone footing",(7.8,6.5,.36),(x,y,.18),"#938878",stone)
+    boxp(P,"Grain shop back wall",(.30,6.25,3.75),(x+3.55,y,2.10),"#c9b596",matte)
+    for sign_y in (-1,1):
+        yy=y+sign_y*3.01
+        boxp(P,"Limewashed shop gable",(7.45,.24,3.75),(x,yy,2.10),"#d6c4a7",matte)
+        P.append(B.quad("Gable infill",[(facex,yy,3.92),(x+3.7,yy,3.92),(x,yy,5.27)],"#d6c4a7",matte))
+        for zz in (.63,2.0,3.67):
+            boxp(P,"Gable timber tie",(7.4,.27,.12),(x,yy,zz),"#79644f",wood)
+        boxp(P,"Side sash",(1.5,.30,1.23),(x+.85,yy,2.21),"#56645d",wood)
+        for d in (-.74,0,.74):
+            boxp(P,"Side sash upright",(.075,.33,1.26),(x+.85+d,yy,2.21),"#917e64",wood)
+    P.extend(B.tile_roof("Grain shop grey tile roof",x,y,3.92,8.05,6.9,1.40,.13,"#64655e",rough,curl=.14))
+    for yy in (y-2.98,y-.68,y+2.98):
+        boxp(P,"Grain shop frame",(.27,.25,3.67),(facex,yy,2.13),"#735841",wood)
+    boxp(P,"Grain shop fascia",(.20,6.33,.79),(facex-.08,y,3.44),"#504638",wood)
+    P.append(letters("Grain shop painted fascia","粮油店",(facex-.195,y,3.44),3.75,.57,
+                    B.mat("Old cream shop lettering","#efdbaf",rough=.84),angle=-math.pi/2,brush=True))
+    boxp(P,"Grain shop door",(.10,1.14,2.40),(facex+.41,y-2.22,1.57),"#71634e",wood)
+    boxp(P,"Grain shop counter",(.92,3.49,1.18),(facex+.21,y+1.00,.94),"#8b6d4e",wood)
+    boxp(P,"Worn counter ledge",(1.02,3.69,.105),(facex+.19,y+1.,1.56),"#b2946f",wood)
+    for n in range(3):
+        yy=y-.28+n*1.08
+        boxp(P,"Bulk rice bin",(.79,.98,.38),(facex-.05,yy,1.74),"#9a805e",wood)
+        P.append(B.sphere("Rice in bin",.46,(facex-.05,yy,1.91),scale=(.79,1,.22),
+                          color=["#d4c098","#d4b387","#b9a177"][n],material=rough,segments=14,rings=7))
+    for yy in (y-1.18,y+2.51):
+        for zz in (1.4,2.43):
+            boxp(P,"Stock shelf",(1.04,2.49,.13),(x+2.73,yy,zz),"#7c624b",wood)
+        for j in range(3):
+            P.append(B.sphere("Hessian grain sack",.51,(x+2.65,yy-.74+j*.68,1.85),scale=(.84,.68,.78),
+                              color="#b9a17e",material=rough,segments=12,rings=7))
+    add(B.join_materials("County grain shop",P,skip_prefixes=()))
+
+
 def cinema_build(y=69.0):
     w, d = 20.0, 16.0
     cx, cy, rot = frame_at(y, 1, 7.2 + 9.0, d)
@@ -1731,17 +1772,25 @@ def cinema_build(y=69.0):
                            (-8.5, fy - 0.37, 2.85)], "#a83a2d", red_cloth)
     quadp(P, "cin_tail2", [(-8.5, fy - 0.37, 3.3), (-7.85, fy - 0.37, 3.3),
                            (-8.5, fy - 0.37, 2.85)], "#a83a2d", red_cloth)
+    # Printed bills are mounted behind a shallow case with their own UV rectangles.
+    print_mat=B.mat("County cinema printed bills",texture=os.path.join(B.ASSETS,"textures","cinema-bills.jpg"),rough=.78)
+    def cinema_bill(px,py,pz,pw,ph,index):
+        u0,u1=(index+.006)/3,(index+.994)/3
+        boxp(P,"Cinema poster case",(pw+.12,.081,ph+.12),(px,py+.051,pz),"#6b6856",metal)
+        P.append(B.quad("Handprinted film bill",[(px-pw/2,py-.014,pz-ph/2),(px+pw/2,py-.014,pz-ph/2),
+                    (px+pw/2,py-.014,pz+ph/2),(px-pw/2,py-.014,pz+ph/2)],"#ffffff",print_mat,
+                    [(u0,.008),(u1,.008),(u1,.992),(u0,.992)]))
     # poster wall + posters
     boxp(P, "cin_postwall", (5.8, 0.18, 2.95), (8.3, fy - 3.7, 1.55), "#c9b99a", matte,
          bevel=0.02)
     for k in range(3):
-        poster(P, 6.1 + k * 2.2, 1.55, 1.9, 2.3, fy - 3.82, style=k, name=f"cin_post{k}")
+        cinema_bill(6.27+k*2.00,fy-3.85,1.65,1.73,2.45,k)
     for sx in (-1, 1):
         boxp(P, "cin_postleg", (0.14, 0.14, 1.55), (8.3 + sx * 2.7, fy - 3.7, 0.78),
              "#6f6653", metal)
     # posters on facade sections
-    poster(P, -6.8, 2.2, 1.7, 2.3, fy - 0.36, style=1, name="cin_fp1")
-    poster(P, 6.8, 2.2, 1.7, 2.3, fy - 0.36, style=2, name="cin_fp2")
+    cinema_bill(-6.8,fy-.38,2.2,1.55,2.2,1)
+    cinema_bill(6.8,fy-.38,2.2,1.55,2.2,2)
     # ticket booth
     boxp(P, "tk_base", (2.5, 2.3, 2.45), (-8.3, fy - 2.6, 1.22), "#cfc3a8", matte,
          bevel=0.02)
@@ -1752,9 +1801,15 @@ def cinema_build(y=69.0):
     boxp(P, "tk_board", (1.6, 0.06, 0.55), (-8.3, fy - 3.8, 3.02), "#d6c8aa", matte)
     boxp(P, "tk_boardstripe", (1.2, 0.02, 0.08), (-8.3, fy - 3.84, 3.02), "#a83a2d", matte)
     # bikes + planters + bollards
-    for k in range(3):
-        bicycle(P, 2.0 + k * 1.3, fy - 6.6, 0.1, "#3f5a55" if k % 2 else "#7a4a3c",
-                name=f"cin_bike{k}")
+    # Bikes belong to the cinema's local forecourt, including its raised paving.
+    for k, bx in enumerate((2.35, 3.65)):
+        by = fy - 4.9
+        bicycle(P, bx, by, math.pi/2 + (.05 if k else -.08),
+                ("#42625a","#86503e")[k], name=f"cin_bike{k}", floor=.16)
+        P.append(B.tube("Cinema cycle stand", [(bx+.22,by-.58,.16),
+                 (bx+.22,by-.58,.71),(bx+.22,by-.48,.80),
+                 (bx+.22,by+.40,.80),(bx+.22,by+.50,.70),(bx+.22,by+.50,.16)],
+                 .032, "#697970", metal, segments=8))
     for sx in (-1, 1):
         boxp(P, "cin_planter", (1.1, 0.8, 0.5), (sx * 3.4, fy - 7.4, 0.35), "#9c8d72",
              stone, bevel=0.02)
@@ -1953,7 +2008,7 @@ def bus_station(y=110.0):
 
 
 # ------------------------------------------------------------------ street furniture
-def bicycle(P, x, y, rot, col="#3f5a55", name="bike"):
+def bicycle(P, x, y, rot, col="#3f5a55", name="bike", floor=.15):
     b = []
     rx = 0.56
     for sx in (-rx, rx):
@@ -2002,8 +2057,8 @@ def bicycle(P, x, y, rot, col="#3f5a55", name="bike"):
     boxp(b, name + "_chain", (0.36, 0.02, 0.05), (-0.15, 0.04, 0.45), "#5d5749", metal)
     beamp(b, name + "_kick", (-0.45, 0.0, 0.36), (-0.5, 0.12, 0.03), 0.018, 0.018,
           "#5f5b4e", metal)
-    B.apply_xform(b, (x, y, 0.02), rot)
-    add(b)
+    B.apply_xform(b, (x, y, floor-.006), rot)
+    P.extend(b)
 
 
 def tricycle(P, x, y, rot, name="tri"):
@@ -2034,7 +2089,7 @@ def tricycle(P, x, y, rot, name="tri"):
         boxp(b, name + "_crate", (0.55, 0.5, 0.35), (-0.65 + k * 0.55, -0.05, 0.95),
              "#96704b", matte, bevel=0.01)
     B.apply_xform(b, (x, y, 0.02), rot)
-    add(b)
+    P.extend(b)
 
 
 def street_lamp(P, y, side, name="lamp"):
@@ -2108,57 +2163,8 @@ def street_tree(P, y, side, h=4.6, name="stree"):
 
 
 def willow(P, x, y, z, h=6.4, name="willow"):
-    trunk = [(x, y, z), (x + 0.12, y + 0.04, z + h * 0.28),
-             (x - 0.06, y, z + h * 0.5)]
-    P.append(B.tube(name + "_trunk", trunk, 0.24, "#5e4a34", matte, segments=6))
-    for k in range(4):
-        a = math.tau * k / 4 + 0.55
-        p1 = (x + math.cos(a) * 1.0, y + math.sin(a) * 1.0, z + h * 0.62)
-        p2 = (x + math.cos(a) * 2.0, y + math.sin(a) * 2.0, z + h * 0.44)
-        P.append(B.tube(name + f"_br{k}", [(x, y, z + h * 0.45), p1, p2], 0.09,
-                        "#5e4a34", matte, segments=5))
-    # soft weeping crown
-    for k in range(6):
-        a = math.tau * k / 6 + 0.3
-        rr = 0.8 + (k % 3) * 0.4
-        cx = x + math.cos(a) * rr
-        cy = y + math.sin(a) * rr
-        cz = z + h * (0.66 + 0.055 * (k % 3))
-        sph(P, name + "_crown", 1.0, (cx, cy, cz), ["#6f8048", "#7c8b52", "#87965a"][k % 3],
-            scale=(1.15, 1.15, 0.82), mx=matte, seg=7, rings=5)
-    for k in range(3):
-        a = math.tau * k / 3 + 0.9
-        cx = x + math.cos(a) * 1.35
-        cy = y + math.sin(a) * 1.35
-        sph(P, name + "_drape", 0.62, (cx, cy, z + h * 0.44), "#7a894f",
-            scale=(0.9, 0.9, 1.9), mx=matte, seg=6, rings=4)
-    # hanging leaf curtain
-    for k in range(14):
-        a = math.tau * k / 14 + 0.2
-        rr = 1.3 + 0.85 * (k % 3) / 2.0
-        sx = x + math.cos(a) * rr
-        sy = y + math.sin(a) * rr
-        top = z + h * (0.8 - 0.04 * (k % 2))
-        pts = [(sx, sy, top),
-               (sx + math.cos(a) * 0.35, sy + math.sin(a) * 0.35, top - h * 0.14),
-               (sx + math.cos(a) * 0.6, sy + math.sin(a) * 0.6, z + h * 0.36),
-               (sx + math.cos(a) * 0.72, sy + math.sin(a) * 0.72, z + h * 0.07)]
-        P.append(B.tube(name + f"_str{k}", pts, 0.017, "#6b6b45", matte, segments=4))
-        tx, ty = -math.sin(a), math.cos(a)
-        for j in range(4):
-            t = 0.10 + j * 0.21
-            lz = top - h * (0.1 + 0.72 * t)
-            lx = sx + math.cos(a) * (0.15 + 0.58 * t)
-            ly = sy + math.sin(a) * (0.15 + 0.58 * t)
-            w = 0.26 + 0.05 * (k % 2)
-            hh = 0.62 + 0.1 * ((k + j) % 3)
-            col = "#7f8f52" if (k + j) % 2 else "#8f9b5c"
-            quadp(P, name + f"_leaf{k}{j}",
-                  [(lx - tx * w / 2, ly - ty * w / 2, lz),
-                   (lx + tx * w / 2, ly + ty * w / 2, lz + 0.03),
-                   (lx + tx * w * 0.35, ly + ty * w * 0.35, lz - hh),
-                   (lx - tx * w * 0.25, ly - ty * w * 0.25, lz - hh * 0.92)],
-                  col, matte)
+    from planted_trees import plant
+    P.append(plant('street',x,y,z,h,h*.91,name))
 
 
 def bench(P, x, y, rot, name="bench"):
@@ -2428,7 +2434,7 @@ def kiosk_binggun(P, x, y, rot):
     boxp(b, "bg_sill", (1.5, 0.34, 0.1), (0, -0.86, 1.32), "#b3a98f", stone)
     cylp(b, "bg_roll", 0.12, 1.35, (0, -0.8, 2.28), "#7f887e", metal,
          rot=(0, math.pi / 2, 0), seg=8)
-    P.append(B.sign_quad("bg_sign", "binggun", (0, -0.8, 2.82), 0.0, 1.65, 0.59, signs))
+    b.append(B.sign_quad("bg_sign", "binggun", (0, -.84, 2.82), 0.0, 1.65, 0.59, signs))
     boxp(b, "bg_signboard", (1.8, 0.1, 0.72), (0, -0.74, 2.82), "#3b2c24", matte)
     # ice box
     boxp(b, "bg_ice", (1.15, 0.72, 0.68), (0, -1.65, 0.4), "#e0ddd0", matte, bevel=0.03)
@@ -2453,8 +2459,8 @@ def kiosk_xiubiao(P, x, y, rot):
     cylp(b, "xb_clock", 0.13, 0.02, (-0.3, -0.7, 1.6), "#e0d8c2", matte,
          rot=(math.pi / 2, 0, 0), seg=12)
     boxp(b, "xb_stool", (0.35, 0.3, 0.06), (0, -0.95, 0.5), "#8a6444", matte)
-    P.append(B.sign_quad("xb_sign", "xiubiao", (0, -0.47, 2.4), 0.0, 1.7, 0.54, signs))
-    boxp(b, "xb_signboard", (1.85, 0.08, 0.62), (0, -0.42, 2.4), "#3b2c24", matte)
+    b.append(B.sign_quad("xb_sign", "xiubiao", (0, -.69, 2.83), 0.0, 1.7, 0.54, signs))
+    boxp(b, "xb_signboard", (1.85, 0.08, 0.62), (0, -.62, 2.83), "#3b2c24", matte)
     boxp(b, "xb_roof", (1.65, 1.25, 0.1), (0, 0, 2.4), "#6c6453", metal)
     B.apply_xform(b, (x, y, 0.06), rot)
     add(b)
@@ -2463,36 +2469,8 @@ def kiosk_xiubiao(P, x, y, rot):
 # ------------------------------------------------------------------ background
 def paper_tree(P, name, x, y, z, h=5.0, spread=2.2, leaf="#4c6a43",
                trunk="#5b4935"):
-    P.append(B.cylinder(name + "_trunk", 0.13, h * 0.6, (x + 0.05, y, z + h * 0.3),
-                        segments=6, color=trunk, material=matte, radius2=0.08))
-    for b in range(3):
-        a = math.tau * b / 3 + 0.5
-        beamp(P, name + f"_br{b}", (x, y, z + h * 0.5),
-              (x + math.cos(a) * spread * 0.55, y + math.sin(a) * spread * 0.55,
-               z + h * 0.72), 0.055, 0.055, trunk, matte)
-    for c in range(5):
-        a = math.tau * c / 5 + R.uniform(-0.3, 0.3)
-        rr = spread * R.uniform(0.25, 0.62)
-        cx = x + math.cos(a) * rr
-        cy = y + math.sin(a) * rr
-        cz = z + h * R.uniform(0.66, 0.94)
-        rx = spread * R.uniform(0.4, 0.62)
-        rz = rx * R.uniform(0.55, 0.8)
-        verts, faces = [], []
-        for r in range(3):
-            t = r / 2.0
-            rad = rx * math.sin((0.18 + 0.72 * t) * math.pi)
-            zz = cz - rz + 2 * rz * t
-            for si in range(7):
-                aa = math.tau * si / 7
-                verts.append((cx + rad * math.cos(aa), cy + rad * math.sin(aa), zz))
-        for r in range(2):
-            for si in range(7):
-                s2 = (si + 1) % 7
-                faces.append((r * 7 + si, r * 7 + s2, (r + 1) * 7 + s2,
-                              (r + 1) * 7 + si))
-        P.append(B._finish(name + f"_leaf{c}", verts, faces, vc(leaf, 0.08), matte,
-                           smooth=False))
+    from planted_trees import plant
+    P.append(plant('street',x,y,z,h,min(3.15,spread*1.57) if name.startswith("stree") else spread*1.63,name))
 
 
 def back_house(x, y, rot, w=7.0, d=6.0, floors=2, wall="#c4b79c", name="bh",
@@ -2606,20 +2584,15 @@ def field_plot(x, y, w, d, rot, col1="#7f9850", col2="#8fa95c", name="field"):
 
 def conifer(x, y, h=5.0, color="#3c5438"):
     z = max(0.0, terrain_h(x, y))
-    b = [B.cylinder("conif_trunk", 0.09, h * 0.4, (x, y, z + h * 0.2), segments=5,
-                    color="#4f3f2e", material=matte)]
-    for (rr, zz, hh) in ((0.36, 0.36, 0.5), (0.28, 0.58, 0.42), (0.18, 0.78, 0.34)):
-        b.append(B.cylinder("conif_needle", h * rr, h * hh, (x, y, z + h * zz),
-                            segments=7, color=color, material=matte, radius2=0.02))
-    add(b)
+    from planted_trees import plant
+    add(plant('street',x,y,z,h,h*.64))
 
 
 def broadleaf(x, y, h=5.2):
-    z = max(0.0, terrain_h(x, y))
-    add(B.tree("btree", (x, y, z), h, h * 0.46, "#4c6a43", "#5b4935", matte, matte, R))
+    from planted_trees import plant
+    add(plant('street',x,y,max(0,terrain_h(x,y)),h,h*.83))
 
 
-# ------------------------------------------------------------------ layout helpers
 def prop_pos(y, side, off):
     tx, ty = street_frame(y)
     nx, ny = ty, -tx
@@ -2751,6 +2724,7 @@ def build_shop_row():
 
     # landmark buildings that need their own massing
     cinema_build(69)
+    grain_shop()
     bus_station(110)
 
     # alleys between buildings
@@ -2790,32 +2764,6 @@ def build_street_furniture():
     # service drops to the east buildings
     tx, ty = street_frame(4)
     nx, ny = ty, -tx
-    for yy in (-100, -36, 40, 76):
-        x0 = road_x(yy) + nx * 6.4
-        y0 = yy + ny * 6.4
-        x1 = road_x(yy) + nx * 7.6
-        y1 = yy + ny * 7.6
-        wire(P, [(x0, y0, 7.4), ((x0 + x1) / 2, (y0 + y1) / 2, 6.6), (x1, y1, 6.1)],
-             name="dropwire")
-    # cross-street cables with small red pennants
-    for yy in (-100, 60):
-        x0 = road_x(yy) + nx * 6.4
-        y0 = yy + ny * 6.4
-        x1 = road_x(yy) - nx * 5.8
-        y1 = yy - ny * 5.8
-        pts = []
-        for k in range(9):
-            t = k / 8
-            pts.append((x0 + (x1 - x0) * t, y0 + (y1 - y0) * t,
-                        6.9 - 1.1 * math.sin(math.pi * t)))
-        wire(P, pts, name="crosswire")
-        for k in range(3):
-            t = 0.28 + k * 0.22
-            px = x0 + (x1 - x0) * t
-            py = y0 + (y1 - y0) * t
-            pz = 6.9 - 1.1 * math.sin(math.pi * t)
-            boxp(P, "pennant", (0.16, 0.02, 0.34), (px, py, pz - 0.2), "#a83a2d", red_cloth,
-                 rot=(0, 0, R.uniform(-0.2, 0.2)))
     # benches, postbox, hydrant, bins, tap
     bench(P, *prop_pos(-25.0, -1, 8.6)[:2], rot=prop_pos(-25.0, -1, 8.6)[2] + math.pi,
           name="bench0")
@@ -2830,9 +2778,6 @@ def build_street_furniture():
     public_tap(P, x, y, rr)
     # parking bay by the department store + hotspot marker
     parking_bay(36.0, 1)
-    # two sun-faded banners across the street
-    add(cross_banner(-54.0, z=6.15, span=14.5))
-    add(cross_banner(82.0, z=6.35, span=14.5, name="banner2"))
     # small layers of wall notices near the bookshop / barber
     for (yy, sd, xo) in ((-54.5, 1, 6.9), (-69.0, -1, 6.95), (44.5, -1, 6.9)):
         tx, ty = street_frame(yy)
@@ -2872,8 +2817,8 @@ def build_market():
     handcart(P, x, y, rot + 0.35)
 
     # cargo tricycle + baskets around the market
-    x, y, rot = prop_pos(-27.0, -1, 4.7)
-    tricycle(P, x, y, rot)
+    x, y, rot = prop_pos(-20.3, -1, 6.4)
+    tricycle(P, x, y, rot-.27)
     for i in range(3):
         x, y, rot = prop_pos(-21.0 + i * 0.8, -1, 8.3)
         lathe_basket(P, x, y, 0.2, 0.32, 0.36, name=f"market_basket{i}")
@@ -2882,12 +2827,12 @@ def build_market():
 
 def build_vehicles_street():
     # parked bicycles along the shops
-    for i, (yy, sd) in enumerate(((-58.5, 1), (-33.0, 1), (16.5, 1), (88.0, -1), (119.0, 1))):
-        x, y, rot = prop_pos(yy, sd, 5.55)
+    for i, (yy, sd) in enumerate(((-58.5, 1), (16.5, 1), (88.0, -1))):
+        x, y, rot = prop_pos(yy, sd, 6.25)
         bicycle(ALL, x, y, rot + math.pi / 2 * sd, col=["#3f5a55", "#7a4a3c", "#4d5560"][i % 3],
                 name=f"streetbike{i}")
     # a couple of delivery bikes leaned near the food stalls
-    x, y, rot = prop_pos(-23.6, -1, 4.9)
+    x, y, rot = prop_pos(-23.6, -1, 6.40)
     bicycle(ALL, x, y, rot + 1.25, col="#5f5c4e", name="marketbike")
 
 
@@ -2939,7 +2884,13 @@ def build_nature():
     # street trees in gaps
     for i, (yy, sd) in enumerate(((-122, -1), (-98, 1), (-84, 1), (-36, -1),
                                   (12, 1), (37, -1), (84, -1))):
-        street_tree(P, yy, sd, h=4.2 + (i % 3) * 0.5, name=f"stree{i}")
+        if i == 5:  # The east-street grocer occupies this former pavement opening.
+            former = []
+            street_tree(former, yy, sd, h=5.2, name="removed_grocer_tree")
+            for item in former:
+                bpy.data.objects.remove(item, do_unlink=True)
+        else:
+            street_tree(P, yy, sd, h=4.2 + (i % 3) * 0.5, name=f"stree{i}")
     # willows along the canal
     for i, (xx, sd) in enumerate(((-56, 1), (-44, -1), (-22, 1), (18, -1),
                                   (36, 1))):
@@ -3064,6 +3015,9 @@ def main():
         print("PREJOIN", i, len(chunks))
     print("PREJOIN done", len(chunks))
     B.join_materials("Town", chunks)
+    from era_fixtures import install
+    install("town")
+    bpy.ops.file.pack_all()
     tris = 0
     verts = 0
     for ob in bpy.context.scene.objects:
@@ -3186,13 +3140,14 @@ def build_car():
         bx("Chrome", (0.014, 1.5, 0.014), (sx * 0.665, -0.28, 1.448), "#a9a28f", chrome)
 
     # ------------------------------------------------ glazing
-    ws = [(-0.625, 0.905, 1.005), (0.625, 0.905, 1.005),
-          (0.530, 0.365, 1.435), (-0.530, 0.365, 1.435)]
-    ws = [(x, y + 0.012, z + 0.008) for (x, y, z) in ws]
-    quad("Glass", ws, "#a9c1bd", glassm, "windshield")
-    quad("Trim", [(x, y - 0.02, z) for (x, y, z) in ws], "#1b2627", trim, "ws_back")
-    for i in range(4):
-        beam("Chrome", ws[i], ws[(i + 1) % 4], 0.024, "#bcb5a2", chrome, "ws_trim")
+    # Follow each bend of the greenhouse so paint cannot break through the glass.
+    glass_rows=[(.915,.630,1.016),(.802,.604,1.170),(.562,.555,1.451),(.475,.541,1.462)]
+    for (y0,w0,z0),(y1,w1,z1) in zip(glass_rows,glass_rows[1:]):
+        quad("Glass",[(-w0,y0,z0),(w0,y0,z0),(w1,y1,z1),(-w1,y1,z1)],"#a9c1bd",glassm,"windshield")
+        for side in (-1,1):
+            beam("Chrome",(side*w0,y0,z0),(side*w1,y1,z1),.016,"#abae9f",chrome,"ws_trim")
+    for yy,ww,zz in (glass_rows[0],glass_rows[-1]):
+        beam("Chrome",(-ww,yy,zz),(ww,yy,zz),.018,"#abae9f",chrome,"ws_trim")
     for sx in (-1, 1):
         beam("Trim", (sx * 0.64, 0.910, 1.0), (sx * 0.535, 0.36, 1.435), 0.030, blk, trim)
     rw = [(-0.580, -1.415, 1.020), (0.580, -1.415, 1.020),
@@ -3568,6 +3523,8 @@ def build_car():
         if lst:
             body_objs.append(B.join_group("Car_" + key, lst))
     root = B.empty("Car", (0, 0, 0))
+    from era_fixtures import install
+    body_objs.extend(install("car"))
     for ob in body_objs + wheel_objs:
         ob.parent = root
         ob.matrix_parent_inverse = root.matrix_world.inverted()

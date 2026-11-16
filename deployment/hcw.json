@@ -1,0 +1,11 @@
+{
+  "url": "https://harmonyconnectwindows.com/#HCHHB",
+  "provider": "Cloudflare Pages",
+  "project": "web",
+  "productionBranch": "main",
+  "productionDeployment": "afd6366f-287d-4f4b-9cda-f664b33714be",
+  "experiencePrefix": "/assets/experiences/aa384c92ca76/",
+  "hostRepository": "L:/harmonyprojectdevelopment/HCW",
+  "releaseDirectory": "L:/harmonyprojectdevelopment/HCW/test/out/hchhb_loading_fast_final_20261112",
+  "publishScript": "L:/harmonyprojectdevelopment/HCW/tools/deploy_pages.ps1"
+}

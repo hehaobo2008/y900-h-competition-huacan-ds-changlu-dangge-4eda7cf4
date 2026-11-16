@@ -614,6 +614,9 @@ def rocket():
 
     # ------------------------------------------------------------------ finalize
     B.join_materials("Rocket", ALL, skip_prefixes=())
+    from era_fixtures import install
+    install("rocket")
+    bpy.ops.file.pack_all()
     # stats
     tris = vtx = 0
     for ob in bpy.context.scene.objects:
@@ -736,6 +739,9 @@ def ground_h(x, y):
     for (px, py, ph, pw) in peaks:
         ridge += ph * math.exp(-(((x - px) / pw) ** 2 + ((y - py) / (pw * 1.18)) ** 2))
     notch = 1.0 - 0.56 * math.exp(-(((x - 108.0) / 30.0) ** 2)) * sstep(108, 130, y)
+    # Let the saddle fall away on the far side, with softer shoulders at the peninsula's ends.
+    ridge *= 1-.77*sstep(134,150,y)
+    ridge *= 1-.50*sstep(123,159,abs(x))
     h += ridge * notch
     # east shoulder behind the port
     e = sstep(144.0, 160.0, x) * sstep(-10.0, 40.0, y)
@@ -963,36 +969,14 @@ def planter(name, x, y, z, w=2.4, d=1.2, h=0.55, rot=0.0, hedge="#5e7c52"):
 
 
 def tree_future(name, x, y, z, h=7.0, r=2.2, col="#5f7f55", rng=None):
-    rng = rng or random
-    obs = []
-    obs.append(B.cylinder(name + "_t", 0.13 + h * 0.008, h * 0.62, (x, y, z + h * 0.31),
-                          segments=6, color="#b8ac93", material=M["wood"]))
-    obs.append(B.cylinder(name + "_t2", 0.09, h * 0.35, (x, y, z + h * 0.55),
-                          segments=5, color="#c8bda4", material=M["wood"]))
-    for k in range(4):
-        a = rng.uniform(0, math.tau)
-        rr = rng.uniform(0.0, r * 0.55)
-        cx = x + math.cos(a) * rr
-        cy = y + math.sin(a) * rr
-        cz = z + h * (0.62 + 0.11 * k) + rng.uniform(-0.2, 0.2)
-        rx = r * rng.uniform(0.55, 0.9)
-        obs.append(B.sphere(name + f"_c{k}", rx, (cx, cy, cz),
-                            scale=(1.0, 0.9, rng.uniform(0.35, 0.55)),
-                            color=B.vary(srgb(col), 0.06), material=M["foliage"],
-                            segments=6, rings=3))
-    return obs
+    from planted_trees import plant
+    family="copper" if name.startswith(("Shore","BayDeck","Lab","Plaza","PortTree")) else "silver"
+    return [plant(family,x,y,z,h,r*2.14,name)]
 
 
-def tree_pine(name, x, y, z, h=9.0, col="#4e6b4f", rng=None):
-    obs = [B.cylinder(name + "_t", 0.16, h * 0.55, (x, y, z + h * 0.27), segments=6,
-                      color="#8d7c63", material=M["wood"])]
-    for k in range(3):
-        base = z + h * (0.32 + k * 0.19)
-        rr = h * (0.19 - k * 0.035)
-        obs.append(B.cylinder(name + f"_c{k}", rr, h * 0.32, (x, y, base + h * 0.16),
-                              segments=8, color=B.vary(srgb(col), 0.07),
-                              material=M["foliage"], radius2=0.02))
-    return obs
+def tree_pine(name,x,y,z,h=9.0,col=None,rng=None):
+    from planted_trees import plant
+    return [plant("silver",x,y,z,h,h*.62,name)]
 
 
 # ---------------------------------------------------------------- ground / water / roads
@@ -1198,8 +1182,7 @@ def build_roads():
         add(flat_path("WalkMain", sp, 3.4, "#b8b09c", M["matte"], zoff=0.13))
         add(B.tube("CurbMain", [(x, y, z + 0.14) for (x, y, z) in offset_path(p, side * 5.15)],
                    0.10, "#d7cfbb", M["matte"]))
-    # red thread centre line
-    add(flat_path("RedThread", p, 0.24, "#ff6c4e", M["red"], zoff=0.03))
+
     for side in (-1, 1):
         lp = offset_path(p, side * 2.0)
         add(flat_path("LaneLine", [(x, y, z + 0.028) for (x, y, z) in lp], 0.12,
@@ -1315,15 +1298,8 @@ def ellipse_band(name, cx, cy, z, rx0, ry0, rx1, ry1, h, color, material, seg=20
 
 
 def mini_tree(name, cx, cy, z, h=3.0, r=1.1, col="#5a7844"):
-    obs = [B.cylinder(name + "_t", 0.075, h * 0.55, (cx, cy, z + h * 0.27), segments=5,
-                      color="#b7a98e", material=M["wood"])]
-    obs.append(B.sphere(name + "_c", r, (cx, cy, z + h * 0.72),
-                        scale=(1.0, 0.95, 0.7), color=B.vary(srgb(col), 0.06),
-                        material=M["foliage"], segments=7, rings=4))
-    obs.append(B.sphere(name + "_c2", r * 0.62, (cx + r * 0.35, cy + r * 0.1, z + h * 0.85),
-                        scale=(1.0, 1.0, 0.75), color=B.vary(srgb(col), 0.06),
-                        material=M["foliage"], segments=6, rings=4))
-    return obs
+    from planted_trees import plant
+    return [plant("silver",cx,cy,z,h,r*1.94,name)]
 
 
 def quad_batch(name, items, color, material):
@@ -1814,7 +1790,7 @@ def city_plaza():
     obs.append(B.cylinder("PlazaPave", 16.0, 0.30, (2, -9, z - 0.15), segments=56,
                           color="#c7bea9", material=M["matte"]))
     for r0, r1, cc in [(4.4, 4.7, "#b3a88f"), (10.2, 10.6, "#d8d0bb"),
-                       (14.2, 14.7, "#b3a88f"), (6.6, 6.85, "#ff6c4e")]:
+                       (14.2, 14.7, "#b3a88f"), (6.6, 6.85, "#aa8971")]:
         mat = M["red"] if cc == "#ff6c4e" else M["matte"]
         obs.append(flat_ring("PlazaRing", z + 0.02, r0, r1, 56, 2, -9, cc, mat))
     for i in range(5):
@@ -1824,7 +1800,7 @@ def city_plaza():
     ang = math.radians(-40)
     for rr, rad, col, mat in [(7.2, 0.38, "#f0ebde", M["white"]),
                               (6.1, 0.16, "#bff7ff", M["cyan"]),
-                              (4.4, 0.07, "#ff8a68", M["red"])]:
+                              (4.4, 0.10, "#a88666", M["metal"])]:
         pts = []
         for i in range(40):
             a = math.tau * i / 40
@@ -1886,11 +1862,6 @@ def city_gate():
 
 LOOP_C = (-18.0, 12.0)
 LOOP_RX, LOOP_RY, LOOP_Z = 70.0, 48.0, 13.8
-TOWER_BASES = [(-50, 28, 12.5), (-16, 18, 9.5), (-14, 44, 9.0), (-72, 2, 10.0),
-               (-60, 44, 8.5), (-42, -20, 8.5), (28, -10, 9.0), (-18, -25, 9.0),
-               (34, 14, 7.5), (38, 28, 5.0), (-104, 34, 7.0), (-122, 52, 6.0),
-               (-108, 78, 6.5), (-132, 16, 6.0), (16, 48, 8.0), (36, 74, 8.0)]
-
 
 def loop_pt(theta):
     return (LOOP_C[0] + LOOP_RX * math.cos(theta),
@@ -1956,8 +1927,8 @@ def build_transit():
     build_station()
     # spaceport terminal
     build_port_terminal(brz[-1])
-    # maglev train
-    build_train()
+    # The articulated train is a separate asset, animated on this guideway.
+    # Rebuild it with tools/build_future_metro.py.
 
 
 def rounded_yz(x, w, h, r, n=3, zc=0.0):
@@ -1971,14 +1942,15 @@ def rounded_yz(x, w, h, r, n=3, zc=0.0):
     return pts
 
 
-def railcar(name, base, rot, z):
+def railcar(name, base, rot, deck_z):
     """Rounded maglev car; local +X along the length."""
     obs = []
+    z = 0.0
     secs = [(-4.15, 0.55), (-3.85, 0.88), (-3.35, 1.0), (-1.0, 1.0),
             (1.0, 1.0), (3.35, 1.0), (3.85, 0.88), (4.15, 0.55)]
     rings = []
     for (x, sc) in secs:
-        rings.append(rounded_yz(x, 2.75 * sc, 2.85 * sc, 0.55 * sc, 3, zc=1.45))
+        rings.append(rounded_yz(x, 2.75 * sc, 2.85 * sc, 0.55 * sc, 3, zc=.30))
     obs.append(loft_rings(name + "_body", rings, "#f1ecdf", M["white"], smooth=True))
     # dark window band and lit panes (both sides)
     for s in (-1, 1):
@@ -2002,26 +1974,27 @@ def railcar(name, base, rot, z):
         obs.append(B.box(name + "_skid", (7.0, 0.5, 0.22), (0, s * 1.05, z + 0.12),
                          color="#303538", material=M["metal"]))
     # roof equipment
-    obs.append(B.box(name + "_roofbox", (2.6, 1.2, 0.35), (0, 0, z + 2.98),
+    obs.append(B.box(name + "_roofbox", (2.6, 1.2, 0.35), (0, 0, z + 3.22),
                      color="#dad4c5", material=M["white"], bevel=0.06))
-    obs.append(B.box(name + "_ant", (0.5, 0.08, 1.0), (-3.0, 0, z + 2.95),
+    obs.append(B.box(name + "_ant", (0.5, 0.08, 1.0), (-3.0, 0, z + 3.01),
                      color="#6d6961", material=M["metal"]))
     # destination strip
     obs.append(B.box(name + "_dest", (1.7, 0.05, 0.24), (0, -1.43, z + 2.7),
                      color="#a8f4ff", material=M["cyan"]))
-    B.apply_xform(obs, (base[0], base[1], z), rot)
+    B.apply_xform(obs, (base[0], base[1], deck_z), rot)
     return obs
 
 
 def build_train():
     # place five cars on the loop south-east arc
+    th = math.radians(-72)
     for k in range(5):
-        th = math.radians(-72 + k * 9.2)
         x = LOOP_C[0] + LOOP_RX * math.cos(th)
         y = LOOP_C[1] + LOOP_RY * math.sin(th)
         tx, ty = -LOOP_RX * math.sin(th), LOOP_RY * math.cos(th)
         rot = math.atan2(ty, tx)
         add(railcar(f"Train{k}", (x, y, 0), rot, LOOP_Z + 0.02))
+        th+=8.55/math.hypot(tx,ty)
 
 
 def build_station():
@@ -2307,13 +2280,27 @@ def build_greenery():
         for s in (-1, 1):
             add(tree_future(f"CrossTree{i}_{s}", x - math.sin(ang) * s * 7.4,
                             y + math.cos(ang) * s * 7.4, z, 5.6, 1.7, "#647f52"))
-    # waterfront trees (land side)
-    pp = [(x, y, 2.06) for (x, y) in PROMENADE]
-    for i in range(2, len(pp) - 2, 3):
-        x, y, z = pp[i]
-        add(tree_future(f"ShoreTree{i}", x + math.sin(path_tangent(pp, i)) * 4.5,
-                        y - math.cos(path_tangent(pp, i)) * 4.5, z + 0.05, 7.0, 2.2,
-                        "#688255"))
+    # An accessible strip of deck follows the water. Group the trees in planted
+    # beds on the land side, leaving the pavilion, gangway and ferry berth open.
+    from planted_trees import plant
+    pp=[(x,y,2.06) for x,y in PROMENADE]
+    last=-100
+    for i in range(2,len(pp)-2,2):
+        x,y,_=pp[i]
+        if x-last<8.8 or 50<x<67 or 104<x<120:continue
+        side=3.85 if i%3 else 4.55
+        angle=path_tangent(pp,i)
+        tx=x-math.sin(angle)*side;ty=y+math.cos(angle)*side
+        z=max(2.03,ground_h(tx,ty))
+        add(B.cylinder("Rain garden edge",1.43,.28,(tx,ty,z+.08),color="#a8b4a5",material=M["matte"],segments=24))
+        add(B.cylinder("Garden soil",1.32,.06,(tx,ty,z+.23),color="#68684d",material=M["matte"],segments=24))
+        for k in range(7):
+            a=(k+i*.11)*math.tau/7
+            add(B.sphere("Liriope",.26,(tx+1.04*math.cos(a),ty+1.04*math.sin(a),z+.34),
+                         scale=(1,.64,.56),color="#749077",material=M["foliage"],segments=7,rings=3))
+        family="copper" if i%3 else "silver"
+        add(plant(family,tx,ty,z+.26,6.2+.58*(i%3),4.3+.36*(i%3),"ShoreTree "+family))
+        last=x
     # hillside forest
     rng = random.Random(333)
     for i in range(48):
@@ -2343,16 +2330,6 @@ def build_greenery():
         if px > 72:
             continue
         add(tree_future(f"PortTree{i}", px, py, ground_h(px, py), 5.5, 1.8, "#668056"))
-    # tower base shrubs
-    for (tx, ty, rr) in TOWER_BASES:
-        for k in range(5):
-            a = math.tau * k / 5 + tx * 0.02
-            px = tx + math.cos(a) * (rr * 0.95)
-            py = ty + math.sin(a) * (rr * 0.95)
-            z = ground_h(px, py) + 1.3
-            add(B.sphere(f"BaseShrub{int(tx)}_{int(ty)}_{k}", rng.uniform(0.5, 0.9),
-                         (px, py, z), scale=(1.2, 1.0, 0.7), color="#5f7a4f",
-                         material=M["foliage"], segments=7, rings=4))
     # solar farm between city and port
     for row in range(5):
         for col in range(5):
@@ -2381,8 +2358,10 @@ def build_greenery():
                                           (22, 136, 44, 2.0), (-142, 118, 40, 0.6)]):
         wz = ground_h(wx, wy)
         add(wind_turbine(f"Wind{i}", wx, wy, wz, hh, 20.0, ph))
-        add(B.box("WindPad", (8, 8, 0.5), (wx, wy, wz + 0.2), color="#c4bda9",
-                  material=M["matte"]))
+        corners=[(wx+dx,wy+dy) for dx,dy in [(-3.8,-3.8),(3.8,-3.8),(3.8,3.8),(-3.8,3.8)]]
+        top=[(x,y,wz+.10) for x,y in corners]
+        footing=[(x,y,min(wz-.9,ground_h(x,y)-1.8)) for x,y in corners]
+        add(loft_rings("Wind turbine foundation",[footing,top],"#a4ab99",M["matte"],smooth=False))
     # stepped tea terraces on the west hill
     add(terrace_garden(-96, 62, 22, 17, 3, 0.06, "#7d9556"))
     add(terrace_garden(-126, 36, 18, 15, 3, -0.08, "#86975a"))
@@ -2515,6 +2494,11 @@ def build_launch_tower():
                      rot=(0, 0, 0.0), color="#e8e2d3", material=M["white"], bevel=0.05))
     obs.append(B.box("TwrJibIn", (15.0, 0.5, 0.4), (cx - 6.5, cy, zt + 2.5),
                      color="#b78c5f", material=M["wood"]))
+    obs.append(B.box("Crane counterjib bearing", (9.2, 2.8, .74), (cx + 4.3, cy, zt + 2.05),
+                     color="#c5ccc4",material=M["metal"]))
+    for side in (-1,1):
+        obs.append(B.beam("Crane counterjib stay",(cx,cy+side,zt+5.15),(cx+9.2,cy+side,zt+2.2),
+                          .18,.18,"#999e99",M["metal"]))
     obs.append(B.box("TwrCounter", (4.4, 4.6, 1.8), (cx + 8.2, cy, zt + 1.4),
                      color="#5b5d58", material=M["metal"]))
     for s in (-1, 1):
@@ -2531,7 +2515,10 @@ def build_launch_tower():
     obs.append(B.sphere("TwrBeacon", 0.28, (cx, cy, zt + 13.1),
                         color="#ff9570", material=M["red"], segments=8, rings=5))
     # tower name at a readable height
-    add(sign_panel("TowerSign", "xinghe", cx - 1.5, cy - 3.15, 23.0, 0.0, 7.4, 2.3, glow=True))
+    for offset in (-2.38,2.38):
+        obs.append(B.beam("Tower plaque brackets",(cx+offset,cy-3.3,23.62),(cx+offset,cy-4.65,23.62),
+                          .11,.12,"#948c74",M["metal"]))
+    add(sign_panel("TowerSign","xinghe",cx,cy-4.86,23.3,0,5.85,1.72,glow=True))
     # pipe raceway up one leg
     for k in range(levels):
         zA, hA = lv[k]
@@ -2830,6 +2817,8 @@ def build_port_buildings():
                      rot=(0, 0, rot), color="#eee9dc", material=M["white"], bevel=0.07))
     obs.extend(sign_panel("PortSign", "xinghe", gx + math.sin(rot) * 0.66,
                           gy - math.cos(rot) * 0.66, zz + 13.2, rot, 8.8, 2.75, glow=True))
+    obs.extend(sign_panel("PortArrivalSign","xinghe",gx-math.sin(rot)*.68,
+                          gy+math.cos(rot)*.68,zz+13.2,rot+math.pi,8.8,2.75,glow=True))
     # gate plaza + orbit sculpture
     obs.append(B.cylinder("PortPlaza", 14.0, 0.32, (gx, gy, zz - 0.05), segments=40,
                           color="#bdb6a5", material=M["matte"]))
@@ -3127,34 +3116,8 @@ def eco_village():
 
 
 def build_city():
-    g = ground_h
-    tower_petal("B1", -50, 28, max(1.55, g(-50, 28)), 98, 12.5, 16, phase=0.2, moon=True)
-    tower_ribbon("B2a", -16, 18, max(1.55, g(-16, 18)), 70, 9.5, 7.5, twist=0.55, floors=16)
-    tower_ribbon("B2b", -14, 44, max(1.55, g(-14, 44)), 62, 9.0, 7.0, twist=-0.4, floors=14,
-                 phase=0.7)
-    tower_petal("B3", -72, 2, max(1.55, g(-72, 2)), 82, 10.0, 14, phase=1.1)
-    tower_terrace("B4", -60, 44, max(1.55, g(-60, 44)), 16.0, 14.0, 44, 4, 0.15)
-    tower_petal("B6", -42, -20, max(1.55, g(-42, -20)), 58, 8.5, 11, phase=0.6)
-    tower_petal("A1", 28, -10, max(1.55, g(28, -10)), 66, 9.0, 12, phase=1.4)
-    tower_ribbon("A2", -18, -25, max(1.55, g(-18, -25)), 60, 9.0, 7.0, twist=-0.5, floors=14,
-                 phase=1.7)
-    tower_petal("A3a", 34, 14, max(1.55, g(34, 14)), 52, 7.5, 10, phase=0.9)
-    tower_terrace("A3b", 38, 28, max(1.55, g(38, 28)), 9.0, 8.0, 36, 4, -0.25)
-    tower_petal("B5", 20, 45, max(1.55, g(20, 45)), 54, 8.0, 11, phase=2.0)
-    tower_terrace("C1", -104, 34, g(-104, 34) - 0.3, 14.0, 12.0, 28, 4, 0.4)
-    tower_terrace("C2", -122, 52, g(-122, 52) - 0.3, 12.0, 10.0, 24, 4, -0.2)
-    tower_petal("C3", -108, 78, g(-108, 78) - 0.3, 40, 6.5, 8, phase=0.3)
-    tower_petal("C6", -132, 16, g(-132, 16) - 0.3, 34, 6.0, 7, phase=1.9)
-    tower_ribbon("D1", 38, 78, max(1.55, g(38, 78)), 28, 8.5, 6.5, twist=0.8, floors=8,
-                 phase=0.35)
-    # sky bridges
-    skybridge("BridgeB2a", -16, 18, -14, 44, 32, 3.2, 3.4, 1.1, False)
-    skybridge("BridgeB2b", -16, 18, -14, 44, 46, 3.2, 3.4, 1.1, False)
-    skybridge("BridgeB1", -50, 28, -16, 18, 48, 3.4, 3.6, 1.4, True)
-    skybridge("BridgeA1", 28, -10, 34, 14, 30, 3.2, 3.4, 1.1, False)
-    skybridge("BridgeA3", 34, 14, 38, 28, 22, 3.0, 3.2, 0.8, False)
-    skybridge("BridgeB6", -42, -20, -16, 18, 30, 3.2, 3.4, 1.3, True)
-    skybridge("BridgeB3", -72, 2, -50, 28, 56, 3.2, 3.4, 1.5, False)
+    from port_architecture import install as build_district
+    build_district(ground_h)
     # plazas, community, lab, bayside furniture
     add(city_plaza())
     add(community_center())
@@ -3176,8 +3139,8 @@ def zone_materials():
     m["panel"] = B.vmat("F_Panel", 0.30, 0.35)
     m["foliage"] = B.vmat("F_Foliage", 0.95)
     m["glass"] = B.mat("F_Glass", "#4a6e72", rough=0.26, metal=0.2)
-    m["cyan"] = B.mat("EmisCyan", "#a8f7ff", rough=0.5, emission="#7fe8ff", emis_strength=2.2)
-    m["warm"] = B.mat("EmisWarm", "#ffd9a8", rough=0.5, emission="#ffbe78", emis_strength=1.8)
+    m["cyan"] = B.mat("EmisCyan", "#b6ccc9", rough=0.5, emission="#95bfbd", emis_strength=.82)
+    m["warm"] = B.mat("EmisWarm", "#e4caaa", rough=0.5, emission="#dcb588", emis_strength=.94)
     m["red"] = B.mat("EmisRed", "#ff6d52", rough=0.5, emission="#ff4a34", emis_strength=2.4)
     m["gold"] = B.vmat("F_Gold", 0.32, 0.7)
     m["dark"] = B.vmat("F_Dark", 0.52, 0.2)
@@ -3221,11 +3184,6 @@ def zone():
     add(build_searchlights())
     add(build_port_buildings())
 
-    # red thread continuation across the pad to the launch table
-    add(flat_path("PadRedThread", [(84, 63, 6.62), (90, 69, 6.62), (97, 76, 6.62),
-                                   (101.5, 79.4, 6.62)], 0.26, "#ff6c4e", M["red"]))
-    add(flat_ring("PadRedRing", 6.63, 10.1, 10.32, 40, PAD[0], PAD[1],
-                  "#ff6c4e", M["red"]))
     # approach pylons / light line along the port road
     for i in range(7):
         px = 82 + i * 2.3
@@ -3262,6 +3220,11 @@ def zone():
 
     # join static geometry by material
     B.join_materials("Future", ALL)
+    from era_fixtures import install
+    install("future")
+    from future_facilities import install as fit_port
+    fit_port()
+    bpy.ops.file.pack_all()
 
     tris = vtx = 0
     for ob in bpy.context.scene.objects:
@@ -3273,6 +3236,10 @@ def zone():
         if ob.type == "MESH":
             print("  MESH", ob.name, ob.data.materials[0].name if ob.data.materials else "-",
                   sum(len(p.vertices) - 2 for p in ob.data.polygons))
+    import json
+    grid=[[round(ground_h(x,-z),2) for x in range(-160,161,4)] for z in range(-148,149,4)]
+    with open(os.path.join(B.ROOT,"src","future_ground.json"),"w",encoding="ascii") as out:
+        json.dump(grid,out,separators=(",",":"))
     B.save_blend(ZONE_BLEND)
     B.export_glb(ZONE_GLB)
     print("FUTURE EXPORTED", os.path.getsize(ZONE_GLB))

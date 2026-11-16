@@ -371,25 +371,25 @@ def empty(name, loc=(0, 0, 0), rot=(0, 0, 0), size=1.0):
 
 
 def ground_slab(name, size_x=320, size_y=300, depth=9, top=0.0,
-                colors=("#6d5840", "#7d6347", "#8b7052", "#5b4a38", "#4a3d30")):
+                colors=("#6d5840", "#7d6347", "#8b7052", "#5b4a38", "#4a3d30"), cap=True):
     """Museum-style cut earth base; visible in the void overview."""
     sx, sy = size_x / 2, size_y / 2
     layers = [0.0, -0.8, -2.8, -5.6, -depth]
     verts, faces, face_colors = [], [], []
     # top
     verts += [(-sx, -sy, top), (sx, -sy, top), (sx, sy, top), (-sx, sy, top)]
-    faces.append((0, 1, 2, 3)); face_colors.append(srgb("#8a8064"))
-    base = len(verts)
+    if cap:
+        faces.append((0, 1, 2, 3)); face_colors.append(srgb("#8a8064"))
     for k, z in enumerate(layers[1:]):
         verts += [(-sx, -sy, z), (sx, -sy, z), (sx, sy, z), (-sx, sy, z)]
     # side bands
     for k in range(len(layers) - 1):
-        a = 4 + k * 4
-        b = 4 + (k + 1) * 4
+        a = k * 4
+        b = (k + 1) * 4
         c = srgb(colors[min(k, len(colors) - 1)])
         for i in range(4):
             j = (i + 1) % 4
-            faces.append((a + i, a + j, b + j, b + i))
+            faces.append((a + i, b + i, b + j, a + j))
             face_colors.append(vary(c, 0.06))
     faces.append((4 + 12 + 3, 4 + 12 + 2, 4 + 12 + 1, 4 + 12 + 0))
     face_colors.append(srgb(colors[-1]))
@@ -401,7 +401,7 @@ def ground_slab(name, size_x=320, size_y=300, depth=9, top=0.0,
 # ---------------------------------------------------------------- terrain / road
 
 def terrain(name, size_x, size_y, nx, ny, height_fn, color_fn, material,
-            z0=0.0, smooth=True):
+            z0=0.0, smooth=True, section=None):
     verts, faces, face_colors = [], [], []
     for iy in range(ny + 1):
         for ix in range(nx + 1):
@@ -419,6 +419,29 @@ def terrain(name, size_x, size_y, nx, ny, height_fn, color_fn, material,
             cy = -size_y / 2 + size_y * (iy + 0.5) / ny
             cz = z0 + (height_fn(cx, cy) + 0.01)
             face_colors.append(_col(color_fn(cx, cy, cz)))
+    if section:
+        # Trace the exact terrain vertices. Duplicate the rim so its outward
+        # normals never pull down the lighting on the hillside above it.
+        rim = (list(range(nx)) +
+               [j*(nx+1)+nx for j in range(ny)] +
+               [ny*(nx+1)+nx-i for i in range(nx)] +
+               [(ny-j)*(nx+1) for j in range(ny)])
+        first = len(verts)
+        colours = [srgb(c) for c in section]
+        if len(colours) != 5:
+            raise ValueError("The terrain cross-section needs five strata colours")
+        for index in rim:
+            x,y,h = verts[index]
+            fold = .042*math.sin(x*.048+y*.037)+.026*math.sin(y*.128-x*.085)
+            for f in (0.,.27+fold,.53+fold,.78+fold*.65,.94+fold*.18,1.):
+                verts.append((x,y,min(z0,h)+(h-min(z0,h))*f))
+        for i,index in enumerate(rim):
+            a,b = first+6*i,first+6*((i+1)%len(rim))
+            x,y,_ = verts[index]
+            tone = .22+.15*math.sin(x*.067+y*.085)
+            for j,colour in enumerate(colours):
+                faces.append((a+j,b+j,b+j+1,a+j+1))
+                face_colors.append(mix(colour,colours[min(j+1,len(colours)-1)],tone))
     ob = _finish(name, verts, faces, None, material, smooth=smooth, face_colors=face_colors)
     return ob
 
@@ -708,11 +731,13 @@ def sign_quad(name, key, loc, rot_z=0.0, w=3.0, h=1.0, material=None,
 # ---------------------------------------------------------------- export utilities
 
 def quad(name, corners, color, material, uv=None):
-    ob = _finish(name, corners, [(0, 1, 2, 3)], color, material, smooth=False)
+    if len(corners) not in (3,4) or (uv is not None and len(uv)!=len(corners)):
+        raise ValueError(f"{name}: expected a triangle or quadrilateral with one UV per corner")
+    ob = _finish(name, corners, [tuple(range(len(corners)))], color, material, smooth=False)
     if uv:
         me = ob.data
         layer = me.uv_layers.new(name="UVMap")
-        for i in range(4):
+        for i in range(len(corners)):
             layer.data[i].uv = uv[i]
     return ob
 
@@ -740,7 +765,7 @@ def join_materials(prefix, objs, skip_prefixes=("Water", "FX_")):
     for ob in objs:
         if ob is None or ob.name in ("",):
             continue
-        if any(ob.name.startswith(p) for p in skip_prefixes):
+        if ob.get('grove_instance') or any(ob.name.startswith(p) for p in skip_prefixes):
             continue
         if not ob.data or not hasattr(ob.data, "polygons"):
             continue
@@ -762,4 +787,5 @@ def collection(name):
 
 def save_blend(path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
+    bpy.context.preferences.filepaths.save_version=0
     bpy.ops.wm.save_as_mainfile(filepath=path)

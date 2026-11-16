@@ -1,0 +1,20 @@
+[
+  {
+    "family": "mashanzheng",
+    "revision": "406197b91ff39a93061c2c2eeaee67ddf2ae1f0d",
+    "source": "https://raw.githubusercontent.com/google/fonts/406197b91ff39a93061c2c2eeaee67ddf2ae1f0d/ofl/mashanzheng/MaShanZheng-Regular.ttf",
+    "files": {
+      "MaShanZheng-Regular.ttf": "6d2546bb189c732a8ca29af9e22457b152387d158aa459e4ac2ce1e51788b7fb",
+      "mashanzheng-OFL.txt": "d7bdb1cee215b689e23c2f95672a6084c790542170648267a55114103d756a08"
+    }
+  },
+  {
+    "family": "zcoolqingkehuangyou",
+    "revision": "56328c01842464f3af41632473d3e9a4731b7627",
+    "source": "https://raw.githubusercontent.com/google/fonts/56328c01842464f3af41632473d3e9a4731b7627/ofl/zcoolqingkehuangyou/ZCOOLQingKeHuangYou-Regular.ttf",
+    "files": {
+      "ZCOOLQingKeHuangYou-Regular.ttf": "54f0c0df4308cd74cd0f2fd3494ae054dbc4a1fd6fa7d71f4807eb4cdd8b4136",
+      "zcoolqingkehuangyou-OFL.txt": "f1bce31b817dee01c1e4ef8bc45d8ecb95f01f4abbf0a985007cb3cd0fd8123d"
+    }
+  }
+]

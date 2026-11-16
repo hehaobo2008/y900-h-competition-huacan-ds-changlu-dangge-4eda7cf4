@@ -13,6 +13,7 @@ import bpy
 import blib as B
 from rural_materials import pbr, project_uv
 from mathutils import Vector
+from model_craft import Batch
 
 ROOT = Path(B.ROOT)
 B.reset(1983)
@@ -118,40 +119,59 @@ for side in (-1, 1):
                        (x+side*.058,.592*math.cos(a),.65+.592*math.sin(a)),
                        (0, math.pi/2, 0), segments=10)
 
-# Two soft sacks with shallow compressed wrinkles and non-spherical profiles.
+# Sewn grain sacks laid on their long sides. The cross sections compress at
+# the bed, gather into a tied neck, then flare into an uneven open cuff.
 def sack(name, center, scale, seed):
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=40, ring_count=24, location=center)
-    ob = bpy.context.object
-    ob.name = name
-    for v in ob.data.vertices:
-        x,y,z = v.co
-        # A grain sack is soft but has filled corners and an uneven load.
-        v.co.x = math.copysign(abs(x)**.78, x)
-        v.co.y = math.copysign(abs(y)**.78, y)
-        # Flatten the underside and add broad, restrained creases.
-        if z < -.55:
-            v.co.z = -.55 + (z + .55) * .12
-        wrinkle = .05 * math.sin(13*x + seed) * math.cos(10*y + seed) * max(0, 1-abs(z))
-        v.co.z += wrinkle
-        # Broad creases where the two crosswise lashings press into the load.
-        if z > 0:
-            v.co.z -= .12 * (math.exp(-((y-.62)/.14)**2) + math.exp(-((y+.62)/.14)**2)) * z
-        v.co.x *= 1 + .035*math.sin(y*8+seed)
-    ob.scale = scale
-    bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
-    for face in ob.data.polygons:
-        face.use_smooth = True
-    ob.data.materials.append(linen)
-    # Existing spherical UVs are re-scaled to the real weave, avoiding giant fibres.
-    uv = ob.data.uv_layers.active
-    for loop in uv.data:
-        loop.uv.x *= 3.8
-        loop.uv.y *= 2.3
+    cx,cy,cz=center
+    sx,sy,sz=scale
+    verts,faces=[],[]
+    rows,sides=48,56
+    for j in range(rows+1):
+        t=j/rows
+        if t<.15:
+            fullness=.54+.46*math.sin(t/.15*math.pi/2)
+        elif t<.72:
+            fullness=1-.09*((t-.40)/.32)**2
+        elif t<.88:
+            u=(t-.72)/.16
+            fullness=.90-.74*u*u*(3-2*u)
+        else:
+            fullness=.16+.30*((t-.88)/.12)**1.3
+        for k in range(sides):
+            a=math.tau*k/sides
+            pleat=(.027+.15*max(0,(t-.64)/.36))*math.cos(11*a+1.6*t+seed)
+            pleat+=.03*math.sin(4*a+5*t+seed)*math.cos(math.tau*t)
+            co,si=math.cos(a),math.sin(a)
+            x=sx*fullness*(1+pleat)*math.copysign(abs(co)**.79,co)
+            z=sz*fullness*(1+pleat)*math.copysign(abs(si)**.80,si)
+            z=max(-sz*.52,z)-sz*.10*t
+            y=(t*2-1)*sy+.018*math.cos(7*a+seed)*(t**6)
+            verts.append((cx+x,cy+y,cz+z))
+    for j in range(rows):
+        for k in range(sides):
+            a=j*sides+k; b=j*sides+(k+1)%sides
+            faces.append((a,a+sides,b+sides,b))
+    faces.append(tuple(range(sides)))
+    ob=B._finish(name,verts,faces,"#ffffff",linen,smooth=True)
+    uv=ob.data.uv_layers.new(name="UVMap")
+    for poly in ob.data.polygons:
+        for li in poly.loop_indices:
+            idx=ob.data.loops[li].vertex_index
+            v=idx%sides
+            if v==0 and idx-1 in poly.vertices: v=sides
+            uv.data[li].uv=(v/sides*3.1,(idx//sides)/rows*2.0)
     parts.append(ob)
+    cord_y=cy+sy*.76
+    for turn in range(3):
+        points=[(cx+(sx*.166+.004)*math.cos(a*math.tau/36),cord_y+turn*.009,
+                 cz-sz*.088+(sz*.17+.007)*math.sin(a*math.tau/36)) for a in range(37)]
+        tube("Gathered neck binding",points,.007)
+    tube("Hemp tail",[(cx+.08,cord_y,cz),(cx+.11,cord_y+.02,cz-.025),
+                       (cx+.14,cord_y+.07,cz-.09)],.006)
     return ob
 
-lower = sack("Rice_sack_lower", (0, -.12, 1.03), (.57, .53, .27), 1)
-upper = sack("Rice_sack_upper", (-.06, -.10, 1.27), (.46, .40, .21), 2)
+lower = sack("Rice sack - loaded against bed", (0,-.11,1.045),(.59,.71,.29),1)
+upper = sack("Rice sack - pleated mouth",(-.045,-.10,1.32),(.49,.52,.225),2)
 bpy.context.view_layer.update()
 def sack_top(x, y):
     hits = []
@@ -169,11 +189,24 @@ for yy in (-.39, .18):
     tube("Lashing_below_bed", [(-.71,yy,.79),(-.62,yy,.73),(.62,yy,.73),(.71,yy,.79)], .012)
     tube("Lashing_knot", [(.69,yy,1.01),(.75,yy-.055,1.03),(.78,yy,1.07),
          (.71,yy+.05,1.04),(.69,yy,1.01),(.76,yy-.05,.91)], .013)
-# Hem stitches on the upper sack; restrained geometry reads at close range.
-for i in range(14):
-    y = -.38 + i*.042
-    tube("Sack_seam_stitch", [(.32,y,1.36),(.335,y+.022,1.35)], .0035)
-
+# A tied sample sheaf rides beside the sacks. Individual awns, glumes and
+# bowed culms keep the outline legible from the road camera.
+straw=Batch()
+for k in range(82):
+    offset=rng.gauss(0,.046)
+    root=(-.48+offset,-.08+rng.uniform(-.06,.07),1.27+rng.uniform(-.028,.028))
+    tie=(-.44+offset*.43,-.55,1.42+rng.uniform(-.026,.026))
+    tip=(-.45+offset+rng.uniform(-.15,.15),-1.02-rng.uniform(0,.27),1.56+rng.uniform(-.08,.10))
+    col=rng.choice(["#bb964b","#cfaa59","#ad904a","#dab96c"])
+    straw.pipe([root,tie,tip],.005,col,4)
+    for j in range(6):
+        f=(j+1)/6
+        g=(tip[0]+offset*f,tip[1]-.12*f,tip[2]-.065*f*f)
+        straw.rod((g[0]-.005,g[1]+.015,g[2]+.009),g,.009,col,5,.002)
+parts.append(straw.object("Bound sheaf of seed rice",B.vmat("Cart_straw",.84)))
+for j in range(4):
+    tube("Sheaf binding", [(-.44+.068*math.cos(k*math.tau/30),-.53-j*.009,
+                           1.42+.04*math.sin(k*math.tau/30)) for k in range(31)],.007)
 # Unlit kerosene lantern hanging from the right rail.
 lx, ly, lz = .82, .56, .94
 metal_cylinder("Lantern_base", .095, .065, (lx,ly,lz-.13), mat=brass)

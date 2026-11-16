@@ -1,0 +1,27 @@
+
+#landing,#hud,#chapter,#timeline,#travelMeta,#scrollHint,#overview,#info,#ticketLayer,#ticketScrim,#prologue,#endCard,#homecoming,#stopNotice{display:none!important}
+#previewUI{position:fixed;inset:0;z-index:60;pointer-events:none;color:#edf4f5;font-family:"Microsoft YaHei",sans-serif}
+.preview-top{position:absolute;top:28px;left:34px;right:34px;display:flex;justify-content:space-between;align-items:start;font-size:13px;letter-spacing:.15em;text-shadow:0 1px 8px #001}
+.preview-top strong{display:block;font-size:21px;font-weight:400;letter-spacing:.18em;margin-top:9px}
+.preview-top small{font-size:11px;opacity:.7}
+#previewWords{position:absolute;bottom:140px;width:100%;text-align:center;font:22px/1.6 "Noto Serif SC","SimSun",serif;letter-spacing:.16em;text-shadow:0 2px 18px #001}
+#previewWords.home{font-size:clamp(28px,4.65vh,42px);bottom:max(132px,18.3vh)}
+#homeLine{position:absolute;bottom:max(108px,15vh);width:100%;text-align:center;font:14px/1.6 "Microsoft YaHei",sans-serif;letter-spacing:.10em;color:#d3e2e6}
+.preview-controls{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);width:min(720px,calc(100vw - 32px));padding:15px 20px;background:#0b1e2bbd;border:1px solid #a4cbd133;border-radius:10px;pointer-events:auto;backdrop-filter:blur(12px)}
+.preview-controls button{color:#edf4f5;font:13px "Microsoft YaHei",sans-serif;padding:7px 12px;min-height:36px;border:1px solid #bdd9df55;border-radius:4px;background:#17384977}
+.preview-controls button:hover{background:#326274}
+.preview-row{display:flex;align-items:center;gap:10px}
+#timeRange{flex:1;min-width:0;accent-color:#b4d8da}
+#timeReadout{font:11px monospace;white-space:nowrap}
+.preview-chapters{display:flex;justify-content:space-between;margin-top:10px;gap:5px}
+.preview-chapters button{border:0;background:transparent;opacity:.8;padding:0;font-size:11px;min-height:22px}
+#previewLoading{position:fixed;inset:0;background:#0c1926;display:grid;place-content:center;color:#e6eef1;z-index:100;font:16px "Microsoft YaHei",sans-serif}
+#previewLoading[hidden]{display:none}
+.preview-credits{position:absolute;top:55px;right:34px;font:10px/1.8 "Microsoft YaHei",sans-serif;color:#b9c8ce;pointer-events:auto;text-align:right}
+.preview-credits summary{cursor:pointer;opacity:.65}
+.preview-credits div{margin-top:8px;padding:14px;background:#0b1e2bf0;border:1px solid #a4cbd133;border-radius:6px;text-align:left;max-width:calc(100vw - 70px)}
+.preview-credits a{color:#b4d8da}
+@media(max-width:600px){.preview-credits{top:20px;right:20px}.preview-credits div{font-size:10px}}
+@media(max-width:600px) and (max-height:650px){#previewUI #previewWords.home{bottom:156px}#previewUI #homeLine{bottom:128px}}
+
+@media(max-width:600px){.preview-top{top:20px;left:20px;right:20px}.preview-top strong{font-size:17px}.preview-top small{display:none}#previewWords{font-size:17px;bottom:160px}#previewWords.home{font-size:min(32px,4.65vh);bottom:max(132px,18.3vh)}#homeLine{bottom:max(108px,15vh);font-size:11px}.preview-controls{padding:12px}.preview-row{gap:6px}.preview-controls button{padding:6px 9px}.preview-chapters button{font-size:10px;padding:0}#timeReadout{font-size:10px}}
